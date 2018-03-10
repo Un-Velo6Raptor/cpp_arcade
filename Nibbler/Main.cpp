@@ -15,6 +15,7 @@ int		main()
 	int             input;
 
 	nibbler.displayMap();
+	//nibbler.bigDisplay();
 	
 	do {
 		std::cout << "> ";
@@ -27,7 +28,10 @@ int		main()
 			nibbler.move(LEFT);
 		else if (line == "right")
 			nibbler.move(RIGHT);
+		else if (line == "")
+			nibbler.demo();
 		nibbler.displayMap();
+		//nibbler.bigDisplay();
 	} while (line != "exit" && std::cin.eof() != 1);
 	return 0;
 }

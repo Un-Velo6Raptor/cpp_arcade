@@ -74,7 +74,7 @@ public:
 	~Nibbler();
 
 	SnakePart	createSnakePart(std::size_t row, std::size_t col, bool full);
-	//void		addPellet();
+	void		addPellet();
 	void		updateHead();
 	void		straightLine();
 	void		cornerToTopRight();
@@ -87,10 +87,13 @@ public:
 	void		updateFirstBodyPart();
 	void		updateTail(tile tail);
 	void		updateSnake(tile tile, std::size_t row, std::size_t col);
+	bool		possibleDestination(tile tile);
 	void		move(direction dir);
 	//void		gameOver() const;
 	//void		pause() const;
 	void		displayMap() const;
+	void		bigDisplay() const;
+	void		demo();
 	//void		menu() const;
 
 private:

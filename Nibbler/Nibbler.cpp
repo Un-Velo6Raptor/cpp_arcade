@@ -7,6 +7,8 @@
 
 #include	<algorithm>
 #include	<iostream>
+#include	<cstdlib>
+#include	<ctime>
 #include	"Nibbler.hpp"
 
 Nibbler::Nibbler() : _snake_length(4), _map_height(9), _map_width(20), _score(0),
@@ -26,13 +28,14 @@ Nibbler::Nibbler() : _snake_length(4), _map_height(9), _map_width(20), _score(0)
 			_map[i][_map_width / 2 - 1] = EMPTY_BODY_RIGHT;
 			_map[i][_map_width / 2] = EMPTY_BODY_RIGHT;
 			_map[i][_map_width / 2 + 1] = CLOSED_MOUTH_RIGHT;
-			//_map[i - 2][_map_width / 2 + 1] = PELLET;
 		}
 	}
 	_snake.insert(_snake.begin(), createSnakePart(_map_height / 2, _map_width / 2 + 1, false));
 	_snake.insert(_snake.begin(), createSnakePart(_map_height / 2, _map_width / 2, false));
 	_snake.insert(_snake.begin(), createSnakePart(_map_height / 2, _map_width / 2 - 1, false));
 	_snake.insert(_snake.begin(), createSnakePart(_map_height / 2, _map_width / 2 - 2, false));
+	std::srand(std::time(nullptr));
+	addPellet();
 }
 
 Nibbler::~Nibbler()
@@ -47,6 +50,32 @@ SnakePart	Nibbler::createSnakePart(std::size_t row, std::size_t col, bool full)
 	portion.col = col;
 	portion.full = full;
 	return portion;
+}
+
+void		Nibbler::addPellet()
+{
+	std::size_t	empty_cells = 0;
+	std::size_t	chosen_cell;
+	std::size_t	count;
+
+	for (size_t i = 0 ; i < _map_height ; i++) {
+		empty_cells += std::count(_map[i].begin(), _map[i].end(), EMPTY);
+	}
+	if (empty_cells == 0)
+		return;
+	chosen_cell = std::rand() % empty_cells;
+	for (count = 0 ; chosen_cell >= std::count(_map[count].begin(), _map[count].end(), EMPTY) ;
+	     count++) {
+		chosen_cell -= std::count(_map[count].begin(), _map[count].end(), EMPTY);
+	}
+	for (size_t i = 0 ; i < _map_width ; i++) {
+		if (_map[count][i] == EMPTY && chosen_cell > 1)
+			chosen_cell--;
+		else if (_map[count][i] == EMPTY) {
+			_map[count][i] = PELLET;
+			break;
+		}
+	}
 }
 
 void		Nibbler::updateHead()
@@ -242,56 +271,140 @@ void		Nibbler::updateTail(tile tail)
 
 void		Nibbler::updateSnake(tile tile, std::size_t row, std::size_t col)
 {
-	if (tile == EMPTY) {
-		_snake.insert(_snake.end(), createSnakePart(row, col, false));
-		updateHead();
-		updateFirstBodyPart();
-		_map[_snake.front().row][_snake.front().col] = EMPTY;
-		_snake.erase(_snake.begin());
-		updateTail(_map[_snake.front().row][_snake.front().col]);
-	} else if (tile == PELLET) {
+	if (tile == PELLET) {
 		_snake.insert(_snake.end(), createSnakePart(row, col, true));
 		updateHead();
 		updateFirstBodyPart();
-		//addPellet();
+		addPellet();
+		_score++;
 	} else {
-		//gameOver();
+		_map[_snake.front().row][_snake.front().col] = EMPTY;
+		_snake.erase(_snake.begin());
+		updateTail(_map[_snake.front().row][_snake.front().col]);
+		_snake.insert(_snake.end(), createSnakePart(row, col, false));
+		updateHead();
+		updateFirstBodyPart();
 	}
+}
+
+bool		Nibbler::possibleDestination(tile tile)
+{
+	if (tile == EMPTY || tile == PELLET || tile == TAIL_UP ||
+	    tile == TAIL_LEFT || tile == TAIL_RIGHT || tile == TAIL_DOWN)
+		return true;
+	return false;
 }
 
 void		Nibbler::move(direction dir)
 {
 	if (dir == UP &&
-	    (_map[_snake.back().row - 1][_snake.back().col] == EMPTY ||
-	     _map[_snake.back().row - 1][_snake.back().col] == PELLET)) {
+	    possibleDestination(_map[_snake.back().row - 1][_snake.back().col]) == true) {
 		updateSnake(_map[_snake.back().row - 1][_snake.back().col],
 			    _snake.back().row - 1, _snake.back().col);
 	} else if (dir == DOWN &&
-	    (_map[_snake.back().row + 1][_snake.back().col] == EMPTY ||
-	     _map[_snake.back().row + 1][_snake.back().col] == PELLET)) {
+		   possibleDestination(_map[_snake.back().row + 1][_snake.back().col]) == true) {
 		updateSnake(_map[_snake.back().row + 1][_snake.back().col],
 			    _snake.back().row + 1, _snake.back().col);
 	} else if (dir == LEFT &&
-	    (_map[_snake.back().row][_snake.back().col - 1] == EMPTY ||
-	     _map[_snake.back().row][_snake.back().col - 1] == PELLET)) {
+		   possibleDestination(_map[_snake.back().row][_snake.back().col - 1]) == true) {
 		updateSnake(_map[_snake.back().row][_snake.back().col - 1],
 			    _snake.back().row, _snake.back().col - 1);
 	} else if (dir == RIGHT &&
-	    (_map[_snake.back().row][_snake.back().col + 1] == EMPTY ||
-	     _map[_snake.back().row][_snake.back().col + 1] == PELLET)) {
+		   possibleDestination(_map[_snake.back().row][_snake.back().col + 1]) == true) {
 		updateSnake(_map[_snake.back().row][_snake.back().col + 1],
 			    _snake.back().row, _snake.back().col + 1);
+	} else {
+		//gameOver();
 	}
 }
 
 void		Nibbler::displayMap() const
 {
-	std::string	display = "X V<>A****|--|oooo++++++++oooooooo....&";
+	std::string	display = "X V><A****|--|oooo++++++++oooooooo....&";
 
 	for (size_t i = 0 ; i < _map_height ; i++) {
 		for (size_t j = 0 ; j < _map_width ; j++) {
 			std::cout << display[_map[i][j]];
 		}
 		std::cout << std::endl;
+	}
+}
+
+void		Nibbler::bigDisplay() const
+{
+	const std::vector<std::vector<std::string> >	display =
+		{{"XXXXXXXX", "XXXXXXXX", "XXXXXXXX", "XXXXXXXX"},
+		 {"        ", "        ", "        ", "        "},
+		 {"        ", "XX    XX", "  XXXX  ", "XX  XX  "},
+		 {"  XX  XX", "    XX  ", "    XXXX", "  XX    "},
+		 {"XX  XX  ", "  XX    ", "XXXX    ", "    XX  "},
+		 {"XX  XX  ", "  XXXX  ", "XX    XX", "        "},
+		 {"        ", "  XXXX  ", "  XXXX  ", "XX  XX  "},
+		 {"      XX", "  XXXX  ", "  XXXXXX", "        "},
+		 {"XX      ", "  XXXX  ", "XXXXXX  ", "        "},
+		 {"XX  XX  ", "  XXXX  ", "  XXXX  ", "        "},
+		 {"  XXXX  ", "    XX  ", "  XX    ", "  XXXX  "},
+		 {"        ", "XX  XXXX", "XXXX  XX", "        "},
+		 {"        ", "XXXX  XX", "XX  XXXX", "        "},
+		 {"  XXXX  ", "  XX    ", "    XX  ", "  XXXX  "},
+		 {"  XXXX  ", "XX  XXXX", "XXXX  XX", "  XXXX  "},
+		 {"  XXXX  ", "XX  XXXX", "XXXX  XX", "  XXXX  "},
+		 {"  XXXX  ", "XXXX  XX", "XX  XXXX", "  XXXX  "},
+		 {"  XXXX  ", "XXXX  XX", "XX  XXXX", "  XXXX  "},
+		 {"  XXXX  ", "  XX  XX", "    XXXX", "        "},
+		 {"  XXXX  ", "XX  XX  ", "XXXX    ", "        "},
+		 {"  XXXX  ", "XX  XX  ", "XXXX    ", "        "},
+		 {"        ", "XXXX    ", "XX  XX  ", "  XXXX  "},
+		 {"  XXXX  ", "  XX  XX", "    XXXX", "        "},
+		 {"        ", "    XXXX", "  XX  XX", "  XXXX  "},
+		 {"        ", "    XXXX", "  XX  XX", "  XXXX  "},
+		 {"        ", "XXXX    ", "XX  XX  ", "  XXXX  "},
+		 {"  XXXXXX", "  XX  XX", "    XXXX", "        "},
+		 {"XXXXXX  ", "XX  XX  ", "XXXX    ", "        "},
+		 {"XXXXXX  ", "XX  XX  ", "XXXX    ", "        "},
+		 {"        ", "XXXX    ", "XX  XX  ", "XXXXXX  "},
+		 {"  XXXXXX", "  XX  XX", "    XXXX", "        "},
+		 {"        ", "    XXXX", "  XX  XX", "  XXXXXX"},
+		 {"        ", "    XXXX", "  XX  XX", "  XXXXXX"},
+		 {"        ", "XXXX    ", "XX  XX  ", "XXXXXX  "},
+		 {"  XXXX  ", "  XXXX  ", "    XX  ", "    XX  "},
+		 {"        ", "XXXX    ", "XXXXXXXX", "        "},
+		 {"        ", "    XXXX", "XXXXXXXX", "        "},
+		 {"    XX  ", "    XX  ", "  XXXX  ", "  XXXX  "},
+		 {"        ", "  XXXX  ", "  XXXX  ", "        "}};
+
+	for (size_t i = 0 ; i < _map_height ; i++) {
+		for (size_t j = 0 ; j < _map_width ; j++)
+			std::cout << display[_map[i][j]][0];
+		std::cout << std::endl;
+		for (size_t j = 0 ; j < _map_width ; j++)
+			std::cout << display[_map[i][j]][1];
+		std::cout << std::endl;
+		for (size_t j = 0 ; j < _map_width ; j++)
+			std::cout << display[_map[i][j]][2];
+		std::cout << std::endl;
+		for (size_t j = 0 ; j < _map_width ; j++)
+			std::cout << display[_map[i][j]][3];
+		std::cout << std::endl;
+	}
+}
+
+void		Nibbler::demo()
+{
+	if (_snake.back().row == 1) {
+		if (_snake.back().col == 1)
+			move(DOWN);
+		else
+			move(LEFT);
+	} else if (_snake.back().col % 2 == 1) {
+		if (_snake.back().row == 7)
+			move(RIGHT);
+		else
+			move(DOWN);
+	} else if (_snake.back().col % 2 == 0) {
+		if (_snake.back().row == 2 && _snake.back().col != 18)
+			move(RIGHT);
+		else
+			move(UP);
 	}
 }
