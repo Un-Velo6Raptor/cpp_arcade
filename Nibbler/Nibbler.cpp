@@ -13,7 +13,7 @@
 
 Nibbler::Nibbler() : _snake_length(4), _map_height(9), _map_width(20), _score(0),
 		     _map(_map_height, std::vector<tile>(_map_width)),
-		     _full(0)
+		     _direction(RIGHT), _full(0)
 {
 	for (size_t i = 0 ; i < _map_height ; i++) {
 		if (i == 0 || i == _map_height - 1) {
@@ -295,26 +295,39 @@ bool		Nibbler::possibleDestination(tile tile)
 	return false;
 }
 
-void		Nibbler::move(direction dir)
+bool		Nibbler::move()
 {
-	if (dir == UP &&
+	if (_direction == UP &&
 	    possibleDestination(_map[_snake.back().row - 1][_snake.back().col]) == true) {
 		updateSnake(_map[_snake.back().row - 1][_snake.back().col],
 			    _snake.back().row - 1, _snake.back().col);
-	} else if (dir == DOWN &&
+	} else if (_direction == DOWN &&
 		   possibleDestination(_map[_snake.back().row + 1][_snake.back().col]) == true) {
 		updateSnake(_map[_snake.back().row + 1][_snake.back().col],
 			    _snake.back().row + 1, _snake.back().col);
-	} else if (dir == LEFT &&
+	} else if (_direction == LEFT &&
 		   possibleDestination(_map[_snake.back().row][_snake.back().col - 1]) == true) {
 		updateSnake(_map[_snake.back().row][_snake.back().col - 1],
 			    _snake.back().row, _snake.back().col - 1);
-	} else if (dir == RIGHT &&
+	} else if (_direction == RIGHT &&
 		   possibleDestination(_map[_snake.back().row][_snake.back().col + 1]) == true) {
 		updateSnake(_map[_snake.back().row][_snake.back().col + 1],
 			    _snake.back().row, _snake.back().col + 1);
-	} else {
-		//gameOver();
+	} else
+		return false;
+	return true;
+}
+
+void		Nibbler::setDirection(direction dir)
+{
+	if (dir == UP && _snake[_snake.size() - 2].row != _snake.back().row - 1) {
+		_direction = UP;
+	} else if (dir == LEFT && _snake[_snake.size() - 2].col != _snake.back().col - 1) {
+		_direction = LEFT;
+	} else if (dir == RIGHT && _snake[_snake.size() - 2].col != _snake.back().col + 1) {
+		_direction = RIGHT;
+	} else if (dir == DOWN && _snake[_snake.size() - 2].row != _snake.back().row + 1) {
+		_direction = DOWN;
 	}
 }
 
@@ -333,7 +346,7 @@ void		Nibbler::displayMap() const
 void		Nibbler::bigDisplay() const
 {
 	const std::vector<std::vector<std::string> >	display =
-		{{"XXXXXXXX", "XXXXXXXX", "XXXXXXXX", "XXXXXXXX"},
+		{{"++++++++", "++++++++", "++++++++", "++++++++"},
 		 {"        ", "        ", "        ", "        "},
 		 {"        ", "XX    XX", "  XXXX  ", "XX  XX  "},
 		 {"  XX  XX", "    XX  ", "    XXXX", "  XX    "},
@@ -393,18 +406,18 @@ void		Nibbler::demo()
 {
 	if (_snake.back().row == 1) {
 		if (_snake.back().col == 1)
-			move(DOWN);
+			setDirection(DOWN);
 		else
-			move(LEFT);
+			setDirection(LEFT);
 	} else if (_snake.back().col % 2 == 1) {
-		if (_snake.back().row == 7)
-			move(RIGHT);
+		if (_snake.back().row == _map.size() - 2)
+			setDirection(RIGHT);
 		else
-			move(DOWN);
+			setDirection(DOWN);
 	} else if (_snake.back().col % 2 == 0) {
-		if (_snake.back().row == 2 && _snake.back().col != 18)
-			move(RIGHT);
+		if (_snake.back().row == 2 && _snake.back().col != _map[0].size() - 2)
+			setDirection(RIGHT);
 		else
-			move(UP);
+			setDirection(UP);
 	}
 }

@@ -14,24 +14,23 @@ int		main()
 	std::string     line;
 	int             input;
 
-	nibbler.displayMap();
-	//nibbler.bigDisplay();
-	
-	do {
+	while (line != "exit" && std::cin.eof() != 1 && nibbler.move() != false) {
+		nibbler.displayMap();
+		//nibbler.bigDisplay();
 		std::cout << "> ";
 		std::getline(std::cin, line);
 		if (line == "up")
-			nibbler.move(UP);
+			nibbler.setDirection(UP);
 		else if (line == "down")
-			nibbler.move(DOWN);
+			nibbler.setDirection(DOWN);
 		else if (line == "left")
-			nibbler.move(LEFT);
+			nibbler.setDirection(LEFT);
 		else if (line == "right")
-			nibbler.move(RIGHT);
+			nibbler.setDirection(RIGHT);
 		else if (line == "")
 			nibbler.demo();
-		nibbler.displayMap();
-		//nibbler.bigDisplay();
-	} while (line != "exit" && std::cin.eof() != 1);
+	}
+	nibbler.displayMap();
+	//nibbler.bigDisplay();	
 	return 0;
 }

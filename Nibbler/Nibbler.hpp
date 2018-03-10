@@ -88,8 +88,8 @@ public:
 	void		updateTail(tile tail);
 	void		updateSnake(tile tile, std::size_t row, std::size_t col);
 	bool		possibleDestination(tile tile);
-	void		move(direction dir);
-	//void		gameOver() const;
+	bool		move();
+	void		setDirection(direction dir);
 	//void		pause() const;
 	void		displayMap() const;
 	void		bigDisplay() const;
@@ -103,6 +103,7 @@ private:
 	std::size_t			_score;
 	std::vector<std::vector<tile> >	_map;
 	std::vector<SnakePart>		_snake;
+	direction			_direction;
 	bool				_full;
 };
 
