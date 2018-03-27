@@ -1,0 +1,50 @@
+/*
+** EPITECH PROJECT, 2018
+** cpp_arcade
+** File description:
+** Created by martin.januario@epitech.eu,
+*/
+
+#ifndef CPP_ARCADE_MANAGEMAP_HPP
+# define CPP_ARCADE_MANAGEMAP_HPP
+
+# include <iostream>
+# include <string>
+# include <map>
+
+enum MapChar {
+	Empty = ' ',
+	Corner = '+',
+	Vertical = '|',
+	Horizontal = '-',
+	ObjectToTake = 'o',
+};
+
+class ManageMap {
+	public:
+	// Constructor / destructor
+	ManageMap(const unsigned int &mapSizeX, const unsigned int &mapSizeY);
+	~ManageMap();
+
+	// Copy constructor and operator copy // Todo: need an Update
+	ManageMap(const ManageMap &other);
+	ManageMap &operator=(ManageMap &other);
+
+	void generateMap(void);
+
+	// Setter
+
+	// Getter
+	unsigned int getSizeX(void) const;
+	unsigned int getSizeY(void) const;
+
+	protected:
+
+	private:
+	unsigned int _sizeX;
+	unsigned int _sizeY;
+
+	std::map<unsigned int, std::string> _map;
+};
+
+#endif //CPP_ARCADE_MANAGEMAP_HPP
