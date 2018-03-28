@@ -11,6 +11,7 @@ MAP		=	Src/Map/ManageMap.cpp			\
 			Src/Map/MapGenerate.cpp			\
 			Src/Map/MapGetter.cpp			\
 			Src/Map/MapSetter.cpp			\
+			Src/Map/ManagePowerUp.cpp		\
 
 EXCEPTION	=	Src/Exception/ErrorException.cpp	\
 			Src/Exception/MapException.cpp		\

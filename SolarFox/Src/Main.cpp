@@ -10,15 +10,15 @@
 
 int main(void)
 {
-	ManageMap tmp(50, 8);
+	ManageMap tmp(10, 10);
 
 	try {
-		tmp.generateMap();
+		tmp.generateMap(20);
 	} catch (MapException const &error) {
 		std::cout << "From " << error.getName() << ":" << std::endl;
 		std::cout << error.what() << std::endl;
 		return 84;
 	}
-
+	tmp.displayMap();
 	return (0);
 }

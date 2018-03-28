@@ -30,7 +30,13 @@ class ManageMap {
 	ManageMap(const ManageMap &other);
 	ManageMap &operator=(ManageMap &other);
 
-	void generateMap(void);
+	void displayMap(void) const;
+	void resetMap(void);
+	void generateMap(unsigned int percent);
+
+	void generateMiddleLine(unsigned int line);
+	void generateFirstLine(unsigned int line);
+	void createLine(unsigned int index_y);
 
 	// Setter
 
@@ -41,6 +47,8 @@ class ManageMap {
 	protected:
 
 	private:
+	int placePowerUp(std::size_t nbPowerUp);
+
 	unsigned int _sizeX;
 	unsigned int _sizeY;
 
