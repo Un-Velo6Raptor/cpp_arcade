@@ -11,19 +11,12 @@
 # include <iostream>
 # include <string>
 # include <map>
-
-enum MapChar {
-	Empty = ' ',
-	Corner = '+',
-	Vertical = '|',
-	Horizontal = '-',
-	ObjectToTake = 'o',
-};
+# include "Enum.hpp"
 
 class ManageMap {
 	public:
 	// Constructor / destructor
-	ManageMap(const unsigned int &mapSizeX, const unsigned int &mapSizeY);
+	ManageMap(const unsigned int &mapSizeX, const unsigned int &mapSizeY); // A block in the map is 10*10px
 	~ManageMap();
 
 	// Copy constructor and operator copy // Todo: need an Update
@@ -43,6 +36,7 @@ class ManageMap {
 	// Getter
 	unsigned int getSizeX(void) const;
 	unsigned int getSizeY(void) const;
+	std::map<unsigned int, std::string> &getMap(void);
 
 	protected:
 

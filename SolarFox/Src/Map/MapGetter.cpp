@@ -16,3 +16,8 @@ unsigned int ManageMap::getSizeX() const
 {
 	return this->_sizeX;
 }
+
+std::map<unsigned int, std::string>& ManageMap::getMap()
+{
+	return this->_map;
+}
