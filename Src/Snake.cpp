@@ -7,6 +7,7 @@
 
 #include	<algorithm>
 #include	<iostream>
+#include	<time.h>
 #include	<ctime>
 #include	"Arcade.hpp"
 #include	"Snake.hpp"
@@ -102,7 +103,7 @@ const std::map<unsigned char, ar::colorVector>	colors {
 };
 
 Snake::Snake() : _direction(RIGHT), _pause(true), _classicMode(false),
-		 _score(0), _timer(0), _time(std::time(nullptr)), _gameOver(false), _map(20, 9),
+		 _score(0), _timer(std::time(nullptr)), _gameOver(false), _time(clock()), _map(20, 9),
 		 _height(9), _width(20), _movementMap(_height, std::vector<Tile>(_width))
 {
 	initiateGame();
@@ -246,7 +247,8 @@ int	Snake::refreshScore()
 
 int	Snake::refreshTimer()
 {
-	return _timer;
+	//_time = std::time(nullptr);
+	return std::time(nullptr) - _timer;
 }
 
 bool	Snake::isGameOver()
@@ -523,7 +525,7 @@ void	Snake::updateMap()
 
 void	Snake::loop()
 {
-	if (std::time(nullptr) == _time || _pause == true)
+	if (clock() - _time < 300000 || _pause == true)
 		return;
 	if (_direction == UP &&
 	    possibleDestination(_movementMap[_snake.back().row - 1][_snake.back().col]) == true) {
@@ -544,8 +546,7 @@ void	Snake::loop()
 	} else
 		_gameOver = true;
 	updateMap();
-	_time = std::time(nullptr);
-	_timer++;
+	_time = clock();
 }
 
 const std::string	Snake::getGameName() const
