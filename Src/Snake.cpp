@@ -14,46 +14,46 @@
 const std::map<unsigned char, ar::spriteCoords>	sprites {
 	{ 0, ar::spriteCoords { 64, 64, 64, 64 } },
 	{ 1, ar::spriteCoords { 64, 64, 64, 64 } },
-	{ 2, ar::spriteCoords { 128, 0, 64, 64 } },
-	{ 3, ar::spriteCoords { 192, 64, 64, 64 } },
-	{ 4, ar::spriteCoords { 128, 0, 64, 64 } },
-	{ 5, ar::spriteCoords { 0, 192, 64, 64 } },
-	{ 6, ar::spriteCoords { 64, 192, 64, 64 } },
-	{ 7, ar::spriteCoords { 0, 256, 64, 64 } },
-	{ 8, ar::spriteCoords { 64, 256, 64, 64 } },
-	{ 9, ar::spriteCoords { 0, 192, 64, 64 } },
-	{ 10, ar::spriteCoords { 64, 192, 64, 64 } },
-	{ 11, ar::spriteCoords { 0, 256, 64, 64 } },
-	{ 12, ar::spriteCoords { 64, 256, 64, 64 } },
-	{ 13, ar::spriteCoords { 64, 128, 64, 64 } },
-	{ 14, ar::spriteCoords { 0, 64, 64, 64 } },
-	{ 15, ar::spriteCoords { 0, 64, 64, 64 } },
-	{ 16, ar::spriteCoords { 64, 128, 64, 64 } },
-	{ 17, ar::spriteCoords { 64, 128, 64, 64 } },
-	{ 18, ar::spriteCoords { 0, 64, 64, 64 } },
-	{ 19, ar::spriteCoords { 0, 64, 64, 64 } },
-	{ 20, ar::spriteCoords { 64, 128, 64, 64 } },
-	{ 21, ar::spriteCoords { 64, 0, 64, 64 } },
+	{ 2, ar::spriteCoords { 0, 128, 64, 64 } },
+	{ 3, ar::spriteCoords { 64, 192, 64, 64 } },
+	{ 4, ar::spriteCoords { 0, 128, 64, 64 } },
+	{ 5, ar::spriteCoords { 192, 0, 64, 64 } },
+	{ 6, ar::spriteCoords { 192, 64, 64, 64 } },
+	{ 7, ar::spriteCoords { 256, 0, 64, 64 } },
+	{ 8, ar::spriteCoords { 256, 64, 64, 64 } },
+	{ 9, ar::spriteCoords { 192, 0, 64, 64 } },
+	{ 10, ar::spriteCoords { 192, 64, 64, 64 } },
+	{ 11, ar::spriteCoords { 256, 0, 64, 64 } },
+	{ 12, ar::spriteCoords { 256, 64, 64, 64 } },
+	{ 13, ar::spriteCoords { 128, 64, 64, 64 } },
+	{ 14, ar::spriteCoords { 64, 0, 64, 64 } },
+	{ 15, ar::spriteCoords { 64, 0, 64, 64 } },
+	{ 16, ar::spriteCoords { 128, 64, 64, 64 } },
+	{ 17, ar::spriteCoords { 128, 64, 64, 64 } },
+	{ 18, ar::spriteCoords { 64, 0, 64, 64 } },
+	{ 19, ar::spriteCoords { 64, 0, 64, 64 } },
+	{ 20, ar::spriteCoords { 128, 64, 64, 64 } },
+	{ 21, ar::spriteCoords { 0, 64, 64, 64 } },
 	{ 22, ar::spriteCoords { 128, 128, 64, 64 } },
 	{ 23, ar::spriteCoords { 128, 128, 64, 64 } },
-	{ 24, ar::spriteCoords { 0, 128, 64, 64 } },
-	{ 25, ar::spriteCoords { 64, 0, 64, 64 } },
+	{ 24, ar::spriteCoords { 128, 0, 64, 64 } },
+	{ 25, ar::spriteCoords { 0, 64, 64, 64 } },
 	{ 26, ar::spriteCoords { 0, 0, 64, 64 } },
 	{ 27, ar::spriteCoords { 0, 0, 64, 64 } },
-	{ 28, ar::spriteCoords { 0, 128, 64, 64 } },
-	{ 29, ar::spriteCoords { 64, 0, 64, 64 } },
+	{ 28, ar::spriteCoords { 128, 0, 64, 64 } },
+	{ 29, ar::spriteCoords { 0, 64, 64, 64 } },
 	{ 30, ar::spriteCoords { 128, 128, 64, 64 } },
 	{ 31, ar::spriteCoords { 128, 128, 64, 64 } },
-	{ 32, ar::spriteCoords { 0, 128, 64, 64 } },
-	{ 33, ar::spriteCoords { 64, 0, 64, 64 } },
+	{ 32, ar::spriteCoords { 128, 0, 64, 64 } },
+	{ 33, ar::spriteCoords { 0, 64, 64, 64 } },
 	{ 34, ar::spriteCoords { 0, 0, 64, 64 } },
 	{ 35, ar::spriteCoords { 0, 0, 64, 64 } },
-	{ 36, ar::spriteCoords { 0, 128, 64, 64 } },
-	{ 37, ar::spriteCoords { 128, 192, 64, 64 } },
+	{ 36, ar::spriteCoords { 128, 0, 64, 64 } },
+	{ 37, ar::spriteCoords { 192, 128, 64, 64 } },
 	{ 38, ar::spriteCoords { 192, 192, 64, 64 } },
-	{ 39, ar::spriteCoords { 128, 256, 64, 64 } },
-	{ 40, ar::spriteCoords { 192, 256, 64, 64 } },
-	{ 41, ar::spriteCoords { 192, 0, 64, 64 } },
+	{ 39, ar::spriteCoords { 256, 128, 64, 64 } },
+	{ 40, ar::spriteCoords { 256, 192, 64, 64 } },
+	{ 41, ar::spriteCoords { 0, 192, 64, 64 } },
 };
 
 const std::map<unsigned char, ar::colorVector>	colors {
@@ -102,7 +102,7 @@ const std::map<unsigned char, ar::colorVector>	colors {
 };
 
 Snake::Snake() : _direction(RIGHT), _pause(true), _classicMode(false),
-		 _score(0), _timer(std::time(nullptr)), _gameOver(false), _map(20, 9),
+		 _score(0), _timer(0), _time(std::time(nullptr)), _gameOver(false), _map(20, 9),
 		 _height(9), _width(20), _movementMap(_height, std::vector<Tile>(_width))
 {
 	initiateGame();
@@ -135,6 +135,7 @@ void		Snake::initiateGame()
 	_snake.insert(_snake.begin(), createSnakePart(_height / 2, _width / 2 - 2, false));
 	std::srand(std::time(nullptr));
 	addPellet();
+	updateMap();
 }
 
 void		Snake::goUp()
@@ -190,7 +191,7 @@ void		Snake::goRight()
 			_direction = DOWN;
 			break;
 		}
-	} else if (_classicMode == true && _snake[_snake.size() - 2].row != _snake.back().row + 1) {
+	} else if (_classicMode == true && _snake[_snake.size() - 2].col != _snake.back().col + 1) {
 		_direction = RIGHT;
 	}
 }
@@ -492,7 +493,7 @@ void		Snake::updateSnake(Tile tile, std::size_t row, std::size_t col)
 		updateHead();
 		updateFirstBodyPart();
 		addPellet();
-		_score++;
+		_score += 100;
 	} else {
 		_movementMap[_snake.front().row][_snake.front().col] = EMPTY;
 		_snake.erase(_snake.begin());
@@ -522,7 +523,7 @@ void	Snake::updateMap()
 
 void	Snake::loop()
 {
-	if (std::time(nullptr) == _timer || _pause == true)
+	if (std::time(nullptr) == _time || _pause == true)
 		return;
 	if (_direction == UP &&
 	    possibleDestination(_movementMap[_snake.back().row - 1][_snake.back().col]) == true) {
@@ -543,7 +544,8 @@ void	Snake::loop()
 	} else
 		_gameOver = true;
 	updateMap();
-	_timer = std::time(nullptr);
+	_time = std::time(nullptr);
+	_timer++;
 }
 
 const std::string	Snake::getGameName() const
@@ -556,6 +558,16 @@ const std::string	Snake::getGameName() const
 void	Snake::setPause()
 {
 	_pause = true;
+}
+
+extern "C" Snake *create()
+{
+	return new Snake();
+}
+
+extern "C" void destroy(Snake *snake)
+{
+	delete snake;
 }
 
 /*void		Snake::bigDisplay()
