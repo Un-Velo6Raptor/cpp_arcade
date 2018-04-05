@@ -1,0 +1,44 @@
+/*
+** EPITECH PROJECT, 2018
+** cpp_arcade
+** File description:
+** Created by martin.januario@epitech.eu,
+*/
+
+#include "Game.hpp"
+
+ar::Qix::Qix() : _manageMap(30, 30)
+{
+	this->_data = {0, "Unknown", 0};
+	this->_spritePath = "extra/qix_pattern.jpg";
+
+	spriteCoords tmp = {0, 0, 100, 100};
+	this->_sprites.insert({3, tmp});
+	this->_sprites.insert({4, tmp});
+	this->_sprites.insert({5, tmp});
+	this->_sprites.insert({6, tmp});
+	this->_sprites.insert({7, tmp});
+
+	colorVector color = {0, 0, 255};
+	this->_colors.insert({3, color});
+
+	color = {255, 0, 0};
+	this->_colors.insert({4, color});
+
+	color = {125, 125, 125};
+	this->_colors.insert({5, color});
+
+	color = {0, 255, 0};
+	this->_colors.insert({6, color});
+
+	color = {0, 255, 255};
+	this->_colors.insert({7, color});
+}
+
+extern "C" ar::Qix *create() {
+	return new ar::Qix;
+}
+
+extern "C" void destroy(ar::Qix *obj) {
+	delete obj;
+}
