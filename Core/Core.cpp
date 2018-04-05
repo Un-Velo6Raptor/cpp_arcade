@@ -215,6 +215,7 @@ int ar::Core::start(std::string const &defaultPath)
 			refreshUserInterface();
 			if (_game->isGameOver()) {
 				destroyActualGame();
+				_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
 				_menu = true;
 			} else {
 				_game->loop();
