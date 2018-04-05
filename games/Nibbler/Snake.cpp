@@ -560,12 +560,12 @@ void	Snake::setPause()
 	_pause = true;
 }
 
-extern "C" Snake *create()
+extern "C" Snake *createGame()
 {
 	return new Snake();
 }
 
-extern "C" void destroy(Snake *snake)
+extern "C" void destroyGame(Snake *snake)
 {
 	delete snake;
 }

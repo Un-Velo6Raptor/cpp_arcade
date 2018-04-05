@@ -66,9 +66,9 @@ namespace ar {
 		 */
 		int *&operator[](int x);
 	private:
-		int **_map;
-		int _height;
-		int _width;
+		int **_map; /*!< The double array of int used in the Map */
+		int _height; /*!< The height of the map */
+		int _width; /*!< The width of the map */
 		int _playerPosX; /*!< the x-coordinate of the player, set in the Games and may be used in Display Interface */
 		int _playerPosY; /*!< the y-coordinate of the player, set in the Games and may be used in Display Interface */
 	};

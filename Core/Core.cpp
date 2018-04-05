@@ -6,7 +6,7 @@
 */
 
 #include <dirent.h>
-#include <string.h>
+#include <cstring>
 #include "Core.hpp"
 #include "Config.hpp"
 
@@ -71,9 +71,9 @@ std::vector<std::string> ar::Core::getGamesName()
 	std::vector<std::string> names;
 
 	for (auto &it: _gamesDL) {
-		ar::IGame *tmp = ((createGame *) it->sym("create"))();
+		ar::IGame *tmp = ((createGame *) it->sym("createGame"))();
 		names.push_back(tmp->getGameName());
-		((destroyGame *) it->sym("destroy"))(tmp);
+		((destroyGame *) it->sym("destroyGame"))(tmp);
 	}
 	return names;
 }
@@ -81,7 +81,7 @@ std::vector<std::string> ar::Core::getGamesName()
 void ar::Core::destroyActualGame()
 {
 	if (_game) {
-		((destroyGame *)_gamesDL[_gamesIdx]->sym("destroy"))(_game);
+		((destroyGame *)_gamesDL[_gamesIdx]->sym("destroyGame"))(_game);
 		_game = nullptr;
 	}
 }
@@ -89,7 +89,7 @@ void ar::Core::destroyActualGame()
 void ar::Core::destroyActualGraphical()
 {
 	if (_graphical) {
-		((destroyDisplay *)_graphicalsDL[_graphicalsIdx]->sym("destroy"))(_graphical);
+		((destroyDisplay *)_graphicalsDL[_graphicalsIdx]->sym("destroyDisplay"))(_graphical);
 		_graphical = nullptr;
 	}
 }
@@ -97,16 +97,16 @@ void ar::Core::destroyActualGraphical()
 void ar::Core::loadSpritesAndColors()
 {
 	if (_graphical->canHandleSprites())
-		_graphical->loadSprites(_game->getSpritesPath(), _game->getSprites());
+		_graphical->loadRessources(_game->getSpritesPath(), _game->getSprites());
 	else
-		_graphical->loadColors(_game->getColors());
+		_graphical->loadRessources(_game->getColors());
 }
 
 void ar::Core::changeGameLib(int idx)
 {
 	destroyActualGame();
 	_gamesIdx = idx;
-	_game = ((createGame *) _gamesDL[_gamesIdx]->sym("create"))();
+	_game = ((createGame *) _gamesDL[_gamesIdx]->sym("createGame"))();
 	_game->setPause();
 	loadSpritesAndColors();
 }
@@ -115,7 +115,7 @@ void ar::Core::changeGraphicalLib(int idx)
 {
 	destroyActualGraphical();
 	_graphicalsIdx = idx;
-	_graphical = ((createDisplay *) _graphicalsDL[_graphicalsIdx]->sym("create"))();
+	_graphical = ((createDisplay *) _graphicalsDL[_graphicalsIdx]->sym("createDisplay"))();
 	if (_game)
 		loadSpritesAndColors();
 	if (_menu) {
@@ -188,7 +188,7 @@ int ar::Core::start(std::string const &defaultPath)
 
 {
 	auto tmp = new ar::DLoader(defaultPath);
-	_graphical = dynamic_cast<ar::IDisplay *>(((createDisplay *) tmp->sym("create"))());
+	_graphical = ((createDisplay *) tmp->sym("createDisplay"))();
 
 	if (!_graphical) {
 		std::cerr << "Invalid argument: argument is not a valid graphical lib." << std::endl;

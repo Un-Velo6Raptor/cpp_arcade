@@ -103,11 +103,13 @@ namespace ar {
 
 	/**
 	 * The typedef for the extern "C" function needed in every Game to create a new instance of it.
+	 * @warning This function must be implemented in order to load the library
 	 */
 	typedef ar::IGame *createGame();
 
 	/**
 	 * The typedef for the extern "C" function needed in every Game destroy an instance of it.
+	 * @warning This function must be implemented in order to load the library
 	 */
 	typedef void destroyGame(ar::IGame *);
 };
