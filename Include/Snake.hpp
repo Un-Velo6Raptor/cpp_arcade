@@ -84,8 +84,6 @@ public:
 	const std::string getGameName() const;
 	void setPause();
 
-	//void bigDisplay();
-
 private:
 
 	struct		SnakePart {
@@ -121,6 +119,7 @@ private:
 	bool _classicMode;
 	int _score;
 	int _timer;
+	int _time;
 	bool _gameOver;
 	ar::Map _map;
 	const std::size_t _height;
