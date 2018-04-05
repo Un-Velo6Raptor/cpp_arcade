@@ -229,7 +229,7 @@ const std::map<unsigned char, ar::spriteCoords>	&Snake::getSprites() const
 
 const std::string	Snake::getSpritesPath() const
 {
-	std::string	path("Assets/snake.png");
+	std::string	path("./Assets/snake.png");
 
 	return path;
 }

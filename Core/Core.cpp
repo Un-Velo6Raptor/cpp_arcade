@@ -42,7 +42,7 @@ std::vector<std::string> const ar::Core::getAllFileOfDirWithPath(std::string con
 		while (de) {
 			if (strcmp(de->d_name, ".") != 0 &&
 				strcmp(de->d_name, "..") != 0 &&
-				de->d_type != DT_DIR)
+				de->d_type != DT_DIR && !strncmp(de->d_name, LIB_ARCADE.c_str(), LIB_ARCADE.size()))
 				files.push_back(path + "/" + de->d_name);
 			de = readdir(directory);
 		}
@@ -113,7 +113,6 @@ void ar::Core::changeGameLib(int idx)
 
 void ar::Core::changeGraphicalLib(int idx)
 {
-	std::cout << _graphicalsIdx << " to " << idx << " max: " << _graphicalsDL.size() << std::endl;
 	destroyActualGraphical();
 	_graphicalsIdx = idx;
 	_graphical = ((createDisplay *) _graphicalsDL[_graphicalsIdx]->sym("create"))();
@@ -189,10 +188,14 @@ int ar::Core::start(std::string const &defaultPath)
 
 {
 	auto tmp = new ar::DLoader(defaultPath);
-	_graphical = ((createDisplay *) tmp->sym("create"))();
+	_graphical = dynamic_cast<ar::IDisplay *>(((createDisplay *) tmp->sym("create"))());
+
+	if (!_graphical) {
+		std::cerr << "Invalid argument: argument is not a valid graphical lib." << std::endl;
+		throw std::invalid_argument("Invalid argument: argument is not a valid graphical lib.");
+	}
 	_gamesName = getGamesName();
 	_graphicalsName = getAllFileOfDirWithPath(GRAPHICALS_PATH);
-
 	_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
 	while (!_ended) {
 		int key;
