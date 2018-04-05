@@ -103,7 +103,7 @@ const std::map<unsigned char, ar::colorVector>	colors {
 };
 
 Snake::Snake() : _direction(RIGHT), _pause(true), _classicMode(false),
-		 _score(0), _timer(std::time(nullptr)), _gameOver(false), _time(clock()), _map(20, 9),
+		 _score(0), _timer(std::time(nullptr)), _time(clock()), _gameOver(false), _map(20, 9),
 		 _height(9), _width(20), _movementMap(_height, std::vector<Tile>(_width))
 {
 	initiateGame();
