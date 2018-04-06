@@ -13,7 +13,7 @@
 # include <map>
 # include "ManageMap.hpp"
 # include "Arcade.hpp"
-# include "Interface/IGame.hpp"
+# include "IGame.hpp"
 # include "Enum.hpp"
 
 namespace ar {

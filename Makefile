@@ -5,35 +5,38 @@
 ## Makefile
 ##
 
-CXX		=	g++
+NAME		=	arcade
 
-NAME		=	lib_arcade_nibbler.so
+all:	core games # TODO add lib
 
-SRC		=	Src/Map.cpp \
-			Src/Snake.cpp
-
-OBJ		=	$(SRC:.cpp=.o)
-
-CPPFLAGS	=	-W -Wall -Wextra -I./Include -std=c++11 -fPIC
-
-LDFLAGS		=	-shared
-
-all:		$(NAME)
-
-$(NAME):	$(OBJ)
-	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS)
+$(NAME):	all
 
 clean:
-	rm -f $(OBJ)
+		make -C Core clean
+		make -C games clean
+		rm -rf $(NAME)
 
-fclean:		clean
-	rm -f $(NAME)
+fclean:
+		make -C Core fclean
+		make -C games fclean
+		rm -rf $(NAME)
 
-re:		fclean all
+re:
+		make -C Core re
+		make -C games re
+		mv ./Core/core ./$(NAME)
 
-rec:		all clean
-
-debug:		CPPFLAGS += -g
+debug:		CXXFLAGS += -g
 debug:		re
 
-.PHONY:		all clean fclean re rec debug
+core:
+	make -C Core
+	mv Core/core $(NAME)
+
+games:
+	make -C games
+
+graphicals:
+	make -C lib
+
+.PHONY:		all clean fclean re debug core graphicals games

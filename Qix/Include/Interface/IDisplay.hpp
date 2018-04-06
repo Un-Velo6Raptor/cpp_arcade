@@ -47,7 +47,7 @@ namespace ar {
 		 * Main function to display the game
 		 * @param UI The ar::userInterface matching with the game, contains informations to be displayed such as score and timer
 		 * @param map The Map used as a double array representing the map to be displayed,\n
-		 * should be filled with recognizable characters (set in IDisplay::loadColors or IDisplay::loadSprites)
+		 * should be filled with recognizable characters (set in IDisplay::loadRessources or IDisplay::loadRessources)
 		 */
 		virtual void displayGame(const userInterface &UI, Map &map) = 0;
 
@@ -58,7 +58,7 @@ namespace ar {
 		 * 	- 3 -> 0,255,0  etc..
 		 * 	\warning  0 and 1 are reserved for black and white, they should be set by default in the graphic libraries.
 		 */
-		virtual void loadColors(const std::map<unsigned char, colorVector> &colors) = 0;
+		virtual void loadResources(const std::map<unsigned char, colorVector> &colors) = 0;
 
 		/**
 		 * Used when the library can handle sprites at initialization (always before IDisplay::displayGame())
@@ -67,7 +67,7 @@ namespace ar {
 		 * 	    \warning 0 AND 1 are reserved for black and white, they should be set by default in the graphic libraries \n
 		 * 	    		2 is the default texture, the one what will be print on every cell BEFORE printing the real sprite
 		 */
-		virtual void loadSprites(const std::string &filePath,
+		virtual void loadResources(const std::string &filePath,
 			const std::map<unsigned char, spriteCoords> &sprites
 		) = 0;
 
@@ -105,11 +105,13 @@ namespace ar {
 
 	/**
 	 * The typedef for the extern "C" function needed in every Display to create a new instance of it.
+	 * @warning This function must be implemented in order to load the library
 	 */
 	typedef ar::IDisplay *createDisplay();
 
 	/**
 	 * The typedef for the extern "C" function needed in every DIsplay destroy an instance of it.
+	 * @warning This function must be implemented in order to load the library
 	 */
 	typedef void destroyDisplay(ar::IDisplay *);
 };

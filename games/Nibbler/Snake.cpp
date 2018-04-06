@@ -13,48 +13,48 @@
 #include	"Snake.hpp"
 
 const std::map<unsigned char, ar::spriteCoords>	sprites {
-	{ 0, ar::spriteCoords { 64, 64, 64, 64 } },
-	{ 1, ar::spriteCoords { 64, 64, 64, 64 } },
-	{ 2, ar::spriteCoords { 0, 128, 64, 64 } },
-	{ 3, ar::spriteCoords { 64, 192, 64, 64 } },
-	{ 4, ar::spriteCoords { 0, 128, 64, 64 } },
-	{ 5, ar::spriteCoords { 192, 0, 64, 64 } },
-	{ 6, ar::spriteCoords { 192, 64, 64, 64 } },
-	{ 7, ar::spriteCoords { 256, 0, 64, 64 } },
-	{ 8, ar::spriteCoords { 256, 64, 64, 64 } },
-	{ 9, ar::spriteCoords { 192, 0, 64, 64 } },
+	{ 0, ar::spriteCoords { 0, 0, 64, 64 } },	// BLACK
+	{ 1, ar::spriteCoords { 64, 0, 64, 64 } },	// WHITE
+	{ 2, ar::spriteCoords { 128, 0, 64, 64 } },	// DEFAULT
+	{ 3, ar::spriteCoords { 192, 0, 64, 64 } },	// WALL
+	{ 4, ar::spriteCoords { 256, 0, 64, 64 } },	// EMPTY
+	{ 5, ar::spriteCoords { 320, 0, 64, 64 } },	// OPEN_MOUTH_UP
+	{ 6, ar::spriteCoords { 384, 0, 64, 64 } },	// OPEN_MOUTH_LEFT
+	{ 7, ar::spriteCoords { 0, 64, 64, 64 } },	// OPEN_MOUTH_RIGHT
+	{ 8, ar::spriteCoords { 64, 64, 64, 64 } },	// OPEN_MOUTH_DOWN
+	{ 9, ar::spriteCoords { 128, 64, 64, 64 } },	// CLOSED_MOUTH_UP
 	{ 10, ar::spriteCoords { 192, 64, 64, 64 } },
-	{ 11, ar::spriteCoords { 256, 0, 64, 64 } },
-	{ 12, ar::spriteCoords { 256, 64, 64, 64 } },
-	{ 13, ar::spriteCoords { 128, 64, 64, 64 } },
-	{ 14, ar::spriteCoords { 64, 0, 64, 64 } },
-	{ 15, ar::spriteCoords { 64, 0, 64, 64 } },
-	{ 16, ar::spriteCoords { 128, 64, 64, 64 } },
-	{ 17, ar::spriteCoords { 128, 64, 64, 64 } },
-	{ 18, ar::spriteCoords { 64, 0, 64, 64 } },
-	{ 19, ar::spriteCoords { 64, 0, 64, 64 } },
-	{ 20, ar::spriteCoords { 128, 64, 64, 64 } },
-	{ 21, ar::spriteCoords { 0, 64, 64, 64 } },
-	{ 22, ar::spriteCoords { 128, 128, 64, 64 } },
-	{ 23, ar::spriteCoords { 128, 128, 64, 64 } },
-	{ 24, ar::spriteCoords { 128, 0, 64, 64 } },
-	{ 25, ar::spriteCoords { 0, 64, 64, 64 } },
-	{ 26, ar::spriteCoords { 0, 0, 64, 64 } },
-	{ 27, ar::spriteCoords { 0, 0, 64, 64 } },
-	{ 28, ar::spriteCoords { 128, 0, 64, 64 } },
-	{ 29, ar::spriteCoords { 0, 64, 64, 64 } },
-	{ 30, ar::spriteCoords { 128, 128, 64, 64 } },
-	{ 31, ar::spriteCoords { 128, 128, 64, 64 } },
-	{ 32, ar::spriteCoords { 128, 0, 64, 64 } },
-	{ 33, ar::spriteCoords { 0, 64, 64, 64 } },
-	{ 34, ar::spriteCoords { 0, 0, 64, 64 } },
-	{ 35, ar::spriteCoords { 0, 0, 64, 64 } },
-	{ 36, ar::spriteCoords { 128, 0, 64, 64 } },
-	{ 37, ar::spriteCoords { 192, 128, 64, 64 } },
-	{ 38, ar::spriteCoords { 192, 192, 64, 64 } },
-	{ 39, ar::spriteCoords { 256, 128, 64, 64 } },
-	{ 40, ar::spriteCoords { 256, 192, 64, 64 } },
-	{ 41, ar::spriteCoords { 0, 192, 64, 64 } },
+	{ 11, ar::spriteCoords { 256, 64, 64, 64 } },
+	{ 12, ar::spriteCoords { 320, 64, 64, 64 } },
+	{ 13, ar::spriteCoords { 128, 128, 64, 64 } },	// EMPTY_BODY_UP
+	{ 14, ar::spriteCoords { 0, 128, 64, 64 } },
+	{ 15, ar::spriteCoords { 64, 128, 64, 64 } },
+	{ 16, ar::spriteCoords { 384, 64, 64, 64 } },
+	{ 17, ar::spriteCoords { 192, 128, 64, 64 } },	// FULL_BODY_UP
+	{ 18, ar::spriteCoords { 192, 128, 64, 64 } },
+	{ 19, ar::spriteCoords { 256, 128, 64, 64 } },
+	{ 20, ar::spriteCoords { 256, 128, 64, 64 } },
+	{ 21, ar::spriteCoords { 384, 128, 64, 64 } },	// EMPTY_CORNER_RIGHT_TO_UP
+	{ 22, ar::spriteCoords { 0, 192, 64, 64 } },	// LEFT_TO_UP
+	{ 23, ar::spriteCoords { 0, 192, 64, 64 } },	// UP_TO_LEFT
+	{ 24, ar::spriteCoords { 64, 192, 64, 64 } },	// DOWN_TO_LEFT
+	{ 25, ar::spriteCoords { 384, 128, 64, 64 } },	// UP_TO_RIGHT
+	{ 26, ar::spriteCoords { 320, 128, 64, 64 } },	// DOWN_TO_RIGHT
+	{ 27, ar::spriteCoords { 320, 128, 64, 64 } },	// RIGHT_TO_DOWN
+	{ 28, ar::spriteCoords { 64, 192, 64, 64 } },	// LEFT_TO_DOWN
+	{ 29, ar::spriteCoords { 256, 192, 64, 64 } },	// FULL_CORNER_RIGHT_TO_UP
+	{ 30, ar::spriteCoords { 320, 192, 64, 64 } },
+	{ 31, ar::spriteCoords { 320, 192, 64, 64 } },
+	{ 32, ar::spriteCoords { 128, 192, 64, 64 } },
+	{ 33, ar::spriteCoords { 256, 192, 64, 64 } },
+	{ 34, ar::spriteCoords { 192, 192, 64, 64 } },
+	{ 35, ar::spriteCoords { 192, 192, 64, 64 } },
+	{ 36, ar::spriteCoords { 128, 192, 64, 64 } },
+	{ 37, ar::spriteCoords { 384, 192, 64, 64 } },	// TAIL_UP
+	{ 38, ar::spriteCoords { 0, 256, 64, 64 } },
+	{ 39, ar::spriteCoords { 64, 256, 64, 64 } },
+	{ 40, ar::spriteCoords { 128, 256, 64, 64 } },
+	{ 41, ar::spriteCoords { 192, 256, 64, 64 } },	// PELLET
 };
 
 const std::map<unsigned char, ar::colorVector>	colors {
@@ -103,7 +103,7 @@ const std::map<unsigned char, ar::colorVector>	colors {
 };
 
 Snake::Snake() : _direction(RIGHT), _pause(true), _classicMode(false),
-		 _score(0), _timer(std::time(nullptr)), _gameOver(false), _time(clock()), _map(20, 9),
+		 _score(0), _timer(std::time(nullptr)), _time(clock()), _gameOver(false), _map(20, 9),
 		 _height(9), _width(20), _movementMap(_height, std::vector<Tile>(_width))
 {
 	initiateGame();
@@ -230,7 +230,7 @@ const std::map<unsigned char, ar::spriteCoords>	&Snake::getSprites() const
 
 const std::string	Snake::getSpritesPath() const
 {
-	std::string	path("Assets/snake.png");
+	std::string	path("./Assets/old_school_snake.png");
 
 	return path;
 }
@@ -247,7 +247,6 @@ int	Snake::refreshScore()
 
 int	Snake::refreshTimer()
 {
-	//_time = std::time(nullptr);
 	return std::time(nullptr) - _timer;
 }
 
@@ -561,12 +560,12 @@ void	Snake::setPause()
 	_pause = true;
 }
 
-extern "C" Snake *create()
+extern "C" Snake *createGame()
 {
 	return new Snake();
 }
 
-extern "C" void destroy(Snake *snake)
+extern "C" void destroyGame(Snake *snake)
 {
 	delete snake;
 }

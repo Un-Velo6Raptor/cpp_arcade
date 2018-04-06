@@ -49,7 +49,7 @@ namespace ar {
 		virtual const std::string getSpritesPath() const = 0;
 
 		/**
-		 * Is used if IDisplay::canHandleSprites() returned false.
+		 * Is used if IDisplay::canHandleSprites() returned true.
 		 * The char is the number stored in the map, the colorVector describes the RGB code that should be print when finding 'char' in the map.
 		 * @return the vector of colors to set via initColors in the graphical interface.
 		 */
@@ -103,11 +103,13 @@ namespace ar {
 
 	/**
 	 * The typedef for the extern "C" function needed in every Game to create a new instance of it.
+	 * @warning This function must be implemented in order to load the library
 	 */
 	typedef ar::IGame *createGame();
 
 	/**
 	 * The typedef for the extern "C" function needed in every Game destroy an instance of it.
+	 * @warning This function must be implemented in order to load the library
 	 */
 	typedef void destroyGame(ar::IGame *);
 };
