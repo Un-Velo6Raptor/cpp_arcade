@@ -169,6 +169,7 @@ void ar::Core::prevGraphicalLib()
 void ar::Core::activateMenu()
 {
 	destroyActualGame();
+	_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
 	_menu = true;
 }
 
@@ -221,11 +222,9 @@ int ar::Core::start(std::string const &defaultPath)
 				_menu = true;
 			} else {
 				_game->loop();
-				std::cout << "NTM" << std::endl;
 				_graphical->displayGame(_userInterfaces[_gamesIdx], _game->getMap());
 			}
 		}
-		std::cout << event << " : " << key << std::endl;
 		if (_actions.find(event) != _actions.end())
 			(this->*(_actions.find(event)->second))();
 	}
