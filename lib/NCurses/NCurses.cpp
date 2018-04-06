@@ -18,7 +18,7 @@ NCurses::NCurses() : _selectedGame(0), _username("")
 	noecho();
 	keypad(stdscr, true);
 	curs_set(false);
-	timeout(1);
+	timeout(0);
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);
 	init_pair(2, COLOR_BLACK, COLOR_WHITE);
