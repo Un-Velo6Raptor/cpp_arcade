@@ -25,6 +25,7 @@ int main(int ac, char **av, char **env)
 
 	} catch (std::exception &e) {
 		std::cerr << e.what() << std::endl;
-		return 1;
+		return 84;
 	}
+	return 0;
 }
