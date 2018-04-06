@@ -14,19 +14,19 @@ $(NAME):	all
 clean:
 		make -C Core clean
 		make -C games clean
-		make -C graphicals clean
+		make -C lib clean
 		rm -rf $(NAME)
 
 fclean:
 		make -C Core fclean
 		make -C games fclean
-		make -C graphicals fclean
+		make -C lib fclean
 		rm -rf $(NAME)
 
 re:
 		make -C Core re
 		make -C games re
-		make -C graphicals re
+		make -C lib re
 		mv ./Core/core ./$(NAME)
 
 debug:		CXXFLAGS += -g
