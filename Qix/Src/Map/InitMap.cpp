@@ -36,7 +36,6 @@ int ManageMap::PlaceQixOntTheMap(std::size_t pattern)
 	}
 	std::size_t cpt_line = 0;
 	bool check = false;
-	std::cout << "Place Qix on (" << this->_posQixY << ", " << this->_posQixX  << ")" << std::endl;
 	for (std::size_t i = 0; this->_qixPattern[pattern].size() != i ; ++i) {
 		if (i && !(i % 8))
 			cpt_line++;

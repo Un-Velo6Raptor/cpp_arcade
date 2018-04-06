@@ -80,6 +80,7 @@ int ar::Qix::randomMoveQix(void)
 	if ((this->*MoveQixTo[dir])() == 1) {
 		this->_life -= 1;
 		resetSpecificCharMap(MapPattern::TRAIL);
+		this->_isPlayerStopped = true;
 		this->_manageMap._map.setPlayerY(this->_lastBorderPosY);
 		this->_manageMap._map.setPlayerX(this->_lastBorderPosX);
 	}

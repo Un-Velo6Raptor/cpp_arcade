@@ -33,6 +33,9 @@ void ManageMap::DisplayMap()
 			case MapPattern::OLDBORDER :
 				std::cout << yellow;
 				break;
+			case MapPattern::SHARKS :
+				std::cout << red;
+				break;
 			}
 			if (idx == this->_map.getPlayerY() && x == this->_map.getPlayerX())
 				std::cout << reset << magenta;

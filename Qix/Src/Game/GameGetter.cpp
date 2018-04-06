@@ -31,3 +31,18 @@ const std::map<unsigned char, ar::spriteCoords> &ar::Qix::getSprites() const
 {
 	return this->_sprites;
 }
+
+std::size_t ar::Qix::getLife() const
+{
+	return this->_life;
+}
+
+int ar::Qix::getLastBorderPosX() const
+{
+	return this->_lastBorderPosX;
+}
+
+int ar::Qix::getLastBorderPosY() const
+{
+	return this->_lastBorderPosY;
+}

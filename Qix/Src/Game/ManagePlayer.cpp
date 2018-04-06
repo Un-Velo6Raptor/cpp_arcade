@@ -113,6 +113,7 @@ int ar::Qix::moovePlayer(void)
 	if (ret) {
 		this->_life -= 1;
 		resetSpecificCharMap(MapPattern::TRAIL);
+		this->_isPlayerStopped = true;
 		this->_manageMap._map.setPlayerY(this->_lastBorderPosY);
 		this->_manageMap._map.setPlayerX(this->_lastBorderPosX);
 	}

@@ -23,7 +23,7 @@ int main(void)
 				game->manageKey(ar::Event::AR_DOWN);
 			else
 				game->manageKey(ar::Event::AR_RIGHT);
-			game->_manageMap.DisplayMap();
+//			game->_manageMap.DisplayMap();
 			game->loop();
 			idx++;
 		}
@@ -35,11 +35,12 @@ int main(void)
 				game->manageKey(ar::Event::AR_LEFT);
 			else
 				game->manageKey(ar::Event::AR_UP);
-			game->_manageMap.DisplayMap();
+//			game->_manageMap.DisplayMap();
 			game->loop();
 			idx++;
 		}
 		game->_manageMap.DisplayMap();
+		delete game;
 	} catch (MapException const &error) {
 		std::cout << "From " << error.getName() << ":" << std::endl;
 		std::cout << error.what() << std::endl;

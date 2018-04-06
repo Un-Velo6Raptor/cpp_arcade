@@ -14,6 +14,10 @@ void ar::Qix::loop() // Todo: A faire
 		return;
 	moovePlayer();
 	randomMoveQix();
+
+	for (auto it = this->_listSharks.begin(); it != this->_listSharks.end() ; ++it) {
+		(*it)->loopSharks(this->_manageMap, this->_lastBorderPosX, this->_lastBorderPosY);
+	}
 }
 
 void ar::Qix::setPause()

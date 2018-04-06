@@ -12,12 +12,18 @@ MAP		=	Src/Map/ManageMap.cpp			\
 			Src/Map/BasicsMap.cpp			\
 			Src/Map/Map.cpp				\
 
+SHARKS		=	Src/Sharks/Sharks.cpp			\
+			Src/Sharks/ManageSharks.cpp		\
+			Src/Sharks/SharksIA.cpp			\
+
 GAME		=	Src/Game/Game.cpp			\
 			Src/Game/ManageGame.cpp			\
 			Src/Game/ManageKeyGame.cpp		\
 			Src/Game/GameGetter.cpp			\
 			Src/Game/GameRefresh.cpp		\
 			Src/Game/ManagePlayer.cpp		\
+			Src/Game/ManageQix.cpp			\
+			Src/Game/ManageSquare.cpp		\
 
 EXCEPTION	=	Src/Exception/ErrorException.cpp	\
 			Src/Exception/MapException.cpp		\
@@ -25,11 +31,11 @@ EXCEPTION	=	Src/Exception/ErrorException.cpp	\
 
 OBJ		=	$(SRC:.cpp=.o)				\
 			$(MAP:.cpp=.o)				\
+			$(SHARKS:.cpp=.o)			\
 			$(GAME:.cpp=.o)				\
 			$(EXCEPTION:.cpp=.o)			\
 
 CPPFLAGS	=	-std=c++11 -W -Wall -Wextra -Werror	\
-			-fPIC					\
 			-I Include/				\
 			-I Include/Class/			\
 			-I Include/Exception/			\
@@ -43,7 +49,7 @@ NAME		=	lib_arcade_qix_martin.so
 all:			$(NAME)
 
 $(NAME):		$(OBJ)
-			g++ -o $(NAME) $(OBJ) $(LDFLAGS)
+			g++ -o $(NAME) $(OBJ)
 
 clean:
 			rm -f $(OBJ)

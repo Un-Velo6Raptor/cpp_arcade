@@ -11,7 +11,9 @@
 # include <cstdlib>
 # include <ctime>
 # include <map>
+# include <vector>
 # include "ManageMap.hpp"
+# include "Sharks.hpp"
 # include "Arcade.hpp"
 # include "IGame.hpp"
 # include "Enum.hpp"
@@ -21,6 +23,7 @@ namespace ar {
 	class Qix : public IGame {
 		public:
 		Qix();
+		~Qix();
 
 		// ManageKeyGame
 		void manageKey(const Event &key);
@@ -40,6 +43,9 @@ namespace ar {
 		const std::map<unsigned char, spriteCoords> &getSprites() const override; //dans games, à l'initialisation
 		const std::string getSpritesPath() const override;
 		const std::map<unsigned char, colorVector> &getColors() const override; //dans games, à l'initialisation
+		std::size_t getLife() const;
+		int getLastBorderPosX() const;
+		int getLastBorderPosY() const;
 
 		ManageMap _manageMap;
 		protected:
@@ -57,6 +63,8 @@ namespace ar {
 		int _lastBorderPosY;
 		bool _isPlayerStopped;
 		DirObj _actualDir;
+
+		std::vector<ManageSharks *> _listSharks;
 
 		// ManageGameKey
 		void KeyUpPressed(void);
