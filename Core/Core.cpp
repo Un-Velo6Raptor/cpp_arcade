@@ -97,9 +97,9 @@ void ar::Core::destroyActualGraphical()
 void ar::Core::loadSpritesAndColors()
 {
 	if (_graphical->canHandleSprites())
-		_graphical->loadRessources(_game->getSpritesPath(), _game->getSprites());
+		_graphical->loadResources(_game->getSpritesPath(), _game->getSprites());
 	else
-		_graphical->loadRessources(_game->getColors());
+		_graphical->loadResources(_game->getColors());
 }
 
 void ar::Core::changeGameLib(int idx)
@@ -204,6 +204,8 @@ int ar::Core::start(std::string const &defaultPath)
 		if (_menu) { // MENU
 			_graphical->refreshUsername(_username, key);
 			_gamesIdx = _graphical->refreshMenu(event, _userInterfaces);
+			if ((unsigned int) _gamesIdx > _gamesDL.size() - 1)
+				_gamesIdx = 0;
 			if (event == ar::Event::AR_VALIDATE && (unsigned int)_gamesIdx < _gamesDL.size()) {
 				_menu = false;
 				_graphical->destroyMenu();
@@ -219,9 +221,11 @@ int ar::Core::start(std::string const &defaultPath)
 				_menu = true;
 			} else {
 				_game->loop();
+				std::cout << "NTM" << std::endl;
 				_graphical->displayGame(_userInterfaces[_gamesIdx], _game->getMap());
 			}
 		}
+		std::cout << event << " : " << key << std::endl;
 		if (_actions.find(event) != _actions.end())
 			(this->*(_actions.find(event)->second))();
 	}

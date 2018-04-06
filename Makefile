@@ -7,10 +7,7 @@
 
 NAME		=	arcade
 
-all:
-		make -C Core
-		make -C games clean
-		mv ./Core/core ./$(NAME)
+all:	core games # TODO add lib
 
 $(NAME):	all
 
@@ -32,6 +29,14 @@ re:
 debug:		CXXFLAGS += -g
 debug:		re
 
+core:
+	make -C Core
+	mv Core/core $(NAME)
 
+games:
+	make -C games
 
-.PHONY:		all clean fclean re debug
+graphicals:
+	make -C lib
+
+.PHONY:		all clean fclean re debug core graphicals games

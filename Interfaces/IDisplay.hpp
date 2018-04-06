@@ -58,7 +58,7 @@ namespace ar {
 		 * 	- 3 -> 0,255,0  etc..
 		 * 	\warning  0 and 1 are reserved for black and white, they should be set by default in the graphic libraries.
 		 */
-		virtual void loadRessources(const std::map<unsigned char, colorVector> &colors) = 0;
+		virtual void loadResources(const std::map<unsigned char, colorVector> &colors) = 0;
 
 		/**
 		 * Used when the library can handle sprites at initialization (always before IDisplay::displayGame())
@@ -67,7 +67,7 @@ namespace ar {
 		 * 	    \warning 0 AND 1 are reserved for black and white, they should be set by default in the graphic libraries \n
 		 * 	    		2 is the default texture, the one what will be print on every cell BEFORE printing the real sprite
 		 */
-		virtual void loadRessources(const std::string &filePath,
+		virtual void loadResources(const std::string &filePath,
 			const std::map<unsigned char, spriteCoords> &sprites
 		) = 0;
 
