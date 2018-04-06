@@ -5,16 +5,16 @@
 ## Created by sahel.lucas-saoudi@epitech.eu,
 ##
 
-SRC     =       Snake.cpp	\
-				../../Interfaces/Map.cpp
+SRC     =       NCurses.cpp	\
+		../../Interfaces/Map.cpp
 
 CXXFLAGS  =   -W -Wall -Wextra -I . -I ../../Interfaces -std=c++11 -fPIC
 
-LDFLAGS	=	-shared
+LDFLAGS	=	-shared -lncurses -ltinfo
 
 OBJ     =   $(SRC:.cpp=.o)
 
-NAME		=	lib_arcade_nibbler.so
+NAME		=	lib_arcade_ncurses.so
 
 all:    $(NAME)
 
@@ -26,10 +26,10 @@ $(NAME):    pre $(OBJ)
 
 clean:
 		rm -rf $(OBJ)
-
+        
 fclean: clean
 		rm -rf $(NAME)
-
+        
 re:     fclean all
 
 debug:	CXXFLAGS += -g
