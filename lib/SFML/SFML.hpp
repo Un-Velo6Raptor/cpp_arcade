@@ -29,17 +29,53 @@ namespace ar {
 		void destroyMenu() override;
 
 	private:
+
+		void displayUserInterface(ar::userInterface const &user);
+
 		sf::Texture _texture;
 		std::map<unsigned char, sf::RectangleShape> _sprites;
+		sf::Font _font;
 
 		std::vector<std::string> _menuGamesName;
 		std::vector<std::string> _menuGraphicalsLib;
 		std::string _menuName;
 
-		const unsigned int _windowWidth = 1920;
-		const unsigned int _windowHeight = 1080;
+		/**
+		 * Internal Menu Configuration
+		 */
+		const std::string _backgroundPath = "resources/un_seul_etre_vous_manque_et_tout_est_depeuple_SFML_background.png";
+		const std::string _titleFontPath = "resources/font/Arcade Classic.ttf";
+		sf::Font _titleFont;
+		sf::Texture _menuBackground;
+
+		/**
+		 * Internal UserInterface Configuration
+		 */
+		 const unsigned int _userHeight = 80;
+		 const unsigned int _userMarginTop = 10;
+		 const unsigned int _userMarginLeft = 100;
+		 const unsigned int _userMarginRight = 100;
+		 const unsigned int _userMarginBottom = 10;
+
+		/**
+		 * Internal Window Configuration
+		 */
+		int _windowWidth = 1920;
+		int _windowHeight = 1080;
+		const std::string _fontPath = "resources/font/Zenzai Itacha.ttf";
+		const unsigned int _fontSize = 40;
+
+		/**
+		 * Internal Game Configuration
+		 */
+		const unsigned int _gameMarginTop = 60;
+		const unsigned int _gameMarginLeft = 60;
+		const unsigned int _gameMarginRight = 60;
+		const unsigned int _gameMarginBottom = 20;
+
 
 		sf::RenderWindow *_window = nullptr;
+		std::string _username;
 
 		int _idx = 0;
 	};
