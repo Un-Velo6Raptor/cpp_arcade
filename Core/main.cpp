@@ -16,7 +16,7 @@ int main(int ac, char **av, char **env)
 		std::cerr << " [ path to a graphics library ]\n" << std::endl;
 		std::cerr << "DESCRIPTION" << std::endl;
 		std::cerr << "\tAllows you to play to several arcade games." << std::endl;
-		return 1;
+		return 84;
 	}
 	(void) env;
 	try {
