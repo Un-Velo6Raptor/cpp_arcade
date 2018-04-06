@@ -102,7 +102,7 @@ const std::map<unsigned char, ar::colorVector>	colors {
 	{ 41, ar::colorVector { 0, 0, 255 } },
 };
 
-Snake::Snake() : _direction(RIGHT), _pause(true), _classicMode(false),
+Snake::Snake() : _direction(RIGHT), _prevDirection(RIGHT), _pause(true), _classicMode(false),
 		 _score(0), _timer(std::time(nullptr)), _time(clock()), _gameOver(false), _map(20, 9),
 		 _height(9), _width(20), _movementMap(_height, std::vector<Tile>(_width))
 {
@@ -156,20 +156,14 @@ void		Snake::goDown()
 void		Snake::goLeft()
 {
 	if (_classicMode == false) {
-		switch (_direction) {
-		case UP:
+		if (_direction == UP && _prevDirection != RIGHT)
 			_direction = LEFT;
-			break;
-		case DOWN:
+		if (_direction == DOWN && _prevDirection != LEFT)
 			_direction = RIGHT;
-			break;
-		case LEFT:
+		if (_direction == LEFT && _prevDirection != UP)
 			_direction = DOWN;
-			break;
-		case RIGHT:
+		if (_direction == RIGHT && _prevDirection != DOWN)
 			_direction = UP;
-			break;
-		}
 	} else if (_classicMode == true && _snake[_snake.size() - 2].col != _snake.back().col - 1) {
 		_direction = LEFT;
 	}
@@ -178,20 +172,14 @@ void		Snake::goLeft()
 void		Snake::goRight()
 {
 	if (_classicMode == false) {
-		switch (_direction) {
-		case UP:
+		if (_direction == UP && _prevDirection != LEFT)
 			_direction = RIGHT;
-			break;
-		case DOWN:
+		if (_direction == DOWN && _prevDirection != RIGHT)
 			_direction = LEFT;
-			break;
-		case LEFT:
+		if (_direction == LEFT && _prevDirection != DOWN)
 			_direction = UP;
-			break;
-		case RIGHT:
+		if (_direction == RIGHT && _prevDirection != UP)
 			_direction = DOWN;
-			break;
-		}
 	} else if (_classicMode == true && _snake[_snake.size() - 2].col != _snake.back().col + 1) {
 		_direction = RIGHT;
 	}
@@ -544,6 +532,7 @@ void	Snake::loop()
 			    _snake.back().row, _snake.back().col + 1);
 	} else
 		_gameOver = true;
+	_prevDirection = _direction;
 	updateMap();
 	_time = clock();
 }

@@ -115,6 +115,7 @@ private:
 	void updateMap();
 
 	Direction _direction;
+	Direction _prevDirection;
 	bool _pause;
 	bool _classicMode;
 	int _score;

@@ -54,13 +54,11 @@ ar::Event	NCurses::getEvent(int &realEvent)
 		{ 10, ar::AR_VALIDATE }
 	};
 	std::map<int, ar::Event>::iterator	it;
-	int	ch;
 
-	ch = getch();
-	it = keyBinding.find(ch);
+	realEvent = getch();
+	it = keyBinding.find(realEvent);
 	if (it != keyBinding.end())
-		return keyBinding.find(ch)->second;
-	realEvent = ch;
+		return keyBinding.find(realEvent)->second;
 	return ar::AR_UNKNOWN;
 }
 
