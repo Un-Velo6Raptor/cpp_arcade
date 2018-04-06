@@ -31,11 +31,12 @@ int ManageMap::PlaceQixOntTheMap(std::size_t pattern)
 {
 	for (int idx_y = 0; this->_map[idx_y] ; ++idx_y) {
 		for (int idx_x = 0; idx_x < this->_map.getWidth(); ++idx_x) {
-			this->_map[idx_y][idx_x] = (this->_map[idx_y][idx_x] == 6) ? MapPattern::WALKABLE : this->_map[idx_y][idx_x];
+			this->_map[idx_y][idx_x] = (this->_map[idx_y][idx_x] == MapPattern::QIX) ? MapPattern::WALKABLE : this->_map[idx_y][idx_x];
 		}
 	}
 	std::size_t cpt_line = 0;
 	bool check = false;
+	std::cout << "Place Qix on (" << this->_posQixY << ", " << this->_posQixX  << ")" << std::endl;
 	for (std::size_t i = 0; this->_qixPattern[pattern].size() != i ; ++i) {
 		if (i && !(i % 8))
 			cpt_line++;

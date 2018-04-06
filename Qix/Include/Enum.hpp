@@ -14,7 +14,18 @@ enum MapPattern {
 	NOWALKABLE = 4,
 	SHARKS = 5,
 	QIX = 6,
-	TRAIL = 7
+	TRAIL = 7,
+	OLDBORDER = 9,
+	FILLQIXTMP = 8,
+	FLAME = 10,
+};
+
+enum DirObj {
+	LEFT,
+	RIGHT,
+	DOWN,
+	UP,
+	UNKNOWN
 };
 
 #endif //CPP_ARCADE_ENUM_HPP

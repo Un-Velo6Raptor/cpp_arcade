@@ -27,6 +27,12 @@ void ManageMap::DisplayMap()
 			case MapPattern::BORDER :
 				std::cout << green;
 				break;
+			case MapPattern::TRAIL :
+				std::cout << cyan;
+				break;
+			case MapPattern::OLDBORDER :
+				std::cout << yellow;
+				break;
 			}
 			if (idx == this->_map.getPlayerY() && x == this->_map.getPlayerX())
 				std::cout << reset << magenta;

@@ -13,6 +13,32 @@ int main(void)
 {
 	try {
 		ar::Qix *game = new ar::Qix();
+
+		game->manageKey(ar::Event::AR_PAUSE);
+		int idx = 0;
+		while (idx < 60) {
+			if (idx <= 3)
+				game->manageKey(ar::Event::AR_RIGHT);
+			else if (idx <= 30)
+				game->manageKey(ar::Event::AR_DOWN);
+			else
+				game->manageKey(ar::Event::AR_RIGHT);
+			game->_manageMap.DisplayMap();
+			game->loop();
+			idx++;
+		}
+		idx = 0;
+		while (idx < 60) {
+			if (idx <= 4)
+				game->manageKey(ar::Event::AR_UP);
+			else if (idx <= 10)
+				game->manageKey(ar::Event::AR_LEFT);
+			else
+				game->manageKey(ar::Event::AR_UP);
+			game->_manageMap.DisplayMap();
+			game->loop();
+			idx++;
+		}
 		game->_manageMap.DisplayMap();
 	} catch (MapException const &error) {
 		std::cout << "From " << error.getName() << ":" << std::endl;

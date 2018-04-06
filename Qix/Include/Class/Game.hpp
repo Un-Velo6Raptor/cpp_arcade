@@ -8,10 +8,13 @@
 #ifndef CPP_ARCADE_GAME_HPP
 # define CPP_ARCADE_GAME_HPP
 
+# include <cstdlib>
+# include <ctime>
 # include <map>
 # include "ManageMap.hpp"
 # include "Arcade.hpp"
-# include "IGame.hpp"
+# include "Interface/IGame.hpp"
+# include "Enum.hpp"
 
 namespace ar {
 
@@ -19,15 +22,19 @@ namespace ar {
 		public:
 		Qix();
 
+		// ManageKeyGame
 		void manageKey(const Event &key);
 
+		// ManageGame
 		void loop();
 		void setPause();
 		bool isGameOver();
 
+		// GameRefresh
 		int refreshScore() override;
 		int refreshTimer() override;
 
+		// GameGetter
 		const std::string getGameName() const override;
 		Map &getMap() override;
 		const std::map<unsigned char, spriteCoords> &getSprites() const override; //dans games, à l'initialisation
@@ -42,6 +49,41 @@ namespace ar {
 		std::map<unsigned char, spriteCoords> _sprites;
 		std::string _spritePath;
 		std::map<unsigned char, colorVector> _colors;
+
+		bool _isPaused;
+		std::size_t _life;
+
+		int _lastBorderPosX;
+		int _lastBorderPosY;
+		bool _isPlayerStopped;
+		DirObj _actualDir;
+
+		// ManageGameKey
+		void KeyUpPressed(void);
+		void KeyDownPressed(void);
+		void KeyLeftPressed(void);
+		void KeyRightPressed(void);
+
+		// ManagePlayer
+		int moovePlayer(void);
+		int ToLeft(int);
+		int ToRight(int);
+		int ToUp(int);
+		int ToDown(int);
+		int GetCharTo(int x, int y);
+
+		// ManageSquare
+		void fillBox(void);
+		int GoThroughTheMap(int x, int y);
+		void resetSpecificCharMap(MapPattern);
+
+		// ManagaeQix
+		int randomMoveQix(void);
+		int QixToLeft(void);
+		int QixToRight(void);
+		int QixToUp(void);
+		int QixToDown(void);
 	};
 }
+
 #endif //CPP_ARCADE_GAME_HPP

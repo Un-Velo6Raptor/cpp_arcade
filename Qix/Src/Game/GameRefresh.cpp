@@ -9,10 +9,10 @@
 
 int ar::Qix::refreshScore() // TODO: A faire
 {
-	return 0;
+	return this->_data.score;
 }
 
 int ar::Qix::refreshTimer() // TODO: A faire
 {
-	return 0;
+	return this->_data.time;
 }

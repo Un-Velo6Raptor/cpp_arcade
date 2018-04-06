@@ -16,8 +16,8 @@
 
 #include <map>
 #include <vector>
-#include "Arcade.hpp"
-#include "Map.hpp"
+#include "../../../Interfaces/Arcade.hpp"
+#include "../../../Interfaces/Map.hpp"
 
 namespace ar {
 	/**

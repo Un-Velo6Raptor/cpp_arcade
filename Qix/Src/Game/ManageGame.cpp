@@ -7,15 +7,21 @@
 
 #include "Game.hpp"
 
+// Todo: Ajouter le timer
 void ar::Qix::loop() // Todo: A faire
 {
+	if (this->_isPaused)
+		return;
+	moovePlayer();
+	randomMoveQix();
 }
 
-void ar::Qix::setPause() // Todo A faire
+void ar::Qix::setPause()
 {
+	this->_isPaused = true;
 }
 
 bool ar::Qix::isGameOver() // todo A faire
 {
-	return false;
+	return (!this->_life);
 }

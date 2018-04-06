@@ -12,11 +12,12 @@ MAP		=	Src/Map/ManageMap.cpp			\
 			Src/Map/BasicsMap.cpp			\
 			Src/Map/Map.cpp				\
 
-GAME		=	Src/Qix/Qix.cpp			\
-			Src/Qix/ManageGame.cpp			\
-			Src/Qix/ManageKeyGame.cpp		\
-			Src/Qix/MapGetter.cpp			\
-			Src/Qix/MapRefresh.cpp			\
+GAME		=	Src/Game/Game.cpp			\
+			Src/Game/ManageGame.cpp			\
+			Src/Game/ManageKeyGame.cpp		\
+			Src/Game/GameGetter.cpp			\
+			Src/Game/GameRefresh.cpp		\
+			Src/Game/ManagePlayer.cpp		\
 
 EXCEPTION	=	Src/Exception/ErrorException.cpp	\
 			Src/Exception/MapException.cpp		\
@@ -24,22 +25,25 @@ EXCEPTION	=	Src/Exception/ErrorException.cpp	\
 
 OBJ		=	$(SRC:.cpp=.o)				\
 			$(MAP:.cpp=.o)				\
-			$(EXCEPTION:.cpp=.o)			\
 			$(GAME:.cpp=.o)				\
+			$(EXCEPTION:.cpp=.o)			\
 
-CPPFLAGS	=	-W -Wall -Wextra -Werror		\
+CPPFLAGS	=	-std=c++11 -W -Wall -Wextra -Werror	\
+			-fPIC					\
 			-I Include/				\
 			-I Include/Class/			\
 			-I Include/Exception/			\
 			-I Include/Interface/			\
-			-I Include/Abstrat/			\
+			-I Include/Abstract/			\
 
-NAME		=	my_qix
+LDFLAGS		=	-shared
+
+NAME		=	lib_arcade_qix_martin.so
 
 all:			$(NAME)
 
 $(NAME):		$(OBJ)
-			g++ -o $(NAME) $(OBJ)
+			g++ -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 			rm -f $(OBJ)

@@ -7,10 +7,19 @@
 
 #include "Game.hpp"
 
-ar::Qix::Qix() : _manageMap(30, 30)
+ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 {
+	std::srand(std::time(nullptr));
+
 	this->_data = {0, "Unknown", 0};
 	this->_spritePath = "extra/qix_pattern.jpg";
+
+	this->_life = 3;
+
+	this->_lastBorderPosX = this->_manageMap._map.getPlayerX();
+	this->_lastBorderPosY = this->_manageMap._map.getPlayerY();
+	this->_actualDir = DirObj::UNKNOWN;
+	this->_isPlayerStopped = false;
 
 	spriteCoords tmp = {0, 0, 100, 100};
 	this->_sprites.insert({3, tmp});
@@ -18,6 +27,9 @@ ar::Qix::Qix() : _manageMap(30, 30)
 	this->_sprites.insert({5, tmp});
 	this->_sprites.insert({6, tmp});
 	this->_sprites.insert({7, tmp});
+	this->_sprites.insert({8, tmp});
+	this->_sprites.insert({9, tmp});
+	this->_sprites.insert({10, tmp});
 
 	colorVector color = {0, 0, 255};
 	this->_colors.insert({3, color});
@@ -33,6 +45,15 @@ ar::Qix::Qix() : _manageMap(30, 30)
 
 	color = {0, 255, 255};
 	this->_colors.insert({7, color});
+
+	color = {255, 100, 100};
+	this->_colors.insert({8, color});
+
+	color = {100, 255, 100};
+	this->_colors.insert({9, color});
+
+	color = {100, 0, 100};
+	this->_colors.insert({10, color});
 }
 
 extern "C" ar::Qix *create() {
