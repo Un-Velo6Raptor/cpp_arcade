@@ -11,11 +11,11 @@ all:
 
 clean:
 		make -C Nibbler clean
-        
+
 fclean:
 		make -C Nibbler fclean
 		rm -rf *.so
-        
+
 re:
 		rm -rf *.so
 		make -C Nibbler re

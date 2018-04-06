@@ -156,7 +156,15 @@ void		Snake::goDown()
 void		Snake::goLeft()
 {
 	if (_classicMode == false) {
-		switch (_direction) {
+		if (_direction == UP && _snake[_snake.size() - 2].col != _snake.back().col - 1)
+			_direction = LEFT;
+		if (_direction == DOWN && _snake[_snake.size() - 2].col != _snake.back().col + 1)
+			_direction = RIGHT;
+		if (_direction == LEFT && _snake[_snake.size() - 2].row != _snake.back().row + 1)
+			_direction = DOWN;
+		if (_direction == RIGHT && _snake[_snake.size() - 2].row != _snake.back().row - 1)
+			_direction = UP;
+		/*switch (_direction) {
 		case UP:
 			_direction = LEFT;
 			break;
@@ -169,7 +177,7 @@ void		Snake::goLeft()
 		case RIGHT:
 			_direction = UP;
 			break;
-		}
+			}*/
 	} else if (_classicMode == true && _snake[_snake.size() - 2].col != _snake.back().col - 1) {
 		_direction = LEFT;
 	}
