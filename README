@@ -1,2 +1,25 @@
-thomas.grandjean@epitech.eu
-victor.dubret@epitech.eu
+
+Groupe compatible:
+   thomas.grandjean@epitech.eu
+   victor.dubret@epitech.eu
+
+
+Information about lib:
+   Shift + 1 => previous Game
+   Shift + 2 => next Game
+   Shift + 3 => previous Graphical lib
+   Shift + 4 => next Graphical lib
+
+   m => Go to menu
+   p => Change pause statement
+   r => reset game
+
+   space => Action
+   Enter => Validate
+
+   Arrow_up => UP action
+   Arrow_down => DOWN action
+   Arrow_left => LEFT action
+   Arrow_right => RIGHT action
+
+   Escape => Quit Arcade
