@@ -156,15 +156,7 @@ void		Snake::goDown()
 void		Snake::goLeft()
 {
 	if (_classicMode == false) {
-		if (_direction == UP && _snake[_snake.size() - 2].col != _snake.back().col - 1)
-			_direction = LEFT;
-		if (_direction == DOWN && _snake[_snake.size() - 2].col != _snake.back().col + 1)
-			_direction = RIGHT;
-		if (_direction == LEFT && _snake[_snake.size() - 2].row != _snake.back().row + 1)
-			_direction = DOWN;
-		if (_direction == RIGHT && _snake[_snake.size() - 2].row != _snake.back().row - 1)
-			_direction = UP;
-		/*switch (_direction) {
+		switch (_direction) {
 		case UP:
 			_direction = LEFT;
 			break;
@@ -177,7 +169,7 @@ void		Snake::goLeft()
 		case RIGHT:
 			_direction = UP;
 			break;
-			}*/
+		}
 	} else if (_classicMode == true && _snake[_snake.size() - 2].col != _snake.back().col - 1) {
 		_direction = LEFT;
 	}
@@ -238,7 +230,7 @@ const std::map<unsigned char, ar::spriteCoords>	&Snake::getSprites() const
 
 const std::string	Snake::getSpritesPath() const
 {
-	std::string	path("./Assets/old_school_snake.png");
+	std::string	path("./resources/old_school_snake.png");
 
 	return path;
 }
@@ -577,69 +569,3 @@ extern "C" void destroyGame(Snake *snake)
 {
 	delete snake;
 }
-
-/*void		Snake::bigDisplay()
-{
-	const std::vector<std::vector<std::string> >	display =
-		{{"++++++++", "++++++++", "++++++++", "++++++++"},
-		 {"        ", "        ", "        ", "        "},
-		 {"        ", "XX    XX", "  XXXX  ", "XX  XX  "},
-		 {"  XX  XX", "    XX  ", "    XXXX", "  XX    "},
-		 {"XX  XX  ", "  XX    ", "XXXX    ", "    XX  "},
-		 {"XX  XX  ", "  XXXX  ", "XX    XX", "        "},
-		 {"        ", "  XXXX  ", "  XXXX  ", "XX  XX  "},
-		 {"      XX", "  XXXX  ", "  XXXXXX", "        "},
-		 {"XX      ", "  XXXX  ", "XXXXXX  ", "        "},
-		 {"XX  XX  ", "  XXXX  ", "  XXXX  ", "        "},
-		 {"  XXXX  ", "    XX  ", "  XX    ", "  XXXX  "},
-		 {"        ", "XX  XXXX", "XXXX  XX", "        "},
-		 {"        ", "XXXX  XX", "XX  XXXX", "        "},
-		 {"  XXXX  ", "  XX    ", "    XX  ", "  XXXX  "},
-		 {"  XXXX  ", "XX  XXXX", "XXXX  XX", "  XXXX  "},
-		 {"  XXXX  ", "XX  XXXX", "XXXX  XX", "  XXXX  "},
-		 {"  XXXX  ", "XXXX  XX", "XX  XXXX", "  XXXX  "},
-		 {"  XXXX  ", "XXXX  XX", "XX  XXXX", "  XXXX  "},
-		 {"  XXXX  ", "  XX  XX", "    XXXX", "        "},
-		 {"  XXXX  ", "XX  XX  ", "XXXX    ", "        "},
-		 {"  XXXX  ", "XX  XX  ", "XXXX    ", "        "},
-		 {"        ", "XXXX    ", "XX  XX  ", "  XXXX  "},
-		 {"  XXXX  ", "  XX  XX", "    XXXX", "        "},
-		 {"        ", "    XXXX", "  XX  XX", "  XXXX  "},
-		 {"        ", "    XXXX", "  XX  XX", "  XXXX  "},
-		 {"        ", "XXXX    ", "XX  XX  ", "  XXXX  "},
-		 {"  XXXXXX", "  XX  XX", "    XXXX", "        "},
-		 {"XXXXXX  ", "XX  XX  ", "XXXX    ", "        "},
-		 {"XXXXXX  ", "XX  XX  ", "XXXX    ", "        "},
-		 {"        ", "XXXX    ", "XX  XX  ", "XXXXXX  "},
-		 {"  XXXXXX", "  XX  XX", "    XXXX", "        "},
-		 {"        ", "    XXXX", "  XX  XX", "  XXXXXX"},
-		 {"        ", "    XXXX", "  XX  XX", "  XXXXXX"},
-		 {"        ", "XXXX    ", "XX  XX  ", "XXXXXX  "},
-		 {"  XXXX  ", "  XXXX  ", "    XX  ", "    XX  "},
-		 {"        ", "XXXX    ", "XXXXXXXX", "        "},
-		 {"        ", "    XXXX", "XXXXXXXX", "        "},
-		 {"    XX  ", "    XX  ", "  XXXX  ", "  XXXX  "},
-		 {"        ", "  XXXX  ", "  XXXX  ", "        "}};
-
-	for (size_t i = 0 ; i < _height ; i++) {
-		for (size_t j = 0 ; j < _width ; j++)
-			std::cout << display[_movementMap[i][j]][0];
-		std::cout << std::endl;
-		for (size_t j = 0 ; j < _width ; j++)
-			std::cout << display[_movementMap[i][j]][1];
-		std::cout << std::endl;
-		for (size_t j = 0 ; j < _width ; j++)
-			std::cout << display[_movementMap[i][j]][2];
-		std::cout << std::endl;
-		for (size_t j = 0 ; j < _width ; j++)
-			std::cout << display[_movementMap[i][j]][3];
-		std::cout << std::endl;
-		}*/
-	/*for (size_t x = 0 ; x < _height ; x++) {
-		for (size_t y = 0 ; y < _width ; y++) {
-			std::cout << _map[x][y];
-		}
-		std::cout << std::endl;
-		}*/
-
-	//}
