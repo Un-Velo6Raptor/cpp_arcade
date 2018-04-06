@@ -18,7 +18,7 @@ NCurses::NCurses() : _selectedGame(0), _username("")
 	noecho();
 	keypad(stdscr, true);
 	curs_set(false);
-	timeout(1);
+	timeout(0);
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);
 	init_pair(2, COLOR_BLACK, COLOR_WHITE);
@@ -54,13 +54,11 @@ ar::Event	NCurses::getEvent(int &realEvent)
 		{ 10, ar::AR_VALIDATE }
 	};
 	std::map<int, ar::Event>::iterator	it;
-	int	ch;
 
-	ch = getch();
-	it = keyBinding.find(ch);
+	realEvent = getch();
+	it = keyBinding.find(realEvent);
 	if (it != keyBinding.end())
-		return keyBinding.find(ch)->second;
-	realEvent = ch;
+		return keyBinding.find(realEvent)->second;
 	return ar::AR_UNKNOWN;
 }
 
