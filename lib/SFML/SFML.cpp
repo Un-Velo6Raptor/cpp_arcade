@@ -11,7 +11,7 @@
 
 ar::SFML::SFML()
 {
-	_window = new sf::RenderWindow(sf::VideoMode(_windowWidth, _windowHeight), "");
+	_window = new sf::RenderWindow(sf::VideoMode(_windowWidth, _windowHeight), "Un seul etre vous manque est tout est depeuple - SFML");
 	if (!_font.loadFromFile(_fontPath)) {
 		std::cerr << "Can't load font (" << _fontPath << ") for SFML" << std::endl;
 		throw std::runtime_error("Can't load font (" + _fontPath + ") for SFML");
@@ -48,13 +48,18 @@ ar::Event ar::SFML::getEvent(int &realEvent)
 		return ar::Event::AR_RESIZE;
 	if (sfEvent.type == sf::Event::KeyPressed) {
 		realEvent = sfEvent.key.code;
-		if (sfEvent.key.shift && sfEvent.key.code == sf::Keyboard::Num1)
+		if (sfEvent.key.shift && (sfEvent.key.code == sf::Keyboard::Num1 ||
+			sfEvent.key.code == sf::Keyboard::Numpad1))
 			return ar::Event::AR_PREV_GAME;
-		if (sfEvent.key.shift && sfEvent.key.code == sf::Keyboard::Num2)
+		if (sfEvent.key.shift && (sfEvent.key.code == sf::Keyboard::Num2 ||
+			sfEvent.key.code == sf::Keyboard::Numpad2))
 			return ar::Event::AR_NEXT_GAME;
-		if (sfEvent.key.shift && sfEvent.key.code == sf::Keyboard::Num3)
+		if (sfEvent.key.shift && (sfEvent.key.code == sf::Keyboard::Num3 ||
+			sfEvent.key.code == sf::Keyboard::Numpad3))
 			return ar::Event::AR_PREV_GRAPH_LIB;
-		if (sfEvent.key.shift && sfEvent.key.code == sf::Keyboard::Num4)
+		if (sfEvent.key.shift && (sfEvent.key.code == sf::Keyboard::Num4 ||
+			sfEvent.key.code == sf::Keyboard::Numpad4 ||
+			sfEvent.key.code == sf::Keyboard::Quote))
 			return ar::Event::AR_NEXT_GRAPH_LIB;
 		if (sfEvent.key.code == sf::Keyboard::M)
 			return ar::Event::AR_MENU;
