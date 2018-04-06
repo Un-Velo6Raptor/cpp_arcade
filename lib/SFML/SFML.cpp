@@ -31,6 +31,10 @@ ar::SFML::SFML()
 	_windowWidth = _window->getSize().x;
 }
 
+ar::SFML::~SFML() {
+	delete _window;
+}
+
 ar::Event ar::SFML::getEvent(int &realEvent)
 {
 	sf::Event sfEvent = sf::Event();
@@ -186,7 +190,7 @@ int ar::SFML::refreshMenu(const ar::Event &key,
 	const std::vector<ar::userInterface> &dataArray
 )
 {
-	// TODO Sahel Display
+	// TODO Sahel Display Graphicals lib
 	_window->clear(sf::Color::Black);
 	if (key == ar::Event::AR_UP && _idx > 0)
 		_idx--;

@@ -137,7 +137,7 @@ void ar::Core::refreshUserInterface()
 void ar::Core::nextGameLib()
 {
 	int idx = _gamesIdx + 1;
-	if (idx >= (int) _gamesDL.size())
+	if (idx >= (int) _gamesDL.size() - 1)
 		idx = 0;
 	changeGameLib(idx);
 }
@@ -153,7 +153,7 @@ void ar::Core::prevGameLib()
 void ar::Core::nextGraphicalLib()
 {
 	int idx = _graphicalsIdx + 1;
-	if (idx >= (int) _graphicalsDL.size())
+	if (idx >= (int) _graphicalsDL.size() - 1)
 		idx = 0;
 	changeGraphicalLib(idx);
 }

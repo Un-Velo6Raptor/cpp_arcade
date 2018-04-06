@@ -17,7 +17,7 @@ namespace ar {
 	class SFML: public ar::IDisplay {
 	public:
 		SFML();
-		~SFML() override = default;
+		~SFML() override;
 		ar::Event getEvent(int &realEvent) override;
 		bool canHandleSprites() override;
 		void displayGame(const userInterface &UI, Map &map) override;
