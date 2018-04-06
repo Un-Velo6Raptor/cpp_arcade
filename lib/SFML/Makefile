@@ -23,12 +23,14 @@ pre:
 
 $(NAME):    pre $(OBJ)
 		g++ -o $(NAME) $(OBJ) $(LDFLAGS)
+		cp $(NAME) ../
 
 clean:
 		rm -rf $(OBJ)
         
 fclean: clean
 		rm -rf $(NAME)
+		rm -rf ../$(NAME)
         
 re:     fclean all
 

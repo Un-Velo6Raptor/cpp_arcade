@@ -190,7 +190,6 @@ int ar::SFML::refreshMenu(const ar::Event &key,
 	const std::vector<ar::userInterface> &dataArray
 )
 {
-	// TODO Sahel Display Graphicals lib
 	_window->clear(sf::Color::Black);
 	if (key == ar::Event::AR_UP && _idx > 0)
 		_idx--;
@@ -210,7 +209,6 @@ int ar::SFML::refreshMenu(const ar::Event &key,
 	titleUsername.setPosition(_windowWidth / 3.0f, 260);
 	_window->draw(titleUsername);
 
-
 	for (int i = 0; i < (int)_menuGamesName.size(); i++) {
 		sf::Color color = sf::Color::White;
 		if (i == _idx)
@@ -220,6 +218,14 @@ int ar::SFML::refreshMenu(const ar::Event &key,
 		game.setPosition(_windowWidth / 2, _windowHeight / 2.0f + (_windowHeight / 2.0f / _menuGamesName.size()) * i);
 		game.setFillColor(color);
 		_window->draw(game);
+	}
+
+	for (int i = 0; i < (int)_menuGraphicalsLib.size(); i++) {
+		std::string libName = _menuGraphicalsLib[i];
+
+		sf::Text lib(libName.substr(libName.find_last_of('/') + 1), _titleFont, 12);
+		lib.setPosition(1, _userHeight + _userMarginBottom + _userMarginTop + 15 * i);
+		_window->draw(lib);
 	}
 
 	displayUserInterface(dataArray[_idx]);

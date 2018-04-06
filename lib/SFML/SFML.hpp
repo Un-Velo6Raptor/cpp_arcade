@@ -51,7 +51,7 @@ namespace ar {
 		/**
 		 * Internal UserInterface Configuration
 		 */
-		 const unsigned int _userHeight = 80;
+		 const unsigned int _userHeight = 100;
 		 const unsigned int _userMarginTop = 10;
 		 const unsigned int _userMarginLeft = 100;
 		 const unsigned int _userMarginRight = 100;
