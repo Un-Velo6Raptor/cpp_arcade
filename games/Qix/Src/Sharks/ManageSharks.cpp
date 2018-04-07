@@ -61,31 +61,49 @@ MapPattern ManageSharks::getLastChar() const
 	return this->_lastChar;
 }
 
+int ManageSharks::GetCharTo(ManageMap &manageMap, int x, int y)
+{
+	int result = -1;
+
+	if (x < 0 || y < 0 || x >= manageMap._map.getWidth() || y >= manageMap._map.getHeight())
+		return result;
+	result = manageMap._map[y][x];
+	return result;
+}
+
+bool ManageSharks::isAnotherTrailAround(ManageMap &manageMap)
+{
+	if (GetCharTo(manageMap, this->_posX, this->_posY + 1) == MapPattern::TRAIL || GetCharTo(manageMap, this->_posX, this->_posY - 1) == MapPattern::TRAIL ||
+		GetCharTo(manageMap, this->_posX + 1, this->_posY) == MapPattern::TRAIL || GetCharTo(manageMap, this->_posX - 1, this->_posY) == MapPattern::TRAIL)
+		return true;
+	return false;
+}
+
 int ManageSharks::loopSharks(ManageMap &manageMap)
 {
 	DirObj tmp = findTheDirToGo(manageMap);
 
 	switch (tmp) {
 	case DirObj::RIGHT:
-		if (_lastChar == MapPattern::TRAIL && manageMap._map[this->_posY][this->_posX + 1] != MapPattern::TRAIL)
+		if (_lastChar == MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
 			_lastChar = (manageMap._map[this->_posY][this->_posX] == WALKABLE) ? WALKABLE : BORDER;
 		manageMap._map[this->_posY][this->_posX] = _lastChar;
 		this->_posX++;
 		break;
 	case DirObj::LEFT:
-		if (_lastChar == MapPattern::TRAIL && manageMap._map[this->_posY][this->_posX - 1] != MapPattern::TRAIL)
+		if (_lastChar == MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
 			_lastChar = (manageMap._map[this->_posY][this->_posX] == WALKABLE) ? WALKABLE : BORDER;
 		manageMap._map[this->_posY][this->_posX] = _lastChar;
 		this->_posX--;
 		break;
 	case DirObj::UP:
-		if (_lastChar == MapPattern::TRAIL && manageMap._map[this->_posY - 1][this->_posX] != MapPattern::TRAIL)
+		if (_lastChar == MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
 			_lastChar = (manageMap._map[this->_posY][this->_posX] == WALKABLE) ? WALKABLE : BORDER;
 		manageMap._map[this->_posY][this->_posX] = _lastChar;
 		this->_posY--;
 		break;
 	case DirObj::DOWN:
-		if (_lastChar == MapPattern::TRAIL && manageMap._map[this->_posY + 1][this->_posX] != MapPattern::TRAIL)
+		if (_lastChar == MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
 			_lastChar = (manageMap._map[this->_posY][this->_posX] == WALKABLE) ? WALKABLE : BORDER;
 		manageMap._map[this->_posY][this->_posX] = _lastChar;
 		this->_posY++;

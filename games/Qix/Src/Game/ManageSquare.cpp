@@ -80,14 +80,6 @@ void ar::Qix::updateMap(void) {
 
 	GoThroughTheMap((int)this->_manageMap._posQixX,
 		(int)this->_manageMap._posQixY);
-
-	const std::string red("\033[0;31m");
-	const std::string green("\033[1;32m");
-	const std::string yellow("\033[1;33m");
-	const std::string cyan("\033[0;36m");
-	const std::string magenta("\033[0;35m");
-	const std::string reset("\033[0m");
-
 	for (int idx_y = 0;
 		idx_y < this->_manageMap._map.getHeight(); ++idx_y) {
 		for (int idx_x = 0;
