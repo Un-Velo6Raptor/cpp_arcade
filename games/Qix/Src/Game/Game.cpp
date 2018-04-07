@@ -7,7 +7,7 @@
 
 #include "Game.hpp"
 
-ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
+ar::Qix::Qix() : _manageMap(45, 80), _isPaused(true)
 {
 	std::srand(std::time(nullptr));
 
@@ -42,10 +42,9 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	this->_sprites.insert({9, {32, 32, 32, 32}});
 	this->_sprites.insert({10, {64, 32, 32, 32}});
 
-	colorVector color = {0, 255, 255};
-	this->_colors.insert({3, color});
 
-	color = {255, 255, 255};
+
+	colorVector color = {255, 255, 255};
 	this->_colors.insert({0, color});
 
 	color = {0, 0, 0};
@@ -53,6 +52,9 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 
 	color = {0, 0, 0};
 	this->_colors.insert({2, color});
+
+	color = {0, 255, 255};
+	this->_colors.insert({3, color});
 
 	color = {0, 0, 0};
 	this->_colors.insert({4, color});

@@ -11,7 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <IDisplay.hpp>
+#include "IDisplay.hpp"
 
 namespace ar {
 	class SFML: public ar::IDisplay {
@@ -72,6 +72,26 @@ namespace ar {
 		const unsigned int _gameMarginLeft = 60;
 		const unsigned int _gameMarginRight = 60;
 		const unsigned int _gameMarginBottom = 20;
+
+		/**
+		 * transcription of sf::Event (type = KeyPressed) in ar::Event
+		 */
+		 std::map<std::pair<bool, int>, ar::Event> _events = {
+			{{true, sf::Keyboard::Num1}, ar::Event::AR_PREV_GAME},
+			{{true, sf::Keyboard::Num2}, ar::Event::AR_NEXT_GAME},
+			{{true, sf::Keyboard::Num3}, ar::Event::AR_PREV_GRAPH_LIB},
+			{{true, sf::Keyboard::Quote}, ar::Event::AR_NEXT_GRAPH_LIB},
+			{{false, sf::Keyboard::R}, ar::Event::AR_RESTART},
+			{{false, sf::Keyboard::P}, ar::Event::AR_PAUSE},
+			{{false, sf::Keyboard::M}, ar::Event::AR_MENU},
+			{{false, sf::Keyboard::Space}, ar::Event::AR_ACTION},
+			{{false, sf::Keyboard::Up}, ar::Event::AR_UP},
+			{{false, sf::Keyboard::Left}, ar::Event::AR_LEFT},
+			{{false, sf::Keyboard::Right}, ar::Event::AR_RIGHT},
+			{{false, sf::Keyboard::Down}, ar::Event::AR_DOWN},
+			{{false, sf::Keyboard::Escape}, ar::Event::AR_EXIT},
+			{{false, sf::Keyboard::Return}, ar::Event::AR_VALIDATE}
+		 };
 
 
 		sf::RenderWindow *_window = nullptr;
