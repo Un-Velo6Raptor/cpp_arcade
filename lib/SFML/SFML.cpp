@@ -29,6 +29,8 @@ ar::SFML::SFML()
 
 	_windowHeight = _window->getSize().y;
 	_windowWidth = _window->getSize().x;
+
+	//_events.insert(std::make_pair(true, sf::Keyboard::Num1)) = ar::Event::AR_PREV_GAME;
 }
 
 ar::SFML::~SFML() {
@@ -48,39 +50,8 @@ ar::Event ar::SFML::getEvent(int &realEvent)
 		return ar::Event::AR_RESIZE;
 	if (sfEvent.type == sf::Event::KeyPressed) {
 		realEvent = sfEvent.key.code;
-		if (sfEvent.key.shift && (sfEvent.key.code == sf::Keyboard::Num1 ||
-			sfEvent.key.code == sf::Keyboard::Numpad1))
-			return ar::Event::AR_PREV_GAME;
-		if (sfEvent.key.shift && (sfEvent.key.code == sf::Keyboard::Num2 ||
-			sfEvent.key.code == sf::Keyboard::Numpad2))
-			return ar::Event::AR_NEXT_GAME;
-		if (sfEvent.key.shift && (sfEvent.key.code == sf::Keyboard::Num3 ||
-			sfEvent.key.code == sf::Keyboard::Numpad3))
-			return ar::Event::AR_PREV_GRAPH_LIB;
-		if (sfEvent.key.shift && (sfEvent.key.code == sf::Keyboard::Num4 ||
-			sfEvent.key.code == sf::Keyboard::Numpad4 ||
-			sfEvent.key.code == sf::Keyboard::Quote))
-			return ar::Event::AR_NEXT_GRAPH_LIB;
-		if (sfEvent.key.code == sf::Keyboard::M)
-			return ar::Event::AR_MENU;
-		if (sfEvent.key.code == sf::Keyboard::P)
-			return ar::Event::AR_PAUSE;
-		if (sfEvent.key.code == sf::Keyboard::Space)
-			return ar::Event::AR_ACTION;
-		if (sfEvent.key.code == sf::Keyboard::Up)
-			return ar::Event::AR_UP;
-		if (sfEvent.key.code == sf::Keyboard::Right)
-			return ar::Event::AR_RIGHT;
-		if (sfEvent.key.code == sf::Keyboard::Left)
-			return ar::Event::AR_LEFT;
-		if (sfEvent.key.code == sf::Keyboard::Down)
-			return ar::Event::AR_DOWN;
-		if (sfEvent.key.code == sf::Keyboard::Escape)
-			return ar::Event::AR_EXIT;
-		if (sfEvent.key.code == sf::Keyboard::Return)
-			return ar::Event::AR_VALIDATE;
-		if (sfEvent.key.code == sf::Keyboard::R)
-			return ar::Event::AR_RESTART;
+		if (_events.find({sfEvent.key.shift, sfEvent.key.code}) != _events.end())
+			return _events[{sfEvent.key.shift, sfEvent.key.code}];
 	}
 	return ar::Event::AR_UNKNOWN;
 }
@@ -103,7 +74,7 @@ void ar::SFML::displayUserInterface(ar::userInterface const &user)
 	sf::Text username(user.username, _font, _fontSize);
 	username.setPosition(_userMarginLeft, _userMarginTop + boxSizeY + 20);
 
-	sf::Text titleHighScore("HighScore", _font, _fontSize);
+	sf::Text titleHighScore("Score", _font, _fontSize);
 	titleHighScore.setPosition(_userMarginLeft + boxSizeX, _userMarginTop);
 	sf::Text highScore(std::to_string(user.score), _font, _fontSize);
 	highScore.setPosition(_userMarginLeft + boxSizeX, _userMarginTop + boxSizeY + 20);
