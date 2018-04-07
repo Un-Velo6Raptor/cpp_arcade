@@ -28,6 +28,7 @@ NCurses::NCurses() : _selectedGame(0), _username("")
 	init_pair(6, COLOR_BLUE, COLOR_BLUE);
 	init_pair(7, COLOR_MAGENTA, COLOR_MAGENTA);
 	init_pair(8, COLOR_CYAN, COLOR_CYAN);
+	init_pair(9, COLOR_GREEN, COLOR_BLACK);
 }
 
 NCurses::~NCurses()
@@ -91,21 +92,43 @@ int		NCurses::findColorPair(int value)
 	return 1;
 }
 
-void		NCurses::displayMap(ar::Map &map, const int mul)
+int		NCurses::getMul(int width, int height, ar::Map &map)
+{
+	if (width > map.getWidth() * 4 && height > map.getHeight() * 2 + 1)
+		return 4;
+	if (width > map.getWidth() * 2 && height > map.getHeight() + 1)
+		return 2;
+	return 1;
+}
+
+int		NCurses::getStartY(int width, int height, ar::Map &map)
+{
+	if (width > map.getWidth() * 4 && height > map.getHeight() * 2 + 1)
+		return height / 2 - map.getHeight();
+	return height / 2 - map.getHeight() / 2;
+}
+
+int		NCurses::getStartX(int width, int height, ar::Map &map)
+{
+	if (width > map.getWidth() * 4 && height > map.getHeight() * 2 + 1)
+		return width / 2 - map.getWidth() * 2;
+	if (width > map.getWidth() * 2 && height > map.getHeight() + 1)
+		return width / 2 - map.getWidth();
+	return width / 2 - map.getWidth() / 2;
+}
+
+void		NCurses::displayMap(ar::Map &map, const int mul, const std::pair<int, int> start)
 {
 	std::string	str(mul, ' ');
-	int	yStart;
-	int	xStart;
-	int	height;
-	int	width;
 
-	getmaxyx(stdscr, height, width);
-	yStart = height / 2 - map.getHeight() / 2 + 1;
-	xStart = width / 2 - map.getWidth() / (3 - mul);
 	for (int y = 0 ; y < map.getHeight() ; y++) {
 		for (int x = 0 ; x < map.getWidth() ; x++) {
 			attron(COLOR_PAIR(findColorPair(map[y][x])));
-			mvprintw(yStart + y, xStart + x * mul, str.c_str());
+			mvprintw(start.first + y * ((mul + 1) / 2),
+				 start.second + x * mul, str.c_str());
+			if (mul == 4)
+				mvprintw(start.first + y * ((mul + 1) / 2) + 1,
+					 start.second + x * mul, str.c_str());
 			attron(COLOR_PAIR(1));
 		}
 	}
@@ -115,24 +138,22 @@ void		NCurses::displayGame(const ar::userInterface &UI, ar::Map &map)
 {
 	std::string	highscore = "Highscore: " + std::to_string(UI.score);
 	std::string	time = "Time: " + std::to_string(UI.time);
-	int	div = 2;
 	int	height;
 	int	width;
-
 	getmaxyx(stdscr, height, width);
+	int	mul = getMul(width, height, map);
+	std::pair<int, int>	start;
+
+	start.first = getStartY(width, height, map) + 1;
+	start.second = getStartX(width, height, map);
 	erase();
-	if (width >= map.getWidth() * 2)
-		div--;
 	if (height < map.getHeight() + 2 || width < map.getWidth()) {
 		mvprintw(height / 2, width / 2 - 9, "Resize your window");
 	} else {
-		mvprintw(height / 2 - map.getHeight() / 2 - 1,
-			 width / 2 - map.getWidth() / div, UI.username.c_str());
-		mvprintw(height / 2 - map.getHeight() / 2 - 1,
-			 width / 2 + map.getWidth() / div - 9, time.c_str());
-		mvprintw(height / 2 - map.getHeight() / 2, width / 2 - map.getWidth() / div,
-			 highscore.c_str());
-		displayMap(map, 3 - div);
+		mvprintw(start.first - 2, start.second, UI.username.c_str());
+		mvprintw(start.first - 2, start.second + map.getWidth() * mul - 9, time.c_str());
+		mvprintw(start.first - 1, start.second, highscore.c_str());
+		displayMap(map, mul, start);
 	}
 	refresh();
 }
@@ -178,9 +199,11 @@ void		NCurses::displayName(const int width) const
 		{ 17, " **                                                                       " }
 	};
 
+	attron(COLOR_PAIR(9));
 	std::for_each(name.begin(), name.end(), [width](std::pair<int, std::string> str)
 		      { mvprintw(str.first, width / 2 - str.second.size() / 2, str.second.c_str()); }
 		);
+	attron(COLOR_PAIR(1));
 }
 
 void		NCurses::printGameName(int &i, const int width, const std::string str) const

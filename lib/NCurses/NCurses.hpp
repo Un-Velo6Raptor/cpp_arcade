@@ -32,8 +32,11 @@ public:
 	void destroyMenu();
 
 private:
+	int getMul(int width, int height, ar::Map &map);
+	int getStartY(int width, int height, ar::Map &map);
+	int getStartX(int width, int height, ar::Map &map);
 	int findColorPair(int value);
-	void displayMap(ar::Map &map, const int mul);
+	void displayMap(ar::Map &map, const int mul, const std::pair<int, int> start);
 	void displayName(const int width) const;
 	void printGameName(int &i, const int width, const std::string str) const;
 	void printHighScore(const int width, const ar::userInterface ui) const;
