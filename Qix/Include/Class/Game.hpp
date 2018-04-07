@@ -58,19 +58,22 @@ namespace ar {
 
 		bool _isPaused;
 		std::size_t _life;
+		std::size_t _patternQix;
 
 		int _lastBorderPosX;
 		int _lastBorderPosY;
 		bool _isPlayerStopped;
 		DirObj _actualDir;
 
-		std::vector<ManageSharks *> _listSharks;
+		std::vector<ManageSharks> _listSharks;
+		ManageSharks *_flame;
 
 		// ManageGameKey
 		void KeyUpPressed(void);
 		void KeyDownPressed(void);
 		void KeyLeftPressed(void);
 		void KeyRightPressed(void);
+		void SetDirFlameToGo(void);
 
 		// ManagePlayer
 		int moovePlayer(void);
@@ -81,7 +84,7 @@ namespace ar {
 		int GetCharTo(int x, int y);
 
 		// ManageSquare
-		void fillBox(void);
+		void fillBox(bool opt = false);
 		int GoThroughTheMap(int x, int y);
 		void resetSpecificCharMap(MapPattern);
 

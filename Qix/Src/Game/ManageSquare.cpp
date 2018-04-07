@@ -35,13 +35,13 @@ int ar::Qix::GoThroughTheMap(int x, int y)
 	return 0;
 }
 
-void ar::Qix::fillBox(void)
+void ar::Qix::fillBox(bool opt)
 {
 	for (int idx_y = 0;
 		idx_y < this->_manageMap._map.getHeight(); ++idx_y) {
 		for (int idx_x = 0;
 			idx_x < this->_manageMap._map.getWidth(); ++idx_x) {
-			if (this->_manageMap._map[idx_y][idx_x] == MapPattern::BORDER || this->_manageMap._map[idx_y][idx_x] == MapPattern::TRAIL)
+			if (this->_manageMap._map[idx_y][idx_x] == MapPattern::BORDER || (this->_manageMap._map[idx_y][idx_x] == MapPattern::TRAIL && !opt))
 				this->_manageMap._map[idx_y][idx_x] = MapPattern::OLDBORDER;
 		}
 	}

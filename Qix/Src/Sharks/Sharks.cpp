@@ -7,9 +7,9 @@
 
 #include "Sharks.hpp"
 
-ManageSharks::ManageSharks(ManageMap &manageMap)
+ManageSharks::ManageSharks(ManageMap &manageMap, bool randOk)
 {
-	initSharksOnTheMap(manageMap);
+	initSharksOnTheMap(manageMap, randOk);
 }
 
 ManageSharks::~ManageSharks()

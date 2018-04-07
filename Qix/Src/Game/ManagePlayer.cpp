@@ -17,7 +17,7 @@ int ar::Qix::GetCharTo(int x, int y)
 	return result;
 }
 
-int ar::Qix::ToUp(int charFrom) // TODO: If charTo == QIX, loose a life and reset the trail
+int ar::Qix::ToUp(int charFrom)
 {
 	int charTo = GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() - 1);
 
@@ -26,6 +26,9 @@ int ar::Qix::ToUp(int charFrom) // TODO: If charTo == QIX, loose a life and rese
 	if (charTo == -1 || (charTo != MapPattern::WALKABLE && charTo != MapPattern::BORDER))
 		return 0;
 	if (charTo == MapPattern::WALKABLE) {
+		charTo = GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() - 2);
+		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS)
+			return 0;
 		this->_manageMap._map[this->_manageMap._map.getPlayerY() - 1][this->_manageMap._map.getPlayerX()] = MapPattern::TRAIL;
 		if (charFrom == MapPattern::BORDER) {
 			this->_lastBorderPosX = this->_manageMap._map.getPlayerX();
@@ -47,7 +50,10 @@ int ar::Qix::ToDown(int charFrom)
 	if (charTo == -1 || (charTo != MapPattern::WALKABLE && charTo != MapPattern::BORDER))
 		return 0;
 	if (charTo == MapPattern::WALKABLE) {
-			this->_manageMap._map[this->_manageMap._map.getPlayerY() + 1][this->_manageMap._map.getPlayerX()] = MapPattern::TRAIL;
+		charTo = GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() + 2);
+		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS)
+			return 0;
+		this->_manageMap._map[this->_manageMap._map.getPlayerY() + 1][this->_manageMap._map.getPlayerX()] = MapPattern::TRAIL;
 		if (charFrom == MapPattern::BORDER) {
 			this->_lastBorderPosX = this->_manageMap._map.getPlayerX();
 			this->_lastBorderPosY= this->_manageMap._map.getPlayerY();
@@ -68,6 +74,9 @@ int ar::Qix::ToLeft(int charFrom)
 	if (charTo == -1 || (charTo != MapPattern::WALKABLE && charTo != MapPattern::BORDER))
 		return 0;
 	if (charTo == MapPattern::WALKABLE) {
+		charTo = GetCharTo(this->_manageMap._map.getPlayerX() - 2, this->_manageMap._map.getPlayerY());
+		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS)
+			return 0;
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX() - 1] = MapPattern::TRAIL;
 		if (charFrom == MapPattern::BORDER) {
 			this->_lastBorderPosX = this->_manageMap._map.getPlayerX();
@@ -89,6 +98,9 @@ int ar::Qix::ToRight(int charFrom)
 	if (charTo == -1 || (charTo != MapPattern::WALKABLE && charTo != MapPattern::BORDER))
 		return 0;
 	if (charTo == MapPattern::WALKABLE) {
+		charTo = GetCharTo(this->_manageMap._map.getPlayerX() + 2, this->_manageMap._map.getPlayerY());
+		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS)
+			return 0;
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX() + 1] = MapPattern::TRAIL;
 		if (charFrom == MapPattern::BORDER) {
 			this->_lastBorderPosX = this->_manageMap._map.getPlayerX();

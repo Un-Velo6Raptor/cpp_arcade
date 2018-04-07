@@ -9,6 +9,8 @@
 #include "ManageMap.hpp"
 #include "Game.hpp"
 
+#include <zconf.h>
+
 int main(void)
 {
 	try {
@@ -16,30 +18,42 @@ int main(void)
 
 		game->manageKey(ar::Event::AR_PAUSE);
 		int idx = 0;
-		while (idx < 60) {
-			if (idx <= 3)
+		while (idx < 30) {
+			if (idx <= 4)
 				game->manageKey(ar::Event::AR_RIGHT);
-			else if (idx <= 30)
+			else if (idx <= 10)
 				game->manageKey(ar::Event::AR_DOWN);
-			else
+			else if (idx <= 12)
+				game->manageKey(ar::Event::AR_LEFT);
+			else if (idx <= 14)
+				game->manageKey(ar::Event::AR_UP);
+			else if (idx <= 30)
 				game->manageKey(ar::Event::AR_RIGHT);
-//			game->_manageMap.DisplayMap();
+			usleep(100000);
+			game->_manageMap.DisplayMap();
 			game->loop();
+			if (game->isGameOver())
+				return 0;
 			idx++;
 		}
+/*
 		idx = 0;
-		while (idx < 60) {
-			if (idx <= 4)
+		while (idx < 150) {
+			if (idx <= 5)
 				game->manageKey(ar::Event::AR_UP);
 			else if (idx <= 10)
 				game->manageKey(ar::Event::AR_LEFT);
 			else
 				game->manageKey(ar::Event::AR_UP);
-//			game->_manageMap.DisplayMap();
+			usleep(100000);
+			game->_manageMap.DisplayMap();
 			game->loop();
+			if (game->isGameOver())
+				return 0;
 			idx++;
 		}
 		game->_manageMap.DisplayMap();
+		*/
 		delete game;
 	} catch (MapException const &error) {
 		std::cout << "From " << error.getName() << ":" << std::endl;

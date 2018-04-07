@@ -15,11 +15,10 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	this->_spritePath = "extra/qix_pattern.jpg";
 
 	this->_life = 3;
-	ManageSharks *objSharks = nullptr;
-	for (int idx = 0; idx < 3; ++idx) {
-		objSharks = new ManageSharks(this->_manageMap);
-		this->_listSharks.push_back(objSharks);
-	}
+	this->_patternQix = 0;
+	this->_listSharks.emplace_back(this->_manageMap, true);
+	this->_listSharks.emplace_back(this->_manageMap, false);
+	this->_flame = nullptr;
 
 	this->_lastBorderPosX = this->_manageMap._map.getPlayerX();
 	this->_lastBorderPosY = this->_manageMap._map.getPlayerY();
@@ -63,6 +62,8 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 
 ar::Qix::~Qix()
 {
+	if (this->_flame)
+		delete this->_flame;
 }
 
 extern "C" ar::Qix *create() {

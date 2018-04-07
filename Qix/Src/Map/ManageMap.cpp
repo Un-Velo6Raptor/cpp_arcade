@@ -31,5 +31,13 @@ ManageMap::ManageMap(int height, int width) : _map(width, height)
 				     "********"
 				     " **  ** "
 				     "* *  * *"});
+	this->_qixPattern.insert({2, "***  ***"
+				     " *    * "
+				     "***  ***"
+				     " ****** "
+				     "*  **  *"
+				     "********"
+				     " ****** "
+				     "* *  * *"});
 	InitMap();
 }

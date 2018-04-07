@@ -12,13 +12,13 @@ int ar::Qix::QixToDown(void)
 	std::size_t posTmp = this->_manageMap._posQixY;
 
 	this->_manageMap._posQixY += 1;
-	int ret = this->_manageMap.PlaceQixOntTheMap(0);
+	int ret = this->_manageMap.PlaceQixOntTheMap(this->_patternQix);
 
 	if (ret == -1) {
 		return 1;
 	} else if (ret) {
 		this->_manageMap._posQixY = posTmp;
-		this->_manageMap.PlaceQixOntTheMap(0);
+		this->_manageMap.PlaceQixOntTheMap(this->_patternQix);
 	}
 	return 0;
 }
@@ -28,13 +28,13 @@ int ar::Qix::QixToUp(void)
 	std::size_t posTmp = this->_manageMap._posQixY;
 
 	this->_manageMap._posQixY -= 1;
-	int ret = this->_manageMap.PlaceQixOntTheMap(0);
+	int ret = this->_manageMap.PlaceQixOntTheMap(this->_patternQix);
 
 	if (ret == -1) {
 		return 1;
 	} else if (ret) {
 		this->_manageMap._posQixY = posTmp;
-		this->_manageMap.PlaceQixOntTheMap(0);
+		this->_manageMap.PlaceQixOntTheMap(this->_patternQix);
 	}
 	return 0;
 }
@@ -44,13 +44,13 @@ int ar::Qix::QixToLeft(void)
 	std::size_t posTmp = this->_manageMap._posQixX;
 
 	this->_manageMap._posQixX -= 1;
-	int ret = this->_manageMap.PlaceQixOntTheMap(0);
+	int ret = this->_manageMap.PlaceQixOntTheMap(this->_patternQix);
 
 	if (ret == -1) {
 		return 1;
 	} else if (ret) {
 		this->_manageMap._posQixX = posTmp;
-		this->_manageMap.PlaceQixOntTheMap(0);
+		this->_manageMap.PlaceQixOntTheMap(this->_patternQix);
 	}
 	return 0;
 }
@@ -60,13 +60,13 @@ int ar::Qix::QixToRight(void)
 	std::size_t posTmp = this->_manageMap._posQixX;
 
 	this->_manageMap._posQixX += 1;
-	int ret = this->_manageMap.PlaceQixOntTheMap(0);
+	int ret = this->_manageMap.PlaceQixOntTheMap(this->_patternQix);
 
 	if (ret == -1) {
 		return 1;
 	} else if (ret) {
 		this->_manageMap._posQixX = posTmp;
-		this->_manageMap.PlaceQixOntTheMap(0);
+		this->_manageMap.PlaceQixOntTheMap(this->_patternQix);
 	}
 	return 0;
 }
