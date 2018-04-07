@@ -172,6 +172,7 @@ void		NCurses::loadResources(const __attribute__ ((unused)) std::string &filePat
 void		NCurses::initMenu(const std::vector<std::string> &menuChoices,
 				  const std::string &menuName, const std::vector<std::string> &display)
 {
+	erase();
 	_menuChoices = menuChoices;
 	_menuName = menuName;
 	_display = display;
