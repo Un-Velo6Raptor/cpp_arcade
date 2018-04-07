@@ -16,7 +16,9 @@ void ar::Qix::loop() // Todo: A faire
 
 	if (this->_isPaused)
 		return;
-	std::cerr << "START LOOP GAME" << std::endl;
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::PLAYER)
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
+
 	moovePlayer();
 
 	if (_flame && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] != MapPattern::TRAIL) {
@@ -62,7 +64,6 @@ void ar::Qix::loop() // Todo: A faire
 
 	lastPosX = this->_manageMap._map.getPlayerX();
 	lastPosY = this->_manageMap._map.getPlayerY();
-	std::cerr << "END LOOP GAME" << std::endl;
 }
 
 void ar::Qix::setPause()
@@ -75,6 +76,8 @@ bool ar::Qix::isGameOver()
 	int sizeMob = 64;
 	int walkableArea = 0;
 
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::PLAYER)
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
 	if (_life <= 0)
 		return true;
 	for (int y = 0; y < this->_manageMap._map.getHeight(); ++y) {

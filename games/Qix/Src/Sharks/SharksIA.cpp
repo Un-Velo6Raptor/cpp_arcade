@@ -77,7 +77,6 @@ DirObj ManageSharks::findTheDirToGo(ManageMap &manageMap)
 			} else
 				++it;
 		}
-		std::cout << std::endl;
 		if (!tmpAccess.empty())
 			result = tmpAccess[rand() % tmpAccess.size()];
 		else
