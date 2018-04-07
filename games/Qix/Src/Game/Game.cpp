@@ -12,7 +12,7 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	std::srand(std::time(nullptr));
 
 	this->_data = {0, "Unknown", 0};
-	this->_spritePath = "./resources/qix_pattern.jpg";
+	this->_spritePath = "./resources/un_seul_etre_vous_manque_et_tout_est_depeuple_qix.png";
 
 	this->_startPause = -1;
 	this->_tmpTimer = 0;
@@ -30,18 +30,17 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	this->_actualDir = DirObj::UNKNOWN;
 	this->_isPlayerStopped = false;
 
-	spriteCoords tmp = {0, 0, 100, 100};
-	this->_sprites.insert({0, tmp});
-	this->_sprites.insert({1, tmp});
-	this->_sprites.insert({2, tmp});
-	this->_sprites.insert({3, tmp});
-	this->_sprites.insert({4, tmp});
-	this->_sprites.insert({5, tmp});
-	this->_sprites.insert({6, tmp});
-	this->_sprites.insert({7, tmp});
-	this->_sprites.insert({8, tmp});
-	this->_sprites.insert({9, tmp});
-	this->_sprites.insert({10, tmp});
+	this->_sprites.insert({0, {0, 0, 32, 32}});
+	this->_sprites.insert({1, {0, 0, 32, 32}});
+	this->_sprites.insert({2, {0, 0, 32, 32}});
+	this->_sprites.insert({3, {32, 0, 32, 32}});
+	this->_sprites.insert({4, {0, 32, 32, 32}});
+	this->_sprites.insert({5, {64, 0, 32, 32}});
+	this->_sprites.insert({6, {0, 64, 32, 32}});
+	this->_sprites.insert({7, {32, 64, 32, 32}});
+	this->_sprites.insert({8, {64, 64, 32, 32}});
+	this->_sprites.insert({9, {32, 32, 32, 32}});
+	this->_sprites.insert({10, {64, 32, 32, 32}});
 
 	colorVector color = {0, 255, 255};
 	this->_colors.insert({3, color});
