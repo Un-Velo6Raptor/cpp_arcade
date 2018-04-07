@@ -104,7 +104,8 @@ const std::map<unsigned char, ar::colorVector>	colors {
 
 Snake::Snake() : _direction(RIGHT), _prevDirection(RIGHT), _pause(true), _classicMode(false),
 		 _score(0), _timer(std::time(nullptr)), _time(clock()), _gameOver(false), _map(20, 9),
-		 _height(9), _width(20), _movementMap(_height, std::vector<Tile>(_width))
+		 _height(9), _width(20), _movementMap(_height, std::vector<Tile>(_width)),
+		 _startPause(-1), _tmpTimer(0)
 {
 	initiateGame();
 }
@@ -235,7 +236,22 @@ int	Snake::refreshScore()
 
 int	Snake::refreshTimer()
 {
-	return std::time(nullptr) - _timer;
+	int	newTime;
+
+	if (_pause == true && _startPause == -1) {
+		_startPause = clock();
+	} else if (_pause == true) {
+		if (clock() - _startPause > 1000000) {
+			_startPause = clock();
+			_timer++;
+		}
+	} else if (_startPause != -1) {
+		_startPause = -1;
+	}
+	newTime = std::time(nullptr) - _timer;
+	if (newTime >= _tmpTimer && _pause == false)
+		_tmpTimer = newTime;
+	return _tmpTimer;
 }
 
 bool	Snake::isGameOver()

@@ -127,6 +127,8 @@ private:
 	const std::size_t _width;
 	std::vector<SnakePart> _snake;
 	std::vector<std::vector<Tile> > _movementMap;
+	int _startPause;
+	int _tmpTimer;
 };
 
 #endif		/* !SNAKE_HPP_ */
