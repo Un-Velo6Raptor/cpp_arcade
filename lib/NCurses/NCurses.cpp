@@ -79,7 +79,7 @@ int		NCurses::findColorPair(int value)
 		return 3;
 	if (it->second.green > it->second.red * 2 && it->second.green > it->second.blue * 2)
 		return 4;
-	if (it->second.blue * 2 < it->second.green && it->second.blue * 2 > it->second.red)
+	if (it->second.blue * 2 < it->second.green && it->second.blue * 2 < it->second.red)
 		return 5;
 	if (it->second.blue > it->second.green * 2 && it->second.blue > it->second.red * 2)
 		return 6;
