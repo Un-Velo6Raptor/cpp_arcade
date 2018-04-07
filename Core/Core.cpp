@@ -127,11 +127,9 @@ void ar::Core::refreshUserInterface()
 {
 	int score = _game->refreshScore();
 
-	if (score >= _userInterfaces[_gamesIdx].score) {
-		_userInterfaces[_gamesIdx].score = score;
-		_userInterfaces[_gamesIdx].time = _game->refreshTimer();
-		_userInterfaces[_gamesIdx].username = _username;
-	}
+	_userInterfaces[_gamesIdx].score = score;
+	_userInterfaces[_gamesIdx].time = _game->refreshTimer();
+	_userInterfaces[_gamesIdx].username = _username;
 }
 
 void ar::Core::nextGameLib()
