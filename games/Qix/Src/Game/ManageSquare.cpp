@@ -63,6 +63,49 @@ void ar::Qix::fillBox(bool opt)
 	this->_manageMap.PlaceQixOntTheMap(0);
 }
 
+void ar::Qix::updateMap(void) {
+	int **mapTmp = new int *[this->_manageMap._map.getHeight() + 1];
+	for (int i = 0; i < this->_manageMap._map.getHeight(); ++i) {
+		mapTmp[i] = new int[this->_manageMap._map.getWidth() + 1];
+		for (int j = 0; j < this->_manageMap._map.getWidth(); ++j) {
+			mapTmp[i][j] = this->_manageMap._map[i][j];
+			if (this->_manageMap._map[i][j] == MapPattern::SHARKS)
+				this->_manageMap._map[i][j] = MapPattern::BORDER;
+			if (this->_manageMap._map[i][j] != MapPattern::BORDER && this->_manageMap._map[i][j] != MapPattern::OLDBORDER)
+				this->_manageMap._map[i][j] = MapPattern::WALKABLE;
+		}
+		mapTmp[i][this->_manageMap._map.getWidth()] = 0;
+	}
+	mapTmp[this->_manageMap._map.getHeight()] = nullptr;
+
+	GoThroughTheMap((int)this->_manageMap._posQixX,
+		(int)this->_manageMap._posQixY);
+
+	const std::string red("\033[0;31m");
+	const std::string green("\033[1;32m");
+	const std::string yellow("\033[1;33m");
+	const std::string cyan("\033[0;36m");
+	const std::string magenta("\033[0;35m");
+	const std::string reset("\033[0m");
+
+	for (int idx_y = 0;
+		idx_y < this->_manageMap._map.getHeight(); ++idx_y) {
+		for (int idx_x = 0;
+			idx_x < this->_manageMap._map.getWidth(); ++idx_x) {
+			if (this->_manageMap._map[idx_y][idx_x] == MapPattern::WALKABLE)
+				this->_manageMap._map[idx_y][idx_x] = MapPattern::NOWALKABLE;
+			else if (this->_manageMap._map[idx_y][idx_x] == MapPattern::FILLQIXTMP)
+				this->_manageMap._map[idx_y][idx_x] = MapPattern::WALKABLE;
+			if (mapTmp[idx_y][idx_x] == MapPattern::SHARKS || mapTmp[idx_y][idx_x] == MapPattern::TRAIL)
+				this->_manageMap._map[idx_y][idx_x] = mapTmp[idx_y][idx_x];
+		}
+	}
+	for (int i = 0; i < this->_manageMap._map.getHeight(); ++i) {
+		delete[] mapTmp[i];
+	}
+	delete[] mapTmp;
+}
+
 void ar::Qix::resetSpecificCharMap(MapPattern car)
 {
 	for (int idx_y = 0;

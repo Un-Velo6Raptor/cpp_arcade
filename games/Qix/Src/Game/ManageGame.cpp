@@ -51,7 +51,10 @@ void ar::Qix::loop() // Todo: A faire
 		delete _flame;
 		_flame = nullptr;
 	}
-	fillBox(true);
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] != MapPattern::TRAIL)
+		fillBox();
+	else
+		updateMap();
 	randomMoveQix();
 
 	if (lastPosX == this->_manageMap._map.getPlayerX() && lastPosY == this->_manageMap._map.getPlayerY() && !this->_flame && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::TRAIL) {
@@ -118,7 +121,7 @@ bool ar::Qix::isGameOver()
 	if (percent <= 70 && this->_patternQix == 0) {
 		this->_listSharks.emplace_back(this->_manageMap, true);
 		this->_patternQix = 1;
-	} else if (percent <= 60 && this->_patternQix == 1) {
+	} else if (percent <= 45 && this->_patternQix == 1) {
 		this->_listSharks.emplace_back(this->_manageMap, false);
 		this->_patternQix = 2;
 	}

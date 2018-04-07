@@ -33,7 +33,7 @@ void ar::Qix::KeyUpPressed(void)
 {
 	bool last = this->_isPlayerStopped;
 
-	this->_isPlayerStopped = (this->_actualDir == DirObj::DOWN);
+	this->_isPlayerStopped = (this->_actualDir == DirObj::DOWN && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::TRAIL);
 	if (!last && this->_isPlayerStopped && !this->_flame) {
 		_flame = new ManageSharks(this->_manageMap, true);
 		SetDirFlameToGo();
@@ -51,7 +51,7 @@ void ar::Qix::KeyDownPressed(void)
 {
 	bool last = this->_isPlayerStopped;
 
-	this->_isPlayerStopped = (this->_actualDir == DirObj::UP);
+	this->_isPlayerStopped = (this->_actualDir == DirObj::UP && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::TRAIL);
 	if (!last && this->_isPlayerStopped && !this->_flame) {
 		_flame = new ManageSharks(this->_manageMap, true);
 		SetDirFlameToGo();
@@ -69,7 +69,7 @@ void ar::Qix::KeyLeftPressed(void)
 {
 	bool last = this->_isPlayerStopped;
 
-	this->_isPlayerStopped = (this->_actualDir == DirObj::RIGHT);
+	this->_isPlayerStopped = (this->_actualDir == DirObj::RIGHT  && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::TRAIL);
 	if (!last && this->_isPlayerStopped && !this->_flame) {
 		_flame = new ManageSharks(this->_manageMap, true);
 		SetDirFlameToGo();
@@ -87,7 +87,7 @@ void ar::Qix::KeyRightPressed(void)
 {
 	bool last = this->_isPlayerStopped;
 
-	this->_isPlayerStopped = (this->_actualDir == DirObj::LEFT);
+	this->_isPlayerStopped = (this->_actualDir == DirObj::LEFT  && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::TRAIL);
 	if (!last && this->_isPlayerStopped && !this->_flame) {
 		_flame = new ManageSharks(this->_manageMap, true);
 		SetDirFlameToGo();

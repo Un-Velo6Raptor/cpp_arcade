@@ -97,6 +97,7 @@ namespace ar {
 		void fillBox(bool opt = false);
 		int GoThroughTheMap(int x, int y);
 		void resetSpecificCharMap(MapPattern);
+		void updateMap(void);
 
 		// ManagaeQix
 		int randomMoveQix(void);

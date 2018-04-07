@@ -9,10 +9,10 @@
 
 ar::Map::~Map()
 {
-	for (int i = 0; i < _height; ++i) {
-		delete[] _map[i];
-	}
-	delete[] _map;
+		for (int i = 0; i < _height; ++i) {
+			delete[] _map[i];
+		}
+		delete[] _map;
 }
 
 ar::Map::Map(int _width, int _height) : _height(_height), _width(_width),

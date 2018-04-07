@@ -21,7 +21,7 @@ re:
 		make -C Nibbler re
 		make -C Qix re
 
-re:
+debug:
 		make -C Nibbler debug
 		make -C Qix debug
 

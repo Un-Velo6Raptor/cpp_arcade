@@ -27,7 +27,11 @@ int ar::Qix::ToUp(int charFrom)
 		return 0;
 	if (charTo == MapPattern::WALKABLE) {
 		charTo = GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() - 2);
-		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS)
+		int charToSharks = GetCharTo(this->_manageMap._map.getPlayerX() - 1, this->_manageMap._map.getPlayerY() - 1);
+		int charToSharksbis = GetCharTo(this->_manageMap._map.getPlayerX() + 1, this->_manageMap._map.getPlayerY() - 1);
+		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS ||
+			charToSharks == MapPattern::TRAIL || charToSharks == MapPattern::SHARKS ||
+			charToSharksbis == MapPattern::TRAIL || charToSharksbis == MapPattern::SHARKS)
 			return 0;
 		this->_manageMap._map[this->_manageMap._map.getPlayerY() - 1][this->_manageMap._map.getPlayerX()] = MapPattern::TRAIL;
 		if (charFrom == MapPattern::BORDER) {
@@ -51,7 +55,11 @@ int ar::Qix::ToDown(int charFrom)
 		return 0;
 	if (charTo == MapPattern::WALKABLE) {
 		charTo = GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() + 2);
-		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS)
+		int charToSharks = GetCharTo(this->_manageMap._map.getPlayerX() - 1, this->_manageMap._map.getPlayerY() + 1);
+		int charToSharksbis = GetCharTo(this->_manageMap._map.getPlayerX() + 1, this->_manageMap._map.getPlayerY() + 1);
+		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS ||
+			charToSharks == MapPattern::TRAIL || charToSharks == MapPattern::SHARKS ||
+			charToSharksbis == MapPattern::TRAIL || charToSharksbis == MapPattern::SHARKS)
 			return 0;
 		this->_manageMap._map[this->_manageMap._map.getPlayerY() + 1][this->_manageMap._map.getPlayerX()] = MapPattern::TRAIL;
 		if (charFrom == MapPattern::BORDER) {
@@ -75,7 +83,11 @@ int ar::Qix::ToLeft(int charFrom)
 		return 0;
 	if (charTo == MapPattern::WALKABLE) {
 		charTo = GetCharTo(this->_manageMap._map.getPlayerX() - 2, this->_manageMap._map.getPlayerY());
-		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS)
+		int charToSharks = GetCharTo(this->_manageMap._map.getPlayerX() - 1, this->_manageMap._map.getPlayerY() + 1);
+		int charToSharksbis = GetCharTo(this->_manageMap._map.getPlayerX() - 1, this->_manageMap._map.getPlayerY() - 1);
+		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS ||
+			charToSharks == MapPattern::TRAIL || charToSharks == MapPattern::SHARKS ||
+			charToSharksbis == MapPattern::TRAIL || charToSharksbis == MapPattern::SHARKS)
 			return 0;
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX() - 1] = MapPattern::TRAIL;
 		if (charFrom == MapPattern::BORDER) {
@@ -99,7 +111,11 @@ int ar::Qix::ToRight(int charFrom)
 		return 0;
 	if (charTo == MapPattern::WALKABLE) {
 		charTo = GetCharTo(this->_manageMap._map.getPlayerX() + 2, this->_manageMap._map.getPlayerY());
-		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS)
+		int charToSharks = GetCharTo(this->_manageMap._map.getPlayerX() + 1, this->_manageMap._map.getPlayerY() + 1);
+		int charToSharksbis = GetCharTo(this->_manageMap._map.getPlayerX() + 1, this->_manageMap._map.getPlayerY() - 1);
+		if (charTo == MapPattern::TRAIL || charTo == MapPattern::SHARKS ||
+			charToSharks == MapPattern::TRAIL || charToSharks == MapPattern::SHARKS ||
+			charToSharksbis == MapPattern::TRAIL || charToSharksbis == MapPattern::SHARKS)
 			return 0;
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX() + 1] = MapPattern::TRAIL;
 		if (charFrom == MapPattern::BORDER) {
