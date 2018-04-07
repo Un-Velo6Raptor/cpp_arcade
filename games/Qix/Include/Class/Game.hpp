@@ -77,6 +77,7 @@ namespace ar {
 
 		// ManageGame
 		void updateScore(void);
+		void joinTheBorder(void);
 
 		// ManageGameKey
 		void KeyUpPressed(void);

@@ -35,6 +35,8 @@ class ManageSharks {
 	void initSharksOnTheMap(ManageMap &, bool);
 	std::vector<DirObj> getAllDirSharks(ManageMap &);
 	int sharksEatPlayer(ManageMap &manageMap);
+	bool isAnotherTrailAround(ManageMap &);
+	int GetCharTo(ManageMap &, int x, int y);
 
 	// SharksIA
 	DirObj findTheDirToGo(ManageMap &);

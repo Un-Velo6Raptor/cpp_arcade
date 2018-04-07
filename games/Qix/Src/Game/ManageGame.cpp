@@ -8,20 +8,48 @@
 #include "Game.hpp"
 #include "../../Include/Enum.hpp"
 
-// Todo: Ajouter le timer
-void ar::Qix::loop() // Todo: A faire
+void ar::Qix::joinTheBorder(void)
+{
+	for (int idx = 0; idx < this->_manageMap._map.getWidth(); ++idx) {
+		if (GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() + idx) == MapPattern::BORDER) {
+			this->_manageMap._map.setPlayerY(this->_manageMap._map.getPlayerY() + idx);
+			break;
+		}
+		if (GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() - idx) == MapPattern::BORDER) {
+			this->_manageMap._map.setPlayerY(this->_manageMap._map.getPlayerY() - idx);
+			break;
+		}
+		if (GetCharTo(this->_manageMap._map.getPlayerX() + idx, this->_manageMap._map.getPlayerY()) == MapPattern::BORDER) {
+			this->_manageMap._map.setPlayerX(this->_manageMap._map.getPlayerX() + idx);
+			break;
+		}
+		if (GetCharTo(this->_manageMap._map.getPlayerX() - idx, this->_manageMap._map.getPlayerY()) == MapPattern::BORDER) {
+			this->_manageMap._map.setPlayerX(this->_manageMap._map.getPlayerX() - idx);
+			break;
+		}
+	}
+}
+
+void ar::Qix::loop()
 {
 	static int lastPosX = 0;
 	static int lastPosY = 0;
 
 	if (clock() - _time < 100000 || _isPaused == true)
 		return;
-	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::PLAYER)
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] ==
+		MapPattern::PLAYER)
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
+
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::OLDBORDER ||
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::NOWALKABLE)
+		joinTheBorder();
 
 	moovePlayer();
 
-	if (_flame && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] != MapPattern::TRAIL) {
+	if (_flame &&
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
+			MapPattern::TRAIL) {
 		this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = _flame->getLastChar();
 		delete _flame;
 		_flame = nullptr;
@@ -32,8 +60,9 @@ void ar::Qix::loop() // Todo: A faire
 		if ((*it).loopSharks(this->_manageMap) == 1) {
 			this->_life--;
 			if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
-				MapPattern::BORDER && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
-				MapPattern::SHARKS) {
+				MapPattern::BORDER &&
+				this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
+					MapPattern::SHARKS) {
 				this->_manageMap._map.setPlayerY(
 					this->_lastBorderPosY);
 				this->_manageMap._map.setPlayerX(
@@ -51,20 +80,31 @@ void ar::Qix::loop() // Todo: A faire
 		delete _flame;
 		_flame = nullptr;
 	}
-	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] != MapPattern::TRAIL)
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
+		MapPattern::TRAIL)
 		fillBox();
 	else
 		updateMap();
 	randomMoveQix();
 
-	if (lastPosX == this->_manageMap._map.getPlayerX() && lastPosY == this->_manageMap._map.getPlayerY() && !this->_flame && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::TRAIL) {
+	if (lastPosX == this->_manageMap._map.getPlayerX() &&
+		lastPosY == this->_manageMap._map.getPlayerY() &&
+		!this->_flame &&
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] ==
+			MapPattern::TRAIL) {
 		_flame = new ManageSharks(this->_manageMap, true);
 		SetDirFlameToGo();
 		_flame->setLastChar(MapPattern::TRAIL);
-		this->_manageMap._map[this->_manageMap._map.getHeight() - 1][this->_manageMap._map.getWidth() - 1] = MapPattern::BORDER;
+		this->_manageMap._map[this->_manageMap._map.getHeight() - 1][
+			this->_manageMap._map.getWidth() -
+				1] = MapPattern::BORDER;
 		this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = MapPattern::SHARKS;
 	}
-
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] ==
+		MapPattern::WALKABLE) {
+		this->_manageMap._map.setPlayerY(this->_lastBorderPosY);
+		this->_manageMap._map.setPlayerX(this->_lastBorderPosX);
+	}
 	lastPosX = this->_manageMap._map.getPlayerX();
 	lastPosY = this->_manageMap._map.getPlayerY();
 	_time = clock();
@@ -76,7 +116,8 @@ void ar::Qix::setPause()
 	this->_isPaused = true;
 }
 
-void ar::Qix::updateScore() {
+void ar::Qix::updateScore()
+{
 	int sizeMob = 64;
 	int walkableArea = 0;
 
@@ -101,7 +142,8 @@ bool ar::Qix::isGameOver()
 	int sizeMob = 64;
 	int walkableArea = 0;
 
-	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::PLAYER)
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] ==
+		MapPattern::PLAYER)
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
 	if (_life <= 0)
 		return true;
