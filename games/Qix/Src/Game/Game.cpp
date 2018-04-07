@@ -14,6 +14,11 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	this->_data = {0, "Unknown", 0};
 	this->_spritePath = "./resources/qix_pattern.jpg";
 
+	this->_startPause = -1;
+	this->_tmpTimer = 0;
+	this->_timer = std::time(nullptr);
+	this->_time = clock();
+
 	this->_life = 3;
 	this->_patternQix = 0;
 	this->_listSharks.emplace_back(this->_manageMap, true);
@@ -38,10 +43,10 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	this->_sprites.insert({9, tmp});
 	this->_sprites.insert({10, tmp});
 
-	colorVector color = {0, 0, 255};
+	colorVector color = {0, 255, 255};
 	this->_colors.insert({3, color});
 
-	color = {0, 0, 0};
+	color = {255, 255, 255};
 	this->_colors.insert({0, color});
 
 	color = {0, 0, 0};
@@ -50,25 +55,25 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	color = {0, 0, 0};
 	this->_colors.insert({2, color});
 
-	color = {255, 0, 0};
+	color = {0, 0, 0};
 	this->_colors.insert({4, color});
 
-	color = {0, 255, 0};
+	color = {255, 255, 0};
 	this->_colors.insert({5, color});
 
-	color = {0, 255, 0};
+	color = {255, 0, 0};
 	this->_colors.insert({6, color});
 
-	color = {0, 255, 255};
+	color = {0, 0, 0};
 	this->_colors.insert({7, color});
 
 	color = {255, 100, 100};
 	this->_colors.insert({8, color});
 
-	color = {100, 255, 100};
+	color = {0, 0, 255};
 	this->_colors.insert({9, color});
 
-	color = {100, 0, 100};
+	color = {255, 0, 255};
 	this->_colors.insert({10, color});
 }
 
