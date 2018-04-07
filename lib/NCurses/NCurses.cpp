@@ -267,7 +267,7 @@ int		NCurses::refreshMenu(const ar::Event &key,
 
 void		NCurses::refreshUsername(std::string &name, int realKey)
 {
-	if (realKey == 127 && name.size() > 0)
+	if ((realKey == 127 || realKey == KEY_BACKSPACE) && name.size() > 0)
 		name.pop_back();
 	else if (name.size() < 12 && ((realKey >= 'a' && realKey <= 'z') ||
 				      (realKey >= 'A' && realKey <= 'Z')))
