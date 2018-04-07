@@ -61,7 +61,7 @@ const std::map<unsigned char, ar::colorVector>	colors {
 	{ 0, ar::colorVector { 0, 0, 0 } },
 	{ 1, ar::colorVector { 255, 255, 255 } },
 	{ 2, ar::colorVector { 255, 255, 255 } },
-	{ 3, ar::colorVector { 0, 0, 0 } },
+	{ 3, ar::colorVector { 0, 255, 255 } },
 	{ 4, ar::colorVector { 255, 255, 255 } },
 	{ 5, ar::colorVector { 255, 0, 0 } },
 	{ 6, ar::colorVector { 255, 0, 0 } },
