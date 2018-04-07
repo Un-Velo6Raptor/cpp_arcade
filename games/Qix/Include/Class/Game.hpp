@@ -10,6 +10,7 @@
 
 # include <cstdlib>
 # include <ctime>
+# include <time.h>
 # include <map>
 # include <vector>
 # include "ManageMap.hpp"
@@ -68,6 +69,14 @@ namespace ar {
 
 		std::vector<ManageSharks> _listSharks;
 		ManageSharks *_flame;
+
+		int _startPause;
+		int _tmpTimer;
+		int _timer;
+		int _time;
+
+		// ManageGame
+		void updateScore(void);
 
 		// ManageGameKey
 		void KeyUpPressed(void);

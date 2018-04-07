@@ -111,7 +111,7 @@ void ar::Qix::manageKey(const ar::Event &key)
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
 
 	if (key == Event::AR_PAUSE)
-		this->_isPaused = false;
+		this->_isPaused = !this->_isPaused;
 	else if (this->_isPaused)
 		return;
 	else if ((int)key < 4)

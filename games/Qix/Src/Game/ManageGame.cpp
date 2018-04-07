@@ -14,7 +14,7 @@ void ar::Qix::loop() // Todo: A faire
 	static int lastPosX = 0;
 	static int lastPosY = 0;
 
-	if (this->_isPaused)
+	if (clock() - _time < 100000 || _isPaused == true)
 		return;
 	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::PLAYER)
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
@@ -64,11 +64,33 @@ void ar::Qix::loop() // Todo: A faire
 
 	lastPosX = this->_manageMap._map.getPlayerX();
 	lastPosY = this->_manageMap._map.getPlayerY();
+	_time = clock();
+	updateScore();
 }
 
 void ar::Qix::setPause()
 {
 	this->_isPaused = true;
+}
+
+void ar::Qix::updateScore() {
+	int sizeMob = 64;
+	int walkableArea = 0;
+
+	for (int y = 0; y < this->_manageMap._map.getHeight(); ++y) {
+		for (int x = 0; x < this->_manageMap._map.getWidth(); ++x) {
+			if (this->_manageMap._map[y][x] ==
+				MapPattern::WALKABLE ||
+				this->_manageMap._map[y][x] ==
+					MapPattern::TRAIL)
+				walkableArea++;
+		}
+	}
+	float percent = (int)(((float)walkableArea /
+		(float)((this->_manageMap._map.getHeight() - 1) *
+			(this->_manageMap._map.getWidth() - 1) - sizeMob)) *
+		100);
+	this->_data.score = int((100 - percent) * 100);
 }
 
 bool ar::Qix::isGameOver()
