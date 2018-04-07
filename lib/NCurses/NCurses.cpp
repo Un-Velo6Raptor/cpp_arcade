@@ -256,6 +256,7 @@ int		NCurses::refreshMenu(const ar::Event &key,
 		std::for_each(_display.begin(), _display.end(), [&i, width, this](std::string str)
 			      { printLibName(i, width, str); }
 			);
+		mvprintw(1, width / 2 - 10, "Choose your username:");
 		mvprintw(3, width / 2 - _username.size() / 2, _username.c_str());
 	} else {
 		mvprintw(height / 2, width / 2 - 9, "Resize your window");
@@ -266,7 +267,7 @@ int		NCurses::refreshMenu(const ar::Event &key,
 
 void		NCurses::refreshUsername(std::string &name, int realKey)
 {
-	if (realKey == 127 && name.size() > 0)
+	if ((realKey == 127 || realKey == KEY_BACKSPACE) && name.size() > 0)
 		name.pop_back();
 	else if (name.size() < 12 && ((realKey >= 'a' && realKey <= 'z') ||
 				      (realKey >= 'A' && realKey <= 'Z')))
