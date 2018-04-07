@@ -109,6 +109,7 @@ void ar::Core::changeGameLib(int idx)
 	_game = ((createGame *) _gamesDL[_gamesIdx]->sym("createGame"))();
 	_game->setPause();
 	loadSpritesAndColors();
+	_actualUser = {0, _username, 0};
 }
 
 void ar::Core::changeGraphicalLib(int idx)
@@ -127,9 +128,9 @@ void ar::Core::refreshUserInterface()
 {
 	int score = _game->refreshScore();
 
-	_userInterfaces[_gamesIdx].score = score;
-	_userInterfaces[_gamesIdx].time = _game->refreshTimer();
-	_userInterfaces[_gamesIdx].username = _username;
+	_actualUser.score = score;
+	_actualUser.time = _game->refreshTimer();
+	_actualUser.username = _username;
 }
 
 void ar::Core::nextGameLib()
@@ -215,12 +216,15 @@ int ar::Core::start(std::string const &defaultPath)
 			_game->manageKey(event);
 			refreshUserInterface();
 			if (_game->isGameOver()) {
+				refreshUserInterface();
+				if (_actualUser.score > _userInterfaces[_gamesIdx].score)
+					_userInterfaces[_gamesIdx] = _actualUser;
 				destroyActualGame();
 				_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
 				_menu = true;
 			} else {
 				_game->loop();
-				_graphical->displayGame(_userInterfaces[_gamesIdx], _game->getMap());
+				_graphical->displayGame(_actualUser, _game->getMap());
 			}
 		}
 		if (_actions.find(event) != _actions.end())
