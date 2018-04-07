@@ -14,7 +14,6 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	this->_data = {0, "Unknown", 0};
 	this->_spritePath = "./resources/qix_pattern.jpg";
 
-	this->_behindPlayer = MapPattern::BORDER;
 	this->_life = 3;
 	this->_patternQix = 0;
 	this->_listSharks.emplace_back(this->_manageMap, true);
@@ -27,6 +26,9 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	this->_isPlayerStopped = false;
 
 	spriteCoords tmp = {0, 0, 100, 100};
+	this->_sprites.insert({0, tmp});
+	this->_sprites.insert({1, tmp});
+	this->_sprites.insert({2, tmp});
 	this->_sprites.insert({3, tmp});
 	this->_sprites.insert({4, tmp});
 	this->_sprites.insert({5, tmp});
@@ -39,10 +41,19 @@ ar::Qix::Qix() : _manageMap(30, 30), _isPaused(true)
 	colorVector color = {0, 0, 255};
 	this->_colors.insert({3, color});
 
+	color = {0, 0, 0};
+	this->_colors.insert({0, color});
+
+	color = {0, 0, 0};
+	this->_colors.insert({1, color});
+
+	color = {0, 0, 0};
+	this->_colors.insert({2, color});
+
 	color = {255, 0, 0};
 	this->_colors.insert({4, color});
 
-	color = {255, 0, 0};
+	color = {0, 255, 0};
 	this->_colors.insert({5, color});
 
 	color = {0, 255, 0};

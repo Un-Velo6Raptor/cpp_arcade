@@ -55,11 +55,11 @@ namespace ar {
 		std::map<unsigned char, spriteCoords> _sprites;
 		std::string _spritePath;
 		std::map<unsigned char, colorVector> _colors;
-		MapPattern _behindPlayer;
 
 		bool _isPaused;
-		std::size_t _life;
+		int _life;
 		std::size_t _patternQix;
+		MapPattern _behindPlayer;
 
 		int _lastBorderPosX;
 		int _lastBorderPosY;

@@ -18,15 +18,11 @@ int main(void)
 
 		game->manageKey(ar::Event::AR_PAUSE);
 		int idx = 0;
-		while (idx < 30) {
+		while (idx < 50) {
 			if (idx <= 4)
 				game->manageKey(ar::Event::AR_RIGHT);
 			else if (idx <= 10)
 				game->manageKey(ar::Event::AR_DOWN);
-			else if (idx <= 12)
-				game->manageKey(ar::Event::AR_LEFT);
-			else if (idx <= 14)
-				game->manageKey(ar::Event::AR_UP);
 			else if (idx <= 30)
 				game->manageKey(ar::Event::AR_RIGHT);
 			usleep(100000);
@@ -36,7 +32,6 @@ int main(void)
 				return 0;
 			idx++;
 		}
-/*
 		idx = 0;
 		while (idx < 150) {
 			if (idx <= 5)
@@ -53,7 +48,6 @@ int main(void)
 			idx++;
 		}
 		game->_manageMap.DisplayMap();
-		*/
 		delete game;
 	} catch (MapException const &error) {
 		std::cout << "From " << error.getName() << ":" << std::endl;

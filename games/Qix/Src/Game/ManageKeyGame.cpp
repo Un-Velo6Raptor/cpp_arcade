@@ -107,10 +107,13 @@ void ar::Qix::manageKey(const ar::Event &key)
 		&ar::Qix::KeyDownPressed, &ar::Qix::KeyLeftPressed,
 		&ar::Qix::KeyRightPressed};
 
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::PLAYER)
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
+
 	if (key == Event::AR_PAUSE)
 		this->_isPaused = false;
 	else if (this->_isPaused)
 		return;
-	else // TODO: Demander si on ne recevra bien que les touches de déplacements ou de pause uniquement
+	else if ((int)key < 4)
 		(this->*keyPressed[key])();
 }

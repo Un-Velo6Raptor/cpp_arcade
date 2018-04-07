@@ -9,14 +9,15 @@
 
 int ar::Qix::GoThroughTheMap(int x, int y)
 {
+	if (x < 0 || y < 0 || this->_manageMap._map.getHeight() <= y || this->_manageMap._map.getWidth() <= x)
+		return 0;
 	if (this->_manageMap._map[y][x] != MapPattern::WALKABLE &&
 		this->_manageMap._map[y][x] != MapPattern::QIX) {
 		if (this->_manageMap._map[y][x] == MapPattern::OLDBORDER)
 			this->_manageMap._map[y][x] = MapPattern::BORDER;
 		return 0;
 	}
-
-	if (x < this->_manageMap._map.getWidth() || y < this->_manageMap._map.getHeight() || x > 0 || y > 0) {
+	if (x < this->_manageMap._map.getWidth() && y < this->_manageMap._map.getHeight() && x > 0 && y > 0) {
 		this->_manageMap._map[y][x] = MapPattern::FILLQIXTMP;
 
 		GoThroughTheMap(x, y + 1);

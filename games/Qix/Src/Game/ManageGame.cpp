@@ -6,6 +6,7 @@
 */
 
 #include "Game.hpp"
+#include "../../Include/Enum.hpp"
 
 // Todo: Ajouter le timer
 void ar::Qix::loop() // Todo: A faire
@@ -15,8 +16,7 @@ void ar::Qix::loop() // Todo: A faire
 
 	if (this->_isPaused)
 		return;
-	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::PLAYER)
-		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
+	std::cerr << "START LOOP GAME" << std::endl;
 	moovePlayer();
 
 	if (_flame && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] != MapPattern::TRAIL) {
@@ -30,7 +30,8 @@ void ar::Qix::loop() // Todo: A faire
 		if ((*it).loopSharks(this->_manageMap) == 1) {
 			this->_life--;
 			if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
-				MapPattern::BORDER) {
+				MapPattern::BORDER && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
+				MapPattern::SHARKS) {
 				this->_manageMap._map.setPlayerY(
 					this->_lastBorderPosY);
 				this->_manageMap._map.setPlayerX(
@@ -51,7 +52,7 @@ void ar::Qix::loop() // Todo: A faire
 	fillBox(true);
 	randomMoveQix();
 
-	if (lastPosX == this->_manageMap._map.getPlayerX() && lastPosY == this->_manageMap._map.getPlayerY() && !this->_flame) {
+	if (lastPosX == this->_manageMap._map.getPlayerX() && lastPosY == this->_manageMap._map.getPlayerY() && !this->_flame && this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::TRAIL) {
 		_flame = new ManageSharks(this->_manageMap, true);
 		SetDirFlameToGo();
 		_flame->setLastChar(MapPattern::TRAIL);
@@ -61,6 +62,7 @@ void ar::Qix::loop() // Todo: A faire
 
 	lastPosX = this->_manageMap._map.getPlayerX();
 	lastPosY = this->_manageMap._map.getPlayerY();
+	std::cerr << "END LOOP GAME" << std::endl;
 }
 
 void ar::Qix::setPause()
@@ -73,6 +75,8 @@ bool ar::Qix::isGameOver()
 	int sizeMob = 64;
 	int walkableArea = 0;
 
+	if (_life <= 0)
+		return true;
 	for (int y = 0; y < this->_manageMap._map.getHeight(); ++y) {
 		for (int x = 0; x < this->_manageMap._map.getWidth(); ++x) {
 			if (this->_manageMap._map[y][x] ==
@@ -95,5 +99,5 @@ bool ar::Qix::isGameOver()
 	}
 	this->_data.score = int((100 - percent) * 100);
 
-	return (this->_life <= 0 || percent <= 25);
+	return (percent <= 25);
 }
