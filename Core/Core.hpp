@@ -72,6 +72,7 @@ namespace ar {
 		bool _menu = true;
 
 		std::vector<ar::userInterface> _userInterfaces;
+		ar::userInterface _actualUser = {0, "", 0};
 
 		std::vector<std::string> _gamesName;
 		std::vector<std::string> _graphicalsName;
