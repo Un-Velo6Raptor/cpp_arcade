@@ -136,7 +136,7 @@ void		NCurses::displayMap(ar::Map &map, const int mul, const std::pair<int, int>
 
 void		NCurses::displayGame(const ar::userInterface &UI, ar::Map &map)
 {
-	std::string	highscore = "Highscore: " + std::to_string(UI.score);
+	std::string	score = "Score: " + std::to_string(UI.score);
 	std::string	time = "Time: " + std::to_string(UI.time);
 	int	height;
 	int	width;
@@ -152,7 +152,7 @@ void		NCurses::displayGame(const ar::userInterface &UI, ar::Map &map)
 	} else {
 		mvprintw(start.first - 2, start.second, UI.username.c_str());
 		mvprintw(start.first - 2, start.second + map.getWidth() * mul - 9, time.c_str());
-		mvprintw(start.first - 1, start.second, highscore.c_str());
+		mvprintw(start.first - 1, start.second, score.c_str());
 		displayMap(map, mul, start);
 	}
 	refresh();
