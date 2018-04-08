@@ -91,7 +91,7 @@ void ar::SFML::displayUsername(std::string const &user, int boxSizeX,
 	titleUsername.setPosition(_userMarginLeft, _userMarginTop);
 
 	sf::Text username(user, _font, _fontSize);
-	username.setPosition(_userMarginLeft, _userMarginTop + boxSizeY + 20);
+	username.setPosition(_userMarginLeft + boxSizeX * 0, _userMarginTop + boxSizeY + 20);
 
 	_window->draw(titleUsername);
 	_window->draw(username);
