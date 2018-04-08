@@ -17,13 +17,6 @@ SHARKS		=	Src/Sharks/Sharks.cpp			\
 			Src/Sharks/SharksIA.cpp			\
 
 GAME		=	Src/Game/Game.cpp			\
-			Src/Game/ManageGame.cpp			\
-			Src/Game/ManageKeyGame.cpp		\
-			Src/Game/GameGetter.cpp			\
-			Src/Game/GameRefresh.cpp		\
-			Src/Game/ManagePlayer.cpp		\
-			Src/Game/ManageQix.cpp			\
-			Src/Game/ManageSquare.cpp		\
 
 EXCEPTION	=	Src/Exception/ErrorException.cpp	\
 			Src/Exception/MapException.cpp		\

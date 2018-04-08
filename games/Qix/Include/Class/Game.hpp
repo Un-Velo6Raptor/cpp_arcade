@@ -87,7 +87,7 @@ namespace ar {
 		void SetDirFlameToGo(void);
 
 		// ManagePlayer
-		int moovePlayer(void);
+		int movePlayer(void);
 		int ToLeft(int);
 		int ToRight(int);
 		int ToUp(int);
