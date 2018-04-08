@@ -173,7 +173,7 @@ void		ar::NCurses::initMenu(const std::vector<std::string> &menuChoices,
 				  const std::string &menuName, const std::vector<std::string> &display)
 {
 	erase();
-	_menuChoices = menuChoices;
+	_menuChoices = { "Snake", "Qix", "Nibbler", "Qix", "Exit" };
 	_menuName = menuName;
 	_display = display;
 }
@@ -235,7 +235,7 @@ void		ar::NCurses::printLibName(int &i, const int width, const std::string str) 
 int		ar::NCurses::refreshMenu(const ar::Event &key,
 				     const std::vector<ar::userInterface> &dataArray)
 {
-	int	gameSize = _menuChoices.size();
+	int	gameSize = dataArray.size();
 	int	libSize = _display.size();
 	int	height;
 	int	width;
