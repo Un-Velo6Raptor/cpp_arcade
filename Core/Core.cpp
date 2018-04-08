@@ -198,6 +198,7 @@ void ar::Core::manageGame(ar::Event &event)
 			_highScores[_gamesIdx] = _scores[_gamesIdx];
 		_scores[_gamesIdx] = {0, _username, 0};
 		delete _games[_gamesIdx];
+		_game = nullptr;
 		_games[_gamesIdx] = (((createGame *)_gamesDL[_gamesIdx]->sym("createGame"))());
 		//destroyActualGame();
 		_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
