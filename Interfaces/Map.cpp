@@ -1,9 +1,10 @@
 /*
 ** EPITECH PROJECT, 2018
-** cpp_arcade
+** arcade
 ** File description:
-** Internal functions
+** Map class
 */
+
 #include "Map.hpp"
 
 ar::Map::~Map()
