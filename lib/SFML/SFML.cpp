@@ -59,6 +59,44 @@ bool ar::SFML::canHandleSprites()
 	return true;
 }
 
+void ar::SFML::displayScore(int score, int boxSizeX, int boxSizeY)
+{
+	sf::Text titleHighScore("Score", _font, _fontSize);
+	titleHighScore.setPosition(_userMarginLeft + boxSizeX, _userMarginTop);
+
+	sf::Text highScore(std::to_string(score), _font, _fontSize);
+	highScore.setPosition(_userMarginLeft + boxSizeX, _userMarginTop + boxSizeY + 20);
+
+	_window->draw(titleHighScore);
+	_window->draw(highScore);
+}
+
+void ar::SFML::displayTime(int timer, int boxSizeX, int boxSizeY)
+{
+	sf::Text titleTime("Time", _font, _fontSize);
+	titleTime.setPosition(_userMarginLeft + boxSizeX * 2, _userMarginTop);
+
+	sf::Text time(std::to_string(timer), _font, _fontSize);
+	time.setPosition(_userMarginLeft + boxSizeX * 2, _userMarginTop + boxSizeY + 20);
+
+	_window->draw(titleTime);
+	_window->draw(time);
+}
+
+void ar::SFML::displayUsername(std::string const &user, int boxSizeX,
+	int boxSizeY
+)
+{
+	sf::Text titleUsername("Username", _font, _fontSize);
+	titleUsername.setPosition(_userMarginLeft, _userMarginTop);
+
+	sf::Text username(user, _font, _fontSize);
+	username.setPosition(_userMarginLeft, _userMarginTop + boxSizeY + 20);
+
+	_window->draw(titleUsername);
+	_window->draw(username);
+}
+
 void ar::SFML::displayUserInterface(ar::userInterface const &user)
 {
 	int dx = _windowWidth - _userMarginLeft - _userMarginRight;
@@ -67,27 +105,9 @@ void ar::SFML::displayUserInterface(ar::userInterface const &user)
 	int boxSizeX = dx / 3;
 	int boxSizeY = dy / 2;
 
-	sf::Text titleUsername("Username", _font, _fontSize);
-	titleUsername.setPosition(_userMarginLeft, _userMarginTop);
-	sf::Text username(user.username, _font, _fontSize);
-	username.setPosition(_userMarginLeft, _userMarginTop + boxSizeY + 20);
-
-	sf::Text titleHighScore("Score", _font, _fontSize);
-	titleHighScore.setPosition(_userMarginLeft + boxSizeX, _userMarginTop);
-	sf::Text highScore(std::to_string(user.score), _font, _fontSize);
-	highScore.setPosition(_userMarginLeft + boxSizeX, _userMarginTop + boxSizeY + 20);
-
-	sf::Text titleTime("Time", _font, _fontSize);
-	titleTime.setPosition(_userMarginLeft + boxSizeX * 2, _userMarginTop);
-	sf::Text time(std::to_string(user.time), _font, _fontSize);
-	time.setPosition(_userMarginLeft + boxSizeX * 2, _userMarginTop + boxSizeY + 20);
-
-	_window->draw(titleUsername);
-	_window->draw(username);
-	_window->draw(titleHighScore);
-	_window->draw(highScore);
-	_window->draw(titleTime);
-	_window->draw(time);
+	displayUsername(user.username, boxSizeX, boxSizeY);
+	displayScore(user.score, boxSizeX, boxSizeY);
+	displayTime(user.time, boxSizeX, boxSizeY);
 }
 
 void ar::SFML::displayGame(const ar::userInterface &UI, ar::Map &map)
@@ -108,7 +128,7 @@ void ar::SFML::displayGame(const ar::userInterface &UI, ar::Map &map)
 			int realX = x * sizeX + _gameMarginLeft;
 			int realY = y * sizeY + _gameMarginTop;
 
-			def.setPosition(realX, realY);
+			def.setPosition(realX, realY);	
 			_window->draw(def);
 			_sprites[map[y][x]].setPosition(realX, realY);
 			_sprites[map[y][x]].setSize(sf::Vector2f(sizeX, sizeY));
@@ -160,29 +180,8 @@ void ar::SFML::refreshUsername(std::string &name, int realKey)
 	_username = name;
 }
 
-int ar::SFML::refreshMenu(const ar::Event &key,
-	const std::vector<ar::userInterface> &dataArray
-)
+void ar::SFML::menuDisplayGames()
 {
-	_window->clear(sf::Color::Black);
-	if (key == ar::Event::AR_UP && _idx > 0)
-		_idx--;
-	if (key == ar::Event::AR_DOWN && (unsigned int) _idx < dataArray.size() -1)
-		_idx++;
-	if ((unsigned int) _idx > dataArray.size() - 1)
-		_idx = 0;
-
-	_window->draw(sf::Sprite(_menuBackground));
-
-	sf::Text title(_menuName, _titleFont, 150);
-	title.setFillColor(sf::Color::Cyan);
-	title.setPosition(_windowWidth / 3.0f, 100);
-	_window->draw(title);
-
-	sf::Text titleUsername("Username = " + _username, _font, 40);
-	titleUsername.setPosition(_windowWidth / 3.0f, 260);
-	_window->draw(titleUsername);
-
 	for (int i = 0; i < (int)_menuGamesName.size(); i++) {
 		sf::Color color = sf::Color::White;
 		if (i == _idx)
@@ -193,7 +192,10 @@ int ar::SFML::refreshMenu(const ar::Event &key,
 		game.setFillColor(color);
 		_window->draw(game);
 	}
+}
 
+void ar::SFML::menuDisplayGraphicals()
+{
 	for (int i = 0; i < (int)_menuGraphicalsLib.size(); i++) {
 		std::string libName = _menuGraphicalsLib[i];
 
@@ -201,8 +203,49 @@ int ar::SFML::refreshMenu(const ar::Event &key,
 		lib.setPosition(1, _userHeight + _userMarginBottom + _userMarginTop + 15 * i);
 		_window->draw(lib);
 	}
+}
 
+void ar::SFML::menuDisplayUsername()
+{
+	sf::Text titleUsername("Username = " + _username, _font, 40);
+	titleUsername.setPosition(_windowWidth / 3.0f, 260);
+	_window->draw(titleUsername);
+}
+
+void ar::SFML::menuDisplayTitle()
+{
+	sf::Text title(_menuName, _titleFont, 150);
+	title.setFillColor(sf::Color::Cyan);
+	title.setPosition(_windowWidth / 3.0f, 100);
+	_window->draw(title);
+}
+
+void ar::SFML::menuManageKey(ar::Event const &key,
+	std::vector<ar::userInterface> const &datas
+)
+{
+	if (key == ar::Event::AR_UP && _idx > 0)
+		_idx--;
+	if (key == ar::Event::AR_DOWN && (unsigned int) _idx < datas.size() -1)
+		_idx++;
+	if ((unsigned int) _idx > datas.size() - 1)
+		_idx = 0;
+}
+
+int ar::SFML::refreshMenu(const ar::Event &key,
+	const std::vector<ar::userInterface> &dataArray
+)
+{
+	_window->clear(sf::Color::Black);
+	menuManageKey(key, dataArray);
+	_window->draw(sf::Sprite(_menuBackground));
+
+	menuDisplayTitle();
+	menuDisplayUsername();
+	menuDisplayGames();
+	menuDisplayGraphicals();
 	displayUserInterface(dataArray[_idx]);
+
 	_window->display();
 	return _idx;
 }
