@@ -6,7 +6,7 @@
 */
 
 #include "Game.hpp"
-#include "../../Include/Enum.hpp"
+#include "Enum.hpp"
 
 ar::Qix::Qix() : _manageMap(45, 80), _isPaused(true)
 {
@@ -115,18 +115,18 @@ void ar::Qix::loop()
 	if (clock() - _time < 100000 || _isPaused == true)
 		return;
 	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] ==
-		MapPattern::PLAYER)
+		ar::MapPattern::PLAYER)
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
 
-	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::OLDBORDER ||
-		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == MapPattern::NOWALKABLE)
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == ar::MapPattern::OLDBORDER ||
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == ar::MapPattern::NOWALKABLE)
 		joinTheBorder();
 
 	movePlayer();
 
 	if (_flame &&
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
-			MapPattern::TRAIL) {
+			ar::MapPattern::TRAIL) {
 		this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = _flame->getLastChar();
 		delete _flame;
 		_flame = nullptr;

@@ -5,7 +5,7 @@
 ## Created by sahel.lucas-saoudi@epitech.eu,
 ##
 
-SRC	     	=       SDL2.cpp							\
+SRC	     	=       SDL2.cpp	\
 			../../Interfaces/Map.cpp
 
 CXXFLAGS	=   	-W -Wall -Wextra -I . -I ../../Interfaces -std=c++11 -fPIC

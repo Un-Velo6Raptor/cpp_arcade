@@ -5,35 +5,20 @@
 ## Created by martin.januario@epitech.eu
 ##
 
-SRC		=	Src/Main.cpp				\
-			../../Interfaces/Map.cpp		\
+SRC		=	../../Interfaces/Map.cpp		\
+			ManageMap.cpp	\
+			Sharks.cpp		\
+			Game.cpp	\
+			./Exception/ErrorException.cpp	\
+			./Exception/GameException.cpp	\
+			./Exception/MapException.cpp
 
-MAP		=	Src/Map/ManageMap.cpp			\
-			Src/Map/InitMap.cpp			\
-			Src/Map/BasicsMap.cpp			\
-
-SHARKS		=	Src/Sharks/Sharks.cpp			\
-			Src/Sharks/ManageSharks.cpp		\
-			Src/Sharks/SharksIA.cpp			\
-
-GAME		=	Src/Game/Game.cpp			\
-
-EXCEPTION	=	Src/Exception/ErrorException.cpp	\
-			Src/Exception/MapException.cpp		\
-			Src/Exception/GameException.cpp		\
-
-OBJ		=	$(SRC:.cpp=.o)				\
-			$(MAP:.cpp=.o)				\
-			$(SHARKS:.cpp=.o)			\
-			$(GAME:.cpp=.o)				\
-			$(EXCEPTION:.cpp=.o)			\
+OBJ		=	$(SRC:.cpp=.o)
 
 CPPFLAGS	=	-std=c++11 -W -Wall -Wextra -Werror	\
-			-I Include/				\
-			-I Include/Class/			\
-			-I Include/Exception/			\
+			-I .	\
 			-I ../../Interfaces/			\
-			-I Include/Abstract/			\
+			-I ./Exception	\
 			-fPIC
 
 LDFLAGS		=	-shared

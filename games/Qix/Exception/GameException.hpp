@@ -10,9 +10,13 @@
 
 # include "ErrorException.hpp"
 
-class GameException : public ErrorException {
-	public:
-	GameException(std::string const &message, std::string const &name);
-};
+namespace ar {
+	class GameException : public ErrorException {
+		public:
+		GameException(std::string const &message,
+			std::string const &name
+		);
+	};
+}
 
 #endif //CPP_ARCADE_GAMEEXCEPTION_HPP

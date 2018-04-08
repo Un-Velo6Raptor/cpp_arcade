@@ -7,6 +7,6 @@
 
 #include "MapException.hpp"
 
-MapException::MapException(std::string const &message, std::string const &name) : ErrorException(message, name)
+ar::MapException::MapException(std::string const &message, std::string const &name) : ErrorException(message, name)
 {
 }

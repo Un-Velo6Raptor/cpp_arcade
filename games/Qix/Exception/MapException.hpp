@@ -10,9 +10,13 @@
 
 # include "ErrorException.hpp"
 
-class MapException : public ErrorException {
-	public:
-	MapException(std::string const &message, std::string const &name);
-};
+namespace ar {
+	class MapException : public ErrorException {
+		public:
+		MapException(std::string const &message,
+			std::string const &name
+		);
+	};
+}
 
 #endif //CPP_ARCADE_MAPEXCEPTION_HPP

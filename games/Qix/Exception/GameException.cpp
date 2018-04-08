@@ -7,7 +7,7 @@
 
 #include "GameException.hpp"
 
-GameException::GameException(std::string const &message, std::string const &name
+ar::GameException::GameException(std::string const &message, std::string const &name
 ) : ErrorException(message, name)
 {
 }
