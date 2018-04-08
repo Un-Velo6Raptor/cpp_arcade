@@ -102,7 +102,7 @@ const std::map<unsigned char, ar::colorVector>	colors {
 	{ 41, ar::colorVector { 0, 0, 255 } },
 };
 
-Snake::Snake() : _direction(RIGHT), _prevDirection(RIGHT), _pause(true), _classicMode(false),
+ar::Snake::Snake() : _direction(ar::RIGHT), _prevDirection(ar::RIGHT), _pause(true), _classicMode(false),
 		 _score(0), _timer(std::time(nullptr)), _time(clock()), _gameOver(false), _map(20, 9),
 		 _height(9), _width(20), _movementMap(_height, std::vector<Tile>(_width)),
 		 _startPause(-1), _tmpTimer(0)
@@ -110,11 +110,11 @@ Snake::Snake() : _direction(RIGHT), _prevDirection(RIGHT), _pause(true), _classi
 	initiateGame();
 }
 
-Snake::~Snake()
+ar::Snake::~Snake()
 {
 }
 
-void		Snake::initiateGame()
+void		ar::Snake::initiateGame()
 {
 	for (size_t i = 0 ; i < _height ; i++) {
 		if (i == 0 || i == _height - 1) {
@@ -125,10 +125,10 @@ void		Snake::initiateGame()
 			_movementMap[i][_width - 1] = WALL;
 		}
 		if (i == _height / 2) {
-			_movementMap[i][_width / 2 - 2] = TAIL_RIGHT;
-			_movementMap[i][_width / 2 - 1] = EMPTY_BODY_RIGHT;
-			_movementMap[i][_width / 2] = EMPTY_BODY_RIGHT;
-			_movementMap[i][_width / 2 + 1] = CLOSED_MOUTH_RIGHT;
+			_movementMap[i][_width / 2 - 2] = ar::TAIL_RIGHT;
+			_movementMap[i][_width / 2 - 1] = ar::EMPTY_BODY_RIGHT;
+			_movementMap[i][_width / 2] = ar::EMPTY_BODY_RIGHT;
+			_movementMap[i][_width / 2 + 1] = ar::CLOSED_MOUTH_RIGHT;
 		}
 	}
 	_snake.insert(_snake.begin(), createSnakePart(_height / 2, _width / 2 + 1, false));
@@ -140,53 +140,53 @@ void		Snake::initiateGame()
 	updateMap();
 }
 
-void		Snake::goUp()
+void		ar::Snake::goUp()
 {
 	if (_classicMode == true && _snake[_snake.size() - 2].row != _snake.back().row - 1) {
-		_direction = UP;
+		_direction = ar::UP;
 	}
 }
 
-void		Snake::goDown()
+void		ar::Snake::goDown()
 {
 	if (_classicMode == true && _snake[_snake.size() - 2].row != _snake.back().row + 1) {
-		_direction = DOWN;
+		_direction = ar::DOWN;
 	}
 }
 
-void		Snake::goLeft()
+void		ar::Snake::goLeft()
 {
 	if (_classicMode == false) {
-		if (_direction == UP && _prevDirection != RIGHT)
-			_direction = LEFT;
-		if (_direction == DOWN && _prevDirection != LEFT)
-			_direction = RIGHT;
-		if (_direction == LEFT && _prevDirection != UP)
-			_direction = DOWN;
-		if (_direction == RIGHT && _prevDirection != DOWN)
-			_direction = UP;
+		if (_direction == ar::UP && _prevDirection != ar::RIGHT)
+			_direction = ar::LEFT;
+		if (_direction == ar::DOWN && _prevDirection != ar::LEFT)
+			_direction = ar::RIGHT;
+		if (_direction == ar::LEFT && _prevDirection != ar::UP)
+			_direction = ar::DOWN;
+		if (_direction == ar::RIGHT && _prevDirection != ar::DOWN)
+			_direction = ar::UP;
 	} else if (_classicMode == true && _snake[_snake.size() - 2].col != _snake.back().col - 1) {
-		_direction = LEFT;
+		_direction = ar::LEFT;
 	}
 }
 
-void		Snake::goRight()
+void		ar::Snake::goRight()
 {
 	if (_classicMode == false) {
-		if (_direction == UP && _prevDirection != LEFT)
-			_direction = RIGHT;
-		if (_direction == DOWN && _prevDirection != RIGHT)
-			_direction = LEFT;
-		if (_direction == LEFT && _prevDirection != DOWN)
-			_direction = UP;
-		if (_direction == RIGHT && _prevDirection != UP)
-			_direction = DOWN;
+		if (_direction == ar::UP && _prevDirection != ar::LEFT)
+			_direction = ar::RIGHT;
+		if (_direction == ar::DOWN && _prevDirection != ar::RIGHT)
+			_direction = ar::LEFT;
+		if (_direction == ar::LEFT && _prevDirection != ar::DOWN)
+			_direction = ar::UP;
+		if (_direction == ar::RIGHT && _prevDirection != ar::UP)
+			_direction = ar::DOWN;
 	} else if (_classicMode == true && _snake[_snake.size() - 2].col != _snake.back().col + 1) {
-		_direction = RIGHT;
+		_direction = ar::RIGHT;
 	}
 }
 
-void		Snake::manageKey(const ar::Event &Key)
+void		ar::Snake::manageKey(const ar::Event &Key)
 {
 	switch (Key) {
 	case ar::AR_UP:
@@ -212,29 +212,29 @@ void		Snake::manageKey(const ar::Event &Key)
 	}
 }
 
-const std::map<unsigned char, ar::spriteCoords>	&Snake::getSprites() const
+const std::map<unsigned char, ar::spriteCoords>	&ar::Snake::getSprites() const
 {
 	return sprites;
 }
 
-const std::string	Snake::getSpritesPath() const
+const std::string	ar::Snake::getSpritesPath() const
 {
 	std::string	path("./resources/old_school_snake.png");
 
 	return path;
 }
 
-const std::map<unsigned char, ar::colorVector>	&Snake::getColors() const
+const std::map<unsigned char, ar::colorVector>	&ar::Snake::getColors() const
 {
 	return colors;
 }
 
-int	Snake::refreshScore()
+int	ar::Snake::refreshScore()
 {
 	return _score;
 }
 
-int	Snake::refreshTimer()
+int	ar::Snake::refreshTimer()
 {
 	int	newTime;
 
@@ -254,19 +254,19 @@ int	Snake::refreshTimer()
 	return _tmpTimer;
 }
 
-bool	Snake::isGameOver()
+bool	ar::Snake::isGameOver()
 {
 	return _gameOver;
 }
 
-ar::Map	&Snake::getMap()
+ar::Map	&ar::Snake::getMap()
 {
 	return _map;
 }
 
-Snake::SnakePart	Snake::createSnakePart(std::size_t row, std::size_t col, bool full)
+ar::Snake::SnakePart	ar::Snake::createSnakePart(std::size_t row, std::size_t col, bool full)
 {
-	SnakePart	portion;
+	ar::Snake::SnakePart	portion;
 
 	portion.row = row;
 	portion.col = col;
@@ -274,129 +274,129 @@ Snake::SnakePart	Snake::createSnakePart(std::size_t row, std::size_t col, bool f
 	return portion;
 }
 
-void		Snake::addPellet()
+void		ar::Snake::addPellet()
 {
 	std::size_t	empty_cells = 0;
 	int		chosen_cell;
 	std::size_t	count;
 
 	for (size_t i = 0 ; i < _height ; i++) {
-		empty_cells += std::count(_movementMap[i].begin(), _movementMap[i].end(), EMPTY);
+		empty_cells += std::count(_movementMap[i].begin(), _movementMap[i].end(), ar::EMPTY);
 	}
 	if (empty_cells == 0)
 		return;
 	chosen_cell = std::rand() % empty_cells;
-	for (count = 0 ; chosen_cell >= std::count(_movementMap[count].begin(), _movementMap[count].end(), EMPTY) ;
+	for (count = 0 ; chosen_cell >= std::count(_movementMap[count].begin(), _movementMap[count].end(), ar::EMPTY) ;
 	     count++) {
-		chosen_cell -= std::count(_movementMap[count].begin(), _movementMap[count].end(), EMPTY);
+		chosen_cell -= std::count(_movementMap[count].begin(), _movementMap[count].end(), ar::EMPTY);
 	}
 	for (size_t i = 0 ; i < _width ; i++) {
-		if (_movementMap[count][i] == EMPTY && chosen_cell > 1)
+		if (_movementMap[count][i] == ar::EMPTY && chosen_cell > 1)
 			chosen_cell--;
-		else if (_movementMap[count][i] == EMPTY) {
-			_movementMap[count][i] = PELLET;
+		else if (_movementMap[count][i] == ar::EMPTY) {
+			_movementMap[count][i] = ar::PELLET;
 			break;
 		}
 	}
 }
 
-void		Snake::updateHead()
+void		ar::Snake::updateHead()
 {
 	if (_snake[_snake.size() - 2].row == _snake.back().row + 1) {
-		if (_movementMap[_snake.back().row - 1][_snake.back().col] == PELLET)
-			_movementMap[_snake.back().row][_snake.back().col] = OPEN_MOUTH_UP;
+		if (_movementMap[_snake.back().row - 1][_snake.back().col] == ar::PELLET)
+			_movementMap[_snake.back().row][_snake.back().col] = ar::OPEN_MOUTH_UP;
 		else
-			_movementMap[_snake.back().row][_snake.back().col] = CLOSED_MOUTH_UP;
+			_movementMap[_snake.back().row][_snake.back().col] = ar::CLOSED_MOUTH_UP;
 	} else if (_snake[_snake.size() - 2].col == _snake.back().col + 1) {
-		if (_movementMap[_snake.back().row][_snake.back().col - 1] == PELLET)
-			_movementMap[_snake.back().row][_snake.back().col] = OPEN_MOUTH_LEFT;
+		if (_movementMap[_snake.back().row][_snake.back().col - 1] == ar::PELLET)
+			_movementMap[_snake.back().row][_snake.back().col] = ar::OPEN_MOUTH_LEFT;
 		else
-			_movementMap[_snake.back().row][_snake.back().col] = CLOSED_MOUTH_LEFT;
+			_movementMap[_snake.back().row][_snake.back().col] = ar::CLOSED_MOUTH_LEFT;
 	} else if (_snake[_snake.size() - 2].col == _snake.back().col - 1) {
-		if (_movementMap[_snake.back().row][_snake.back().col + 1] == PELLET)
-			_movementMap[_snake.back().row][_snake.back().col] = OPEN_MOUTH_RIGHT;
+		if (_movementMap[_snake.back().row][_snake.back().col + 1] == ar::PELLET)
+			_movementMap[_snake.back().row][_snake.back().col] = ar::OPEN_MOUTH_RIGHT;
 		else
-			_movementMap[_snake.back().row][_snake.back().col] = CLOSED_MOUTH_RIGHT;
+			_movementMap[_snake.back().row][_snake.back().col] = ar::CLOSED_MOUTH_RIGHT;
 	} else if (_snake[_snake.size() - 2].row == _snake.back().row - 1) {
-		if (_movementMap[_snake.back().row + 1][_snake.back().col] == PELLET)
-			_movementMap[_snake.back().row][_snake.back().col] = OPEN_MOUTH_DOWN;
+		if (_movementMap[_snake.back().row + 1][_snake.back().col] == ar::PELLET)
+			_movementMap[_snake.back().row][_snake.back().col] = ar::OPEN_MOUTH_DOWN;
 		else
-			_movementMap[_snake.back().row][_snake.back().col] = CLOSED_MOUTH_DOWN;
+			_movementMap[_snake.back().row][_snake.back().col] = ar::CLOSED_MOUTH_DOWN;
 	}
 }
 
-void		Snake::straightLine()
+void		ar::Snake::straightLine()
 {
 	if (_snake[_snake.size() - 3].row < _snake[_snake.size() - 1].row) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_BODY_DOWN;
+				ar::EMPTY_BODY_DOWN;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_BODY_DOWN;
+				ar::FULL_BODY_DOWN;
 	} else if (_snake[_snake.size() - 3].row > _snake[_snake.size() - 1].row) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_BODY_UP;
+				ar::EMPTY_BODY_UP;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_BODY_UP;
+				ar::FULL_BODY_UP;
 	} else if (_snake[_snake.size() - 3].col < _snake[_snake.size() - 1].col) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_BODY_RIGHT;
+				ar::EMPTY_BODY_RIGHT;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_BODY_RIGHT;
+				ar::FULL_BODY_RIGHT;
 	} else if (_snake[_snake.size() - 3].col > _snake[_snake.size() - 1].col) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_BODY_LEFT;
+				ar::EMPTY_BODY_LEFT;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_BODY_LEFT;
+				ar::FULL_BODY_LEFT;
 	}
 }
 
-void		Snake::cornerToTopRight()
+void		ar::Snake::cornerToTopRight()
 {
 	if (_snake[_snake.size() - 3].row > _snake[_snake.size() - 2].row) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_CORNER_DOWN_TO_RIGHT;
+				ar::EMPTY_CORNER_DOWN_TO_RIGHT;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_CORNER_DOWN_TO_RIGHT;
+				ar::FULL_CORNER_DOWN_TO_RIGHT;
 	} else if (_snake[_snake.size() - 3].col < _snake[_snake.size() - 2].col) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_CORNER_LEFT_TO_UP;
+				ar::EMPTY_CORNER_LEFT_TO_UP;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_CORNER_LEFT_TO_UP;
+				ar::FULL_CORNER_LEFT_TO_UP;
 	}
 }
 
-void		Snake::cornerToBottomRight()
+void		ar::Snake::cornerToBottomRight()
 {
 	if (_snake[_snake.size() - 3].row < _snake[_snake.size() - 2].row) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_CORNER_UP_TO_RIGHT;
+				ar::EMPTY_CORNER_UP_TO_RIGHT;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_CORNER_UP_TO_RIGHT;
+				ar::FULL_CORNER_UP_TO_RIGHT;
 	} else if (_snake[_snake.size() - 3].col < _snake[_snake.size() - 2].col) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_CORNER_LEFT_TO_DOWN;
+				ar::EMPTY_CORNER_LEFT_TO_DOWN;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_CORNER_LEFT_TO_DOWN;
+				ar::FULL_CORNER_LEFT_TO_DOWN;
 	}
 }
 
-void		Snake::cornerFromLeftToRight()
+void		ar::Snake::cornerFromLeftToRight()
 {
 	if (_snake[_snake.size() - 3].row > _snake[_snake.size() - 1].row) {
 		cornerToTopRight();
@@ -405,45 +405,45 @@ void		Snake::cornerFromLeftToRight()
 	}
 }
 
-void		Snake::cornerToTopLeft()
+void		ar::Snake::cornerToTopLeft()
 {
 	if (_snake[_snake.size() - 3].row > _snake[_snake.size() - 2].row) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_CORNER_DOWN_TO_LEFT;
+				ar::EMPTY_CORNER_DOWN_TO_LEFT;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_CORNER_DOWN_TO_LEFT;
+				ar::FULL_CORNER_DOWN_TO_LEFT;
 	} else if (_snake[_snake.size() - 3].col > _snake[_snake.size() - 2].col) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_CORNER_RIGHT_TO_UP;
+				ar::EMPTY_CORNER_RIGHT_TO_UP;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_CORNER_RIGHT_TO_UP;
+				ar::FULL_CORNER_RIGHT_TO_UP;
 	}
 }
 
-void		Snake::cornerToBottomLeft()
+void		ar::Snake::cornerToBottomLeft()
 {
 	if (_snake[_snake.size() - 3].row < _snake[_snake.size() - 2].row) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_CORNER_UP_TO_LEFT;
+				ar::EMPTY_CORNER_UP_TO_LEFT;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_CORNER_UP_TO_LEFT;
+				ar::FULL_CORNER_UP_TO_LEFT;
 	} else if (_snake[_snake.size() - 3].col > _snake[_snake.size() - 2].col) {
 		if (_snake[_snake.size() - 2].full == false)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				EMPTY_CORNER_RIGHT_TO_DOWN;
+				ar::EMPTY_CORNER_RIGHT_TO_DOWN;
 		else if (_snake[_snake.size() - 2].full == true)
 			_movementMap[_snake[_snake.size() - 2].row][_snake[_snake.size() - 2].col] =
-				FULL_CORNER_RIGHT_TO_DOWN;
+				ar::FULL_CORNER_RIGHT_TO_DOWN;
 	}
 }
 
-void		Snake::cornerFromRightToLeft()
+void		ar::Snake::cornerFromRightToLeft()
 {
 	if (_snake[_snake.size() - 3].row > _snake[_snake.size() - 1].row) {
 		cornerToTopLeft();
@@ -452,7 +452,7 @@ void		Snake::cornerFromRightToLeft()
 	}
 }
 
-void		Snake::corner()
+void		ar::Snake::corner()
 {
 	if (_snake[_snake.size() - 3].col < _snake[_snake.size() - 1].col) {
 		cornerFromLeftToRight();
@@ -461,7 +461,7 @@ void		Snake::corner()
 	}
 }
 
-void		Snake::updateFirstBodyPart()
+void		ar::Snake::updateFirstBodyPart()
 {
 	if (_snake[_snake.size() - 3].row == _snake[_snake.size() - 1].row ||
 	    _snake[_snake.size() - 3].col == _snake[_snake.size() - 1].col) {
@@ -471,36 +471,36 @@ void		Snake::updateFirstBodyPart()
 	}
 }
 
-void		Snake::updateTail(Tile tail)
+void		ar::Snake::updateTail(Tile tail)
 {
-	if (tail == EMPTY_BODY_UP || tail == FULL_BODY_UP ||
-	    tail == EMPTY_CORNER_RIGHT_TO_UP || tail == EMPTY_CORNER_LEFT_TO_UP ||
-	    tail == FULL_CORNER_RIGHT_TO_UP || tail == FULL_CORNER_LEFT_TO_UP)
-		_movementMap[_snake.front().row][_snake.front().col] = TAIL_UP;
-	if (tail == EMPTY_BODY_LEFT || tail == FULL_BODY_LEFT ||
-	    tail == EMPTY_CORNER_DOWN_TO_LEFT || tail == EMPTY_CORNER_UP_TO_LEFT ||
-	    tail == FULL_CORNER_DOWN_TO_LEFT || tail == FULL_CORNER_UP_TO_LEFT)
-		_movementMap[_snake.front().row][_snake.front().col] = TAIL_LEFT;
-	if (tail == EMPTY_BODY_RIGHT || tail == FULL_BODY_RIGHT ||
-	    tail == EMPTY_CORNER_DOWN_TO_RIGHT || tail == EMPTY_CORNER_UP_TO_RIGHT ||
-	    tail == FULL_CORNER_DOWN_TO_RIGHT || tail == FULL_CORNER_UP_TO_RIGHT)
-		_movementMap[_snake.front().row][_snake.front().col] = TAIL_RIGHT;
-	if (tail == EMPTY_BODY_DOWN || tail == FULL_BODY_DOWN ||
-	    tail == EMPTY_CORNER_RIGHT_TO_DOWN || tail == EMPTY_CORNER_LEFT_TO_DOWN ||
-	    tail == FULL_CORNER_RIGHT_TO_DOWN || tail == FULL_CORNER_LEFT_TO_DOWN)
-		_movementMap[_snake.front().row][_snake.front().col] = TAIL_DOWN;
+	if (tail == ar::EMPTY_BODY_UP || tail == ar::FULL_BODY_UP ||
+	    tail == ar::EMPTY_CORNER_RIGHT_TO_UP || tail == ar::EMPTY_CORNER_LEFT_TO_UP ||
+	    tail == ar::FULL_CORNER_RIGHT_TO_UP || tail == ar::FULL_CORNER_LEFT_TO_UP)
+		_movementMap[_snake.front().row][_snake.front().col] = ar::TAIL_UP;
+	if (tail == ar::EMPTY_BODY_LEFT || tail == ar::FULL_BODY_LEFT ||
+	    tail == ar::EMPTY_CORNER_DOWN_TO_LEFT || tail == ar::EMPTY_CORNER_UP_TO_LEFT ||
+	    tail == ar::FULL_CORNER_DOWN_TO_LEFT || tail == ar::FULL_CORNER_UP_TO_LEFT)
+		_movementMap[_snake.front().row][_snake.front().col] = ar::TAIL_LEFT;
+	if (tail == ar::EMPTY_BODY_RIGHT || tail == ar::FULL_BODY_RIGHT ||
+	    tail == ar::EMPTY_CORNER_DOWN_TO_RIGHT || tail == ar::EMPTY_CORNER_UP_TO_RIGHT ||
+	    tail == ar::FULL_CORNER_DOWN_TO_RIGHT || tail == ar::FULL_CORNER_UP_TO_RIGHT)
+		_movementMap[_snake.front().row][_snake.front().col] = ar::TAIL_RIGHT;
+	if (tail == ar::EMPTY_BODY_DOWN || tail == ar::FULL_BODY_DOWN ||
+	    tail == ar::EMPTY_CORNER_RIGHT_TO_DOWN || tail == ar::EMPTY_CORNER_LEFT_TO_DOWN ||
+	    tail == ar::FULL_CORNER_RIGHT_TO_DOWN || tail == ar::FULL_CORNER_LEFT_TO_DOWN)
+		_movementMap[_snake.front().row][_snake.front().col] = ar::TAIL_DOWN;
 }
 
-void		Snake::updateSnake(Tile tile, std::size_t row, std::size_t col)
+void		ar::Snake::updateSnake(ar::Tile tile, std::size_t row, std::size_t col)
 {
-	if (tile == PELLET) {
+	if (tile == ar::PELLET) {
 		_snake.insert(_snake.end(), createSnakePart(row, col, true));
 		updateHead();
 		updateFirstBodyPart();
 		addPellet();
 		_score += 100;
 	} else {
-		_movementMap[_snake.front().row][_snake.front().col] = EMPTY;
+		_movementMap[_snake.front().row][_snake.front().col] = ar::EMPTY;
 		_snake.erase(_snake.begin());
 		updateTail(_movementMap[_snake.front().row][_snake.front().col]);
 		_snake.insert(_snake.end(), createSnakePart(row, col, false));
@@ -509,15 +509,15 @@ void		Snake::updateSnake(Tile tile, std::size_t row, std::size_t col)
 	}
 }
 
-bool		Snake::possibleDestination(Tile tile)
+bool		ar::Snake::possibleDestination(ar::Tile tile)
 {
-	if (tile == EMPTY || tile == PELLET || tile == TAIL_UP ||
-	    tile == TAIL_LEFT || tile == TAIL_RIGHT || tile == TAIL_DOWN)
+	if (tile == ar::EMPTY || tile == ar::PELLET || tile == ar::TAIL_UP ||
+	    tile == ar::TAIL_LEFT || tile == ar::TAIL_RIGHT || tile == ar::TAIL_DOWN)
 		return true;
 	return false;
 }
 
-void	Snake::updateMap()
+void	ar::Snake::updateMap()
 {
 	for (size_t x = 0 ; x < _height ; x++) {
 		for (size_t y = 0 ; y < _width ; y++) {
@@ -526,23 +526,23 @@ void	Snake::updateMap()
 	}
 }
 
-void	Snake::loop()
+void	ar::Snake::loop()
 {
 	if (clock() - _time < 300000 || _pause == true)
 		return;
-	if (_direction == UP &&
+	if (_direction == ar::UP &&
 	    possibleDestination(_movementMap[_snake.back().row - 1][_snake.back().col]) == true) {
 		updateSnake(_movementMap[_snake.back().row - 1][_snake.back().col],
 			    _snake.back().row - 1, _snake.back().col);
-	} else if (_direction == DOWN &&
+	} else if (_direction == ar::DOWN &&
 		   possibleDestination(_movementMap[_snake.back().row + 1][_snake.back().col]) == true) {
 		updateSnake(_movementMap[_snake.back().row + 1][_snake.back().col],
 			    _snake.back().row + 1, _snake.back().col);
-	} else if (_direction == LEFT &&
+	} else if (_direction == ar::LEFT &&
 		   possibleDestination(_movementMap[_snake.back().row][_snake.back().col - 1]) == true) {
 		updateSnake(_movementMap[_snake.back().row][_snake.back().col - 1],
 			    _snake.back().row, _snake.back().col - 1);
-	} else if (_direction == RIGHT &&
+	} else if (_direction == ar::RIGHT &&
 		   possibleDestination(_movementMap[_snake.back().row][_snake.back().col + 1]) == true) {
 		updateSnake(_movementMap[_snake.back().row][_snake.back().col + 1],
 			    _snake.back().row, _snake.back().col + 1);
@@ -553,24 +553,24 @@ void	Snake::loop()
 	_time = clock();
 }
 
-const std::string	Snake::getGameName() const
+const std::string	ar::Snake::getGameName() const
 {
 	std::string	name("Nibbler");
 
 	return name;
 }
 
-void	Snake::setPause()
+void	ar::Snake::setPause()
 {
 	_pause = true;
 }
 
-extern "C" Snake *createGame()
+extern "C" ar::Snake *createGame()
 {
-	return new Snake();
+	return new ar::Snake();
 }
 
-extern "C" void destroyGame(Snake *snake)
+extern "C" void destroyGame(ar::Snake *snake)
 {
 	delete snake;
 }

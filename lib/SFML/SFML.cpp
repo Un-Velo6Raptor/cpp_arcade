@@ -128,7 +128,7 @@ void ar::SFML::displayGame(const ar::userInterface &UI, ar::Map &map)
 			int realX = x * sizeX + _gameMarginLeft;
 			int realY = y * sizeY + _gameMarginTop;
 
-			def.setPosition(realX, realY);	
+			def.setPosition(realX, realY);
 			_window->draw(def);
 			_sprites[map[y][x]].setPosition(realX, realY);
 			_sprites[map[y][x]].setSize(sf::Vector2f(sizeX, sizeY));
