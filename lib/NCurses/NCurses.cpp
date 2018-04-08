@@ -33,7 +33,6 @@ NCurses::NCurses() : _selectedGame(0), _username("")
 
 NCurses::~NCurses()
 {
-	use_default_colors();
 	endwin();
 }
 
