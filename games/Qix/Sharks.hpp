@@ -30,11 +30,11 @@ namespace ar {
 		std::size_t getPosY() const;
 		ar::MapPattern getLastChar() const;
 
+		bool isAnotherTrailAround(ar::ManageMap &);
 	private:
 		void initSharksOnTheMap(ar::ManageMap &, bool);
 		std::vector<DirObj> getAllDirSharks(ar::ManageMap &);
 		int sharksEatPlayer(ar::ManageMap &manageMap);
-		bool isAnotherTrailAround(ar::ManageMap &);
 		int GetCharTo(ar::ManageMap &, int x, int y);
 
 		// SharksIA

@@ -244,11 +244,11 @@ void ar::SDL2::printGraphicalList(void)
 
 	texture_dest.x += (width / 2) / 13;
 	texture_dest.w -= (width / 2) / 9;
+	texture_dest.y += 40;
 
 	for (auto it = _graphicalName.begin(); it != _graphicalName.end() ; ++it) {
 		s.str("");
 		s << (*it).substr((*it).find_last_of('/') + 1);
-
 
 		printStringMenu(&texture_dest, s.str().c_str());
 		texture_dest.y += ((height - (height / 20) * 2) + 20) / (_graphicalName.size() + 1);
@@ -267,6 +267,7 @@ void ar::SDL2::printGameList(void)
 
 	texture_dest.x += (width / 2) / 13;
 	texture_dest.w -= (width / 2) / 9;
+	texture_dest.y += 40;
 
 	unsigned int cmp = 0;
 	for (auto it = _gameName.begin(); it != _gameName.end() ; ++it) {

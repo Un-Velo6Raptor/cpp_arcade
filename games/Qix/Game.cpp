@@ -122,12 +122,17 @@ void ar::Qix::loop()
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == ar::MapPattern::NOWALKABLE)
 		joinTheBorder();
 
+	_behindPlayer = (MapPattern)(this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()]);
 	movePlayer();
 
 	if (_flame &&
 		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
 			ar::MapPattern::TRAIL) {
-		this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = _flame->getLastChar();
+		resetSpecificCharMap(MapPattern::TRAIL);
+		if (_behindPlayer == TRAIL)
+			this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = BORDER;
+		else
+			this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = WALKABLE;
 		delete _flame;
 		_flame = nullptr;
 	}
