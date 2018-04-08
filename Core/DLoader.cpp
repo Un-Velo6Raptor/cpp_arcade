@@ -25,24 +25,14 @@ ar::DLoader::~DLoader()
 		dlclose(_dl);
 }
 
-std::string const& ar::DLoader::getName() const
-{
-	return _name;
-}
-
-void ar::DLoader::setName(std::string const &name)
-{
-	_name = name;
-}
-
-void* ar::DLoader::sym(std::string const &symName)
+void *ar::DLoader::sym(std::string const &symName)
 {
 	void *tmp = dlsym(_dl, symName.c_str());
-
 	char *error(dlerror());
+
 	if (error) {
 		std::cerr << error << std::endl;
-		throw std::runtime_error("Cannot access to symbol in lib :" + _name);
+		throw std::runtime_error("Cannot access to symbol in lib");
 	}
 	return tmp ? tmp : nullptr;
 }

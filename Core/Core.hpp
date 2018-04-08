@@ -30,7 +30,7 @@ namespace ar {
 		// Setter
 
 		// Other
-		int start(std::string const &defaultPath);
+		void start(std::string const &defaultPath);
 		void exit();
 		void restart();
 
@@ -58,6 +58,9 @@ namespace ar {
 		void prevGameLib();
 
 		void activateMenu();
+
+		void manageMenu(ar::Event &event, int key);
+		void manageGame(ar::Event &event);
 
 		int _graphicalsIdx = 0;
 		int _gamesIdx = 0;

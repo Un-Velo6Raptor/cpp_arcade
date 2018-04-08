@@ -17,7 +17,6 @@ ar::Core::Core()
 
 	if (_graphicalsDL.empty() ||
 		_gamesDL.empty()) {
-		std::cerr << "Arcade need at least one Gaming Lib and one Graphical Lib" << std::endl;
 		throw std::runtime_error("Arcade need at least one Gaming lib and one Graphical Lib");
 	}
 }
@@ -184,16 +183,44 @@ void ar::Core::restart()
 	changeGameLib(_gamesIdx);
 }
 
-int ar::Core::start(std::string const &defaultPath)
+void ar::Core::manageGame(ar::Event &event)
+{
+	_game->manageKey(event);
+	refreshUserInterface();
+	if (_game->isGameOver()) {
+		refreshUserInterface();
+		if (_actualUser.score > _userInterfaces[_gamesIdx].score)
+			_userInterfaces[_gamesIdx] = _actualUser;
+		destroyActualGame();
+		_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
+		_menu = true;
+	} else {
+		_game->loop();
+		_graphical->displayGame(_actualUser, _game->getMap());
+	}
+}
+
+void ar::Core::manageMenu(ar::Event &event, int key)
+{
+	_graphical->refreshUsername(_username, key);
+	_gamesIdx = _graphical->refreshMenu(event, _userInterfaces);
+	if ((unsigned int) _gamesIdx > _gamesDL.size() - 1)
+		_gamesIdx = 0;
+	if (event == ar::Event::AR_VALIDATE && (unsigned int)_gamesIdx < _gamesDL.size()) {
+		_menu = false;
+		_graphical->destroyMenu();
+		changeGameLib(_gamesIdx);
+	}
+}
+
+void ar::Core::start(std::string const &defaultPath)
 
 {
 	auto tmp = new ar::DLoader(defaultPath);
 	_graphical = ((createDisplay *) tmp->sym("createDisplay"))();
 
-	if (!_graphical) {
-		std::cerr << "Invalid argument: argument is not a valid graphical lib." << std::endl;
+	if (!_graphical)
 		throw std::invalid_argument("Invalid argument: argument is not a valid graphical lib.");
-	}
 	_gamesName = getGamesName();
 	_graphicalsName = getAllFileOfDirWithPath(GRAPHICALS_PATH);
 	_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
@@ -201,34 +228,12 @@ int ar::Core::start(std::string const &defaultPath)
 		int key;
 		ar::Event event = _graphical->getEvent(key);
 
-		if (_menu) { // MENU
-			_graphical->refreshUsername(_username, key);
-			_gamesIdx = _graphical->refreshMenu(event, _userInterfaces);
-			if ((unsigned int) _gamesIdx > _gamesDL.size() - 1)
-				_gamesIdx = 0;
-			if (event == ar::Event::AR_VALIDATE && (unsigned int)_gamesIdx < _gamesDL.size()) {
-				_menu = false;
-				_graphical->destroyMenu();
-				changeGameLib(_gamesIdx);
-			}
-		}
-		if (!_menu) { // GAME
-			_game->manageKey(event);
-			refreshUserInterface();
-			if (_game->isGameOver()) {
-				refreshUserInterface();
-				if (_actualUser.score > _userInterfaces[_gamesIdx].score)
-					_userInterfaces[_gamesIdx] = _actualUser;
-				destroyActualGame();
-				_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
-				_menu = true;
-			} else {
-				_game->loop();
-				_graphical->displayGame(_actualUser, _game->getMap());
-			}
+		if (_menu) {
+			manageMenu(event, key);
+		} else {
+			manageGame(event);
 		}
 		if (_actions.find(event) != _actions.end())
 			(this->*(_actions.find(event)->second))();
 	}
-	return 0;
 }
