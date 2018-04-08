@@ -19,7 +19,7 @@ namespace ar {
 	class SDL2 : public ar::IDisplay {
 	public:
 		SDL2();
-		~SDL2();
+		~SDL2() override;
 
 		ar::Event getEvent(int &) override;
 		bool canHandleSprites() override;

@@ -10,7 +10,7 @@ SRC	     	=       SDL2.cpp							\
 
 CXXFLAGS	=   	-W -Wall -Wextra -I . -I ../../Interfaces -std=c++11 -fPIC
 
-LDFLAGS		=	-shared -lSDL2 -lSDL2_image -lSDL2_ttf
+LDFLAGS		=	-shared -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2main
 
 OBJ		=	$(SRC:.cpp=.o)
 

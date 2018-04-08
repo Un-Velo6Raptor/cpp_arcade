@@ -29,8 +29,6 @@ ar::SFML::SFML()
 
 	_windowHeight = _window->getSize().y;
 	_windowWidth = _window->getSize().x;
-
-	//_events.insert(std::make_pair(true, sf::Keyboard::Num1)) = ar::Event::AR_PREV_GAME;
 }
 
 ar::SFML::~SFML() {
