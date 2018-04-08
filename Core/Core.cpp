@@ -53,8 +53,11 @@ std::vector<std::string> const ar::Core::getAllFileOfDirWithPath(std::string con
 void ar::Core::loadGamesLib(std::vector<std::string> const &paths)
 {
 	for (auto &it: paths) {
-		_gamesDL.push_back(new ar::DLoader(it));
-		_userInterfaces.push_back({0, "UNKNOWN", 0});
+		auto dl = new ar::DLoader(it);
+		_gamesDL.push_back(dl);
+		_highScores.push_back({0, "UNKNOWN", 0});
+		_scores.push_back({0, "", 0});
+		_games.push_back(((createGame *)dl->sym("createGame"))());
 	}
 }
 
@@ -103,12 +106,14 @@ void ar::Core::loadSpritesAndColors()
 
 void ar::Core::changeGameLib(int idx)
 {
-	destroyActualGame();
+	if (_game)
+		_game->setPause();
+	//destroyActualGame();
 	_gamesIdx = idx;
-	_game = ((createGame *) _gamesDL[_gamesIdx]->sym("createGame"))();
+	//_game = ((createGame *) _gamesDL[_gamesIdx]->sym("createGame"))();
+	_game = _games[_gamesIdx];
 	_game->setPause();
 	loadSpritesAndColors();
-	_actualUser = {0, _username, 0};
 }
 
 void ar::Core::changeGraphicalLib(int idx)
@@ -127,9 +132,9 @@ void ar::Core::refreshUserInterface()
 {
 	int score = _game->refreshScore();
 
-	_actualUser.score = score;
-	_actualUser.time = _game->refreshTimer();
-	_actualUser.username = _username;
+	_scores[_gamesIdx].score = score;
+	_scores[_gamesIdx].time = _game->refreshTimer();
+	_scores[_gamesIdx].username = _username;
 }
 
 void ar::Core::nextGameLib()
@@ -189,21 +194,24 @@ void ar::Core::manageGame(ar::Event &event)
 	refreshUserInterface();
 	if (_game->isGameOver()) {
 		refreshUserInterface();
-		if (_actualUser.score > _userInterfaces[_gamesIdx].score)
-			_userInterfaces[_gamesIdx] = _actualUser;
-		destroyActualGame();
+		if (_scores[_gamesIdx].score > _highScores[_gamesIdx].score)
+			_highScores[_gamesIdx] = _scores[_gamesIdx];
+		_scores[_gamesIdx] = {0, _username, 0};
+		delete _games[_gamesIdx];
+		_games[_gamesIdx] = (((createGame *)_gamesDL[_gamesIdx]->sym("createGame"))());
+		//destroyActualGame();
 		_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
 		_menu = true;
 	} else {
 		_game->loop();
-		_graphical->displayGame(_actualUser, _game->getMap());
+		_graphical->displayGame(_scores[_gamesIdx], _game->getMap());
 	}
 }
 
 void ar::Core::manageMenu(ar::Event &event, int key)
 {
 	_graphical->refreshUsername(_username, key);
-	_gamesIdx = _graphical->refreshMenu(event, _userInterfaces);
+	_gamesIdx = _graphical->refreshMenu(event, _highScores);
 	if ((unsigned int) _gamesIdx > _gamesDL.size() - 1)
 		_gamesIdx = 0;
 	if (event == ar::Event::AR_VALIDATE && (unsigned int)_gamesIdx < _gamesDL.size()) {

@@ -74,11 +74,13 @@ namespace ar {
 		bool _ended = false;
 		bool _menu = true;
 
-		std::vector<ar::userInterface> _userInterfaces;
-		ar::userInterface _actualUser = {0, "", 0};
+		std::vector<ar::userInterface> _highScores;
+		std::vector<ar::userInterface> _scores;
 
 		std::vector<std::string> _gamesName;
 		std::vector<std::string> _graphicalsName;
+
+		std::vector<ar::IGame *> _games;
 
 		std::string _username = "";
 
