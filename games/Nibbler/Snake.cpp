@@ -528,7 +528,7 @@ void	ar::Snake::updateMap()
 
 void	ar::Snake::loop()
 {
-	if (clock() - _time < 300000 || _pause == true)
+	if (clock() - _time < 200000 || _pause == true)
 		return;
 	if (_direction == ar::UP &&
 	    possibleDestination(_movementMap[_snake.back().row - 1][_snake.back().col]) == true) {
