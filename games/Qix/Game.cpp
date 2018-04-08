@@ -13,8 +13,6 @@ ar::Qix::Qix() : _manageMap(45, 80), _isPaused(true)
 	std::srand(std::time(nullptr));
 
 	this->_data = {0, "Unknown", 0};
-	this->_spritePath = "./resources/un_seul_etre_vous_manque_et_tout_est_depeuple_qix.png";
-
 	this->_startPause = -1;
 	this->_tmpTimer = 0;
 	this->_timer = std::time(nullptr);
@@ -31,6 +29,46 @@ ar::Qix::Qix() : _manageMap(45, 80), _isPaused(true)
 	this->_actualDir = DirObj::UNKNOWN;
 	this->_isPlayerStopped = false;
 
+	initSprites();
+	initColor();
+}
+
+ar::Qix::~Qix()
+{
+	if (this->_flame)
+		delete this->_flame;
+}
+
+void ar::Qix::initColor()
+{
+	colorVector color = {255, 255, 255};
+	this->_colors.insert({0, color});
+
+	color = {0, 0, 0};
+	this->_colors.insert({1, color});
+	color = {0, 0, 0};
+	this->_colors.insert({2, color});
+	color = {0, 255, 255};
+	this->_colors.insert({3, color});
+	color = {0, 0, 0};
+	this->_colors.insert({4, color});
+	color = {255, 255, 0};
+	this->_colors.insert({5, color});
+	color = {255, 0, 0};
+	this->_colors.insert({6, color});
+	color = {0, 0, 0};
+	this->_colors.insert({7, color});
+	color = {255, 100, 100};
+	this->_colors.insert({8, color});
+	color = {0, 0, 255};
+	this->_colors.insert({9, color});
+	color = {255, 0, 255};
+	this->_colors.insert({10, color});}
+
+void ar::Qix::initSprites()
+{
+	this->_spritePath = "./resources/un_seul_etre_vous_manque_et_tout_est_depeuple_qix.png";
+
 	this->_sprites.insert({0, {0, 0, 32, 32}});
 	this->_sprites.insert({1, {0, 0, 32, 32}});
 	this->_sprites.insert({2, {0, 0, 32, 32}});
@@ -42,47 +80,6 @@ ar::Qix::Qix() : _manageMap(45, 80), _isPaused(true)
 	this->_sprites.insert({8, {64, 64, 32, 32}});
 	this->_sprites.insert({9, {32, 32, 32, 32}});
 	this->_sprites.insert({10, {64, 32, 32, 32}});
-
-
-
-	colorVector color = {255, 255, 255};
-	this->_colors.insert({0, color});
-
-	color = {0, 0, 0};
-	this->_colors.insert({1, color});
-
-	color = {0, 0, 0};
-	this->_colors.insert({2, color});
-
-	color = {0, 255, 255};
-	this->_colors.insert({3, color});
-
-	color = {0, 0, 0};
-	this->_colors.insert({4, color});
-
-	color = {255, 255, 0};
-	this->_colors.insert({5, color});
-
-	color = {255, 0, 0};
-	this->_colors.insert({6, color});
-
-	color = {0, 0, 0};
-	this->_colors.insert({7, color});
-
-	color = {255, 100, 100};
-	this->_colors.insert({8, color});
-
-	color = {0, 0, 255};
-	this->_colors.insert({9, color});
-
-	color = {255, 0, 255};
-	this->_colors.insert({10, color});
-}
-
-ar::Qix::~Qix()
-{
-	if (this->_flame)
-		delete this->_flame;
 }
 
 void ar::Qix::joinTheBorder(void)
@@ -91,52 +88,21 @@ void ar::Qix::joinTheBorder(void)
 		if (GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() + idx) == MapPattern::BORDER) {
 			this->_manageMap._map.setPlayerY(this->_manageMap._map.getPlayerY() + idx);
 			break;
-		}
-		if (GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() - idx) == MapPattern::BORDER) {
+		}else if (GetCharTo(this->_manageMap._map.getPlayerX(), this->_manageMap._map.getPlayerY() - idx) == MapPattern::BORDER) {
 			this->_manageMap._map.setPlayerY(this->_manageMap._map.getPlayerY() - idx);
 			break;
-		}
-		if (GetCharTo(this->_manageMap._map.getPlayerX() + idx, this->_manageMap._map.getPlayerY()) == MapPattern::BORDER) {
+		} else if (GetCharTo(this->_manageMap._map.getPlayerX() + idx, this->_manageMap._map.getPlayerY()) == MapPattern::BORDER) {
 			this->_manageMap._map.setPlayerX(this->_manageMap._map.getPlayerX() + idx);
 			break;
-		}
-		if (GetCharTo(this->_manageMap._map.getPlayerX() - idx, this->_manageMap._map.getPlayerY()) == MapPattern::BORDER) {
+		} else if (GetCharTo(this->_manageMap._map.getPlayerX() - idx, this->_manageMap._map.getPlayerY()) == MapPattern::BORDER) {
 			this->_manageMap._map.setPlayerX(this->_manageMap._map.getPlayerX() - idx);
 			break;
 		}
 	}
 }
 
-void ar::Qix::loop()
+void ar::Qix::startLoopListSharks()
 {
-	static int lastPosX = 0;
-	static int lastPosY = 0;
-
-	if (clock() - _time < 100000 || _isPaused == true)
-		return;
-	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] ==
-		ar::MapPattern::PLAYER)
-		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
-
-	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == ar::MapPattern::OLDBORDER ||
-		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == ar::MapPattern::NOWALKABLE)
-		joinTheBorder();
-
-	_behindPlayer = (MapPattern)(this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()]);
-	movePlayer();
-
-	if (_flame &&
-		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
-			ar::MapPattern::TRAIL) {
-		resetSpecificCharMap(MapPattern::TRAIL);
-		if (_behindPlayer == TRAIL)
-			this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = BORDER;
-		else
-			this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = WALKABLE;
-		delete _flame;
-		_flame = nullptr;
-	}
-
 	for (auto it = this->_listSharks.begin();
 		it != this->_listSharks.end(); ++it) {
 		if ((*it).loopSharks(this->_manageMap) == 1) {
@@ -153,6 +119,22 @@ void ar::Qix::loop()
 			resetSpecificCharMap(MapPattern::TRAIL);
 		}
 	}
+}
+
+void ar::Qix::FireOnTrailCheck()
+{
+	if (_flame &&
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
+			ar::MapPattern::TRAIL) {
+		resetSpecificCharMap(MapPattern::TRAIL);
+		if (_behindPlayer == TRAIL)
+			this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = BORDER;
+		else
+			this->_manageMap._map[_flame->getPosY()][_flame->getPosX()] = WALKABLE;
+		delete _flame;
+		_flame = nullptr;
+	}
+	startLoopListSharks();
 	if (_flame && _flame->loopSharks(this->_manageMap) == 1) {
 		this->_life--;
 		this->_manageMap._map.setPlayerY(this->_lastBorderPosY);
@@ -162,12 +144,12 @@ void ar::Qix::loop()
 		delete _flame;
 		_flame = nullptr;
 	}
-	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
-		MapPattern::TRAIL)
-		fillBox();
-	else
-		updateMap();
-	randomMoveQix();
+}
+
+void ar::Qix::checkStartFire()
+{
+	static int lastPosX = 0;
+	static int lastPosY = 0;
 
 	if (lastPosX == this->_manageMap._map.getPlayerX() &&
 		lastPosY == this->_manageMap._map.getPlayerY() &&
@@ -188,6 +170,27 @@ void ar::Qix::loop()
 	}
 	lastPosX = this->_manageMap._map.getPlayerX();
 	lastPosY = this->_manageMap._map.getPlayerY();
+}
+
+void ar::Qix::loop()
+{
+	if (clock() - _time < 100000 || _isPaused == true)
+		return;
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] ==
+		ar::MapPattern::PLAYER)
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] = this->_behindPlayer;
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == ar::MapPattern::OLDBORDER ||
+		this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] == ar::MapPattern::NOWALKABLE)
+		joinTheBorder();
+	_behindPlayer = (MapPattern)(this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()]);
+	movePlayer();
+	FireOnTrailCheck();
+	if (this->_manageMap._map[this->_manageMap._map.getPlayerY()][this->_manageMap._map.getPlayerX()] !=
+		MapPattern::TRAIL)
+		fillBox();
+	else
+		updateMap();
+	randomMoveQix();
 	_time = clock();
 	updateScore();
 }
@@ -217,6 +220,14 @@ void ar::Qix::updateScore()
 	this->_data.score = int((100 - percent) * 100);
 }
 
+float ar::Qix::percentOfMapCoverage(int sizeMob, int walkableArea)
+{
+	float percent = (int)(((float)walkableArea /
+		(float)((this->_manageMap._map.getHeight() - 1) *
+			(this->_manageMap._map.getWidth() - 1) - sizeMob)) * 100);
+	return percent;
+}
+
 bool ar::Qix::isGameOver()
 {
 	int sizeMob = 64;
@@ -229,26 +240,19 @@ bool ar::Qix::isGameOver()
 		return true;
 	for (int y = 0; y < this->_manageMap._map.getHeight(); ++y) {
 		for (int x = 0; x < this->_manageMap._map.getWidth(); ++x) {
-			if (this->_manageMap._map[y][x] ==
-				MapPattern::WALKABLE ||
-				this->_manageMap._map[y][x] ==
-					MapPattern::TRAIL)
+			if (this->_manageMap._map[y][x] == MapPattern::WALKABLE || this->_manageMap._map[y][x] == MapPattern::TRAIL)
 				walkableArea++;
 		}
 	}
-	float percent = (int)(((float)walkableArea /
-		(float)((this->_manageMap._map.getHeight() - 1) *
-			(this->_manageMap._map.getWidth() - 1) - sizeMob)) * 100);
-	if (percent <= 70 && this->_patternQix == 0) {
+	if (percentOfMapCoverage(sizeMob, walkableArea) <= 70 && this->_patternQix == 0) {
 		this->_listSharks.emplace_back(this->_manageMap, true);
 		this->_patternQix = 1;
-	} else if (percent <= 45 && this->_patternQix == 1) {
+	} else if (percentOfMapCoverage(sizeMob, walkableArea) <= 45 && this->_patternQix == 1) {
 		this->_listSharks.emplace_back(this->_manageMap, false);
 		this->_patternQix = 2;
 	}
-	this->_data.score = int((100 - percent) * 100);
-
-	return (percent <= 25);
+	this->_data.score = int((100 - percentOfMapCoverage(sizeMob, walkableArea)) * 100);
+	return (percentOfMapCoverage(sizeMob, walkableArea) <= 25);
 }
 
 const std::map<unsigned char, ar::colorVector> &ar::Qix::getColors() const
@@ -602,20 +606,15 @@ int ar::Qix::GoThroughTheMap(int x, int y)
 	}
 	if (x < this->_manageMap._map.getWidth() && y < this->_manageMap._map.getHeight() && x > 0 && y > 0) {
 		this->_manageMap._map[y][x] = MapPattern::FILLQIXTMP;
-
 		GoThroughTheMap(x, y + 1);
 		GoThroughTheMap(x, y - 1);
-
 		GoThroughTheMap(x + 1, y);
 		GoThroughTheMap(x - 1, y);
-
 		GoThroughTheMap(x + 1, y + 1);
 		GoThroughTheMap(x - 1, y - 1);
-
 		GoThroughTheMap(x - 1, y + 1);
 		GoThroughTheMap(x + 1, y - 1);
 	}
-
 	return 0;
 }
 
@@ -646,7 +645,8 @@ void ar::Qix::fillBox(bool opt)
 	this->_manageMap.PlaceQixOntTheMap(0);
 }
 
-void ar::Qix::updateMap(void) {
+int **ar::Qix::copyMapForUpdate()
+{
 	int **mapTmp = new int *[this->_manageMap._map.getHeight() + 1];
 	for (int i = 0; i < this->_manageMap._map.getHeight(); ++i) {
 		mapTmp[i] = new int[this->_manageMap._map.getWidth() + 1];
@@ -660,6 +660,11 @@ void ar::Qix::updateMap(void) {
 		mapTmp[i][this->_manageMap._map.getWidth()] = 0;
 	}
 	mapTmp[this->_manageMap._map.getHeight()] = nullptr;
+	return mapTmp;
+}
+
+void ar::Qix::updateMap(void) {
+	int **mapTmp = copyMapForUpdate();
 
 	GoThroughTheMap((int)this->_manageMap._posQixX,
 		(int)this->_manageMap._posQixY);

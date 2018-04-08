@@ -34,11 +34,15 @@ namespace ar {
 	private:
 		void initSharksOnTheMap(ar::ManageMap &, bool);
 		std::vector<DirObj> getAllDirSharks(ar::ManageMap &);
+		void getAllDirSharksVerticaly(ar::ManageMap &, std::vector<DirObj> &);
 		int sharksEatPlayer(ar::ManageMap &manageMap);
 		int GetCharTo(ar::ManageMap &, int x, int y);
+		void checkDirToGo(ManageMap &, int x, int y);
 
 		// SharksIA
 		ar::DirObj findTheDirToGo(ar::ManageMap &);
+		ar::DirObj findTheDirToGoWithTrail(ar::ManageMap &, std::vector<ar::DirObj> &);
+
 		ar::DirObj _dir;
 		ar::MapPattern _lastChar;
 		std::size_t _posX;

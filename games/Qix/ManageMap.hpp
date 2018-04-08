@@ -1,4 +1,4 @@
-/*void
+/*
 ** EPITECH PROJECT, 2018
 ** cpp_arcade
 ** File description:
@@ -19,9 +19,6 @@ namespace ar {
 		ManageMap(int height, int width);
 
 		~ManageMap() = default;
-
-		// Basics map
-		void DisplayMap(void);
 
 		int PlaceQixOntTheMap(std::size_t pattern);
 

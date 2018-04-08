@@ -75,9 +75,18 @@ namespace ar {
 		int _timer;
 		int _time;
 
+		// init
+		void initSprites(void);
+		void initColor(void);
+
 		// ManageGame
 		void updateScore(void);
 		void joinTheBorder(void);
+		float percentOfMapCoverage(int sizeMob, int walkableArea);
+		int **copyMapForUpdate(void);
+		void startLoopListSharks(void);
+		void FireOnTrailCheck(void);
+		void checkStartFire(void);
 
 		// ManageGameKey
 		void KeyUpPressed(void);

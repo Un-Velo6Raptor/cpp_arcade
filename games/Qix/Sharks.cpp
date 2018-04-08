@@ -16,6 +16,28 @@ ar::ManageSharks::~ManageSharks()
 {
 }
 
+void ar::ManageSharks::getAllDirSharksVerticaly(ar::ManageMap &manageMap,
+	std::vector<ar::DirObj> &result
+)
+{
+	if (this->_dir != ar::DirObj::DOWN && this->_posY > 0 &&
+		(manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::BORDER ||
+			manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::SHARKS ||
+			manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::TRAIL ||
+			((manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::OLDBORDER) &&
+				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER ||
+					manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
+		result.push_back(DirObj::UP);
+	if (this->_dir != ar::DirObj::UP && this->_posY < (std::size_t)manageMap._map.getHeight() - 1 &&
+		(manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::BORDER ||
+			manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::SHARKS ||
+			manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::TRAIL ||
+			(manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::OLDBORDER &&
+				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER ||
+					manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
+		result.push_back(ar::DirObj::DOWN);
+}
+
 std::vector<ar::DirObj> ar::ManageSharks::getAllDirSharks(ar::ManageMap &manageMap)
 {
 	std::vector<ar::DirObj> result;
@@ -25,35 +47,50 @@ std::vector<ar::DirObj> ar::ManageSharks::getAllDirSharks(ar::ManageMap &manageM
 			manageMap._map[this->_posY][this->_posX - 1] == ar::MapPattern::SHARKS ||
 			manageMap._map[this->_posY][this->_posX - 1] == ar::MapPattern::TRAIL ||
 			(manageMap._map[this->_posY][this->_posX - 1] == ar::MapPattern::OLDBORDER &&
-				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER || manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
+				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER ||
+					manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
 		result.push_back(DirObj::LEFT);
 	if (this->_dir != ar::DirObj::LEFT && this->_posX < (std::size_t)manageMap._map.getWidth() - 1 &&
 		(manageMap._map[this->_posY][this->_posX + 1] == ar::MapPattern::BORDER ||
 			manageMap._map[this->_posY][this->_posX + 1] == ar::MapPattern::SHARKS ||
 			manageMap._map[this->_posY][this->_posX + 1] == ar::MapPattern::TRAIL ||
 			(manageMap._map[this->_posY][this->_posX + 1] == ar::MapPattern::OLDBORDER &&
-				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER || manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
+				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER ||
+					manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
 		result.push_back(DirObj::RIGHT);
-	if (this->_dir != ar::DirObj::DOWN && this->_posY > 0 &&
-		(manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::BORDER ||
-			manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::SHARKS ||
-			manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::TRAIL ||
-			((manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::OLDBORDER) &&
-				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER || manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
-		result.push_back(DirObj::UP);
-	if (this->_dir != ar::DirObj::UP && this->_posY < (std::size_t)manageMap._map.getHeight() - 1 &&
-		(manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::BORDER ||
-			manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::SHARKS ||
-			manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::TRAIL ||
-			(manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::OLDBORDER &&
-				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER || manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
-		result.push_back(ar::DirObj::DOWN);
+	getAllDirSharksVerticaly(manageMap, result);
+	return result;
+}
+
+ar::DirObj ar::ManageSharks::findTheDirToGoWithTrail(ar::ManageMap &manageMap, std::vector<ar::DirObj> &dirAccess)
+{
+	ar::DirObj result = ar::DirObj::UNKNOWN;
+	std::vector<ar::DirObj> tmpAccess;
+
+	for (auto it = dirAccess.begin(); it != dirAccess.end() ;) {
+		if (*it == ar::DirObj::DOWN && (manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::BORDER || manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::TRAIL)) {
+			tmpAccess.push_back(*it);
+			dirAccess.erase(it);
+		} else if (*it == ar::DirObj::UP && (manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::BORDER || manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::TRAIL)) {
+			tmpAccess.push_back(*it);
+			dirAccess.erase(it);
+		} else if (*it == ar::DirObj::LEFT && (manageMap._map[this->_posY][this->_posX - 1] == ar::MapPattern::BORDER || manageMap._map[this->_posY][this->_posX - 1] == ar::MapPattern::TRAIL)) {
+			tmpAccess.push_back(*it);
+			dirAccess.erase(it);
+		} else if (*it == ar::DirObj::RIGHT && (manageMap._map[this->_posY][this->_posX + 1] == ar::MapPattern::BORDER || manageMap._map[this->_posY][this->_posX + 1] == ar::MapPattern::TRAIL)) {
+			tmpAccess.push_back(*it);
+			dirAccess.erase(it);
+		} else
+			++it;
+	}
+	if (tmpAccess.empty() && dirAccess.empty())
+		return result;
+	result = (!tmpAccess.empty()) ? tmpAccess[rand() % tmpAccess.size()] : dirAccess[rand() % dirAccess.size()];
 	return result;
 }
 
 ar::DirObj ar::ManageSharks::findTheDirToGo(ar::ManageMap &manageMap)
 {
-	ar::DirObj result = ar::DirObj::UNKNOWN;
 	std::vector<ar::DirObj> dirAccess;
 
 	if (manageMap._map[this->_posY][this->_posX] != ar::MapPattern::BORDER &&
@@ -65,34 +102,7 @@ ar::DirObj ar::ManageSharks::findTheDirToGo(ar::ManageMap &manageMap)
 	} else {
 		dirAccess = getAllDirSharks(manageMap);
 	}
-	if (!dirAccess.empty()) {
-		std::vector<ar::DirObj> tmpAccess;
-		for (auto it = dirAccess.begin(); it != dirAccess.end() ;) {
-			if (*it == ar::DirObj::DOWN && (manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::BORDER || manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::TRAIL)) {
-				tmpAccess.push_back(*it);
-				dirAccess.erase(it);
-			}
-			else if (*it == ar::DirObj::UP && (manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::BORDER || manageMap._map[this->_posY - 1][this->_posX] == ar::MapPattern::TRAIL)) {
-				tmpAccess.push_back(*it);
-				dirAccess.erase(it);
-			}
-			else if (*it == ar::DirObj::LEFT && (manageMap._map[this->_posY][this->_posX - 1] == ar::MapPattern::BORDER || manageMap._map[this->_posY][this->_posX - 1] == ar::MapPattern::TRAIL)) {
-				tmpAccess.push_back(*it);
-				dirAccess.erase(it);
-			}
-			else if (*it == ar::DirObj::RIGHT && (manageMap._map[this->_posY][this->_posX + 1] == ar::MapPattern::BORDER || manageMap._map[this->_posY][this->_posX + 1] == ar::MapPattern::TRAIL)) {
-				tmpAccess.push_back(*it);
-				dirAccess.erase(it);
-			} else
-				++it;
-		}
-		if (!tmpAccess.empty())
-			result = tmpAccess[rand() % tmpAccess.size()];
-		else
-			result = dirAccess[rand() % dirAccess.size()];
-	}
-
-	return result;
+	return findTheDirToGoWithTrail(manageMap, dirAccess);
 }
 
 void ar::ManageSharks::initSharksOnTheMap(ar::ManageMap &manageMap, bool dir)
@@ -167,34 +177,31 @@ bool ar::ManageSharks::isAnotherTrailAround(ar::ManageMap &manageMap)
 	return false;
 }
 
+void ar::ManageSharks::checkDirToGo(ManageMap &manageMap, int x, int y)
+{
+	if (_lastChar == ar::MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
+		_lastChar = (manageMap._map[this->_posY][this->_posX] == ar::WALKABLE) ? ar::WALKABLE : ar::BORDER;
+	manageMap._map[this->_posY][this->_posX] = _lastChar;
+	this->_posX += x;
+	this->_posY += y;
+}
+
 int ar::ManageSharks::loopSharks(ar::ManageMap &manageMap)
 {
 	ar::DirObj tmp = findTheDirToGo(manageMap);
 
 	switch (tmp) {
 	case ar::DirObj::RIGHT:
-		if (_lastChar == ar::MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
-			_lastChar = (manageMap._map[this->_posY][this->_posX] == ar::WALKABLE) ? ar::WALKABLE : ar::BORDER;
-		manageMap._map[this->_posY][this->_posX] = _lastChar;
-		this->_posX++;
+		checkDirToGo(manageMap, 1, 0);
 		break;
 	case ar::DirObj::LEFT:
-		if (_lastChar == ar::MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
-			_lastChar = (manageMap._map[this->_posY][this->_posX] == ar::WALKABLE) ? ar::WALKABLE : ar::BORDER;
-		manageMap._map[this->_posY][this->_posX] = _lastChar;
-		this->_posX--;
+		checkDirToGo(manageMap, -1, 0);
 		break;
 	case ar::DirObj::UP:
-		if (_lastChar == ar::MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
-			_lastChar = (manageMap._map[this->_posY][this->_posX] == ar::WALKABLE) ? ar::WALKABLE : ar::BORDER;
-		manageMap._map[this->_posY][this->_posX] = _lastChar;
-		this->_posY--;
+		checkDirToGo(manageMap, 0, -1);
 		break;
 	case ar::DirObj::DOWN:
-		if (_lastChar == ar::MapPattern::TRAIL && !isAnotherTrailAround(manageMap))
-			_lastChar = (manageMap._map[this->_posY][this->_posX] == ar::WALKABLE) ? ar::WALKABLE : ar::BORDER;
-		manageMap._map[this->_posY][this->_posX] = _lastChar;
-		this->_posY++;
+		checkDirToGo(manageMap, 0, 1);
 		break;
 	default:
 		manageMap._map[this->_posY][this->_posX] = ar::MapPattern::WALKABLE;
