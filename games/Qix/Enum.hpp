@@ -18,7 +18,7 @@ namespace ar {
 		TRAIL = 7,
 		OLDBORDER = 9,
 		FILLQIXTMP = 8,
-		FLAME = 10,
+		PLAYER = 10
 	};
 
 	enum DirObj {

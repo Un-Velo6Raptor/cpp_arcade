@@ -235,7 +235,7 @@ void		ar::NCurses::printLibName(int &i, const int width, const std::string str) 
 int		ar::NCurses::refreshMenu(const ar::Event &key,
 				     const std::vector<ar::userInterface> &dataArray)
 {
-	int	gameSize = _menuChoices.size();
+	int	gameSize = dataArray.size();
 	int	libSize = _display.size();
 	int	height;
 	int	width;

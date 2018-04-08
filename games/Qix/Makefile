@@ -7,14 +7,18 @@
 
 SRC		=	../../Interfaces/Map.cpp		\
 			ManageMap.cpp	\
-			Sharks.cpp
-
+			Sharks.cpp		\
+			Game.cpp	\
+			./Exception/ErrorException.cpp	\
+			./Exception/GameException.cpp	\
+			./Exception/MapException.cpp
 
 OBJ		=	$(SRC:.cpp=.o)
 
 CPPFLAGS	=	-std=c++11 -W -Wall -Wextra -Werror	\
 			-I .	\
 			-I ../../Interfaces/			\
+			-I ./Exception	\
 			-fPIC
 
 LDFLAGS		=	-shared

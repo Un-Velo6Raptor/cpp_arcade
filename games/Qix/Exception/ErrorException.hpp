@@ -11,18 +11,22 @@
 # include <string>
 # include <iostream>
 
-class ErrorException : public std::exception {
+namespace ar {
+	class ErrorException : public std::exception {
 	public:
-	ErrorException(std::string const &message, std::string const &name);
+		ErrorException(std::string const &message,
+			std::string const &name
+		);
 
-	// Member Functions
-	std::string const &getName() const;
+		// Member Functions
+		std::string const &getName() const;
 
-	const char *what() const noexcept override;
+		const char *what() const noexcept override;
 
 	private:
-	std::string _message;
-	std::string _name;
-};
+		std::string _message;
+		std::string _name;
+	};
+}
 
 #endif //CPP_ARCADE_ERROREXCEPTION_HPP

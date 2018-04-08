@@ -7,18 +7,18 @@
 
 #include "ErrorException.hpp"
 
-ErrorException::ErrorException(std::string const &message,
+ar::ErrorException::ErrorException(std::string const &message,
 	std::string const &name
 ) : _message(message), _name(name)
 {
 }
 
-const char *ErrorException::what() const noexcept
+const char *ar::ErrorException::what() const noexcept
 {
 	return this->_message.c_str();
 }
 
-std::string const &ErrorException::getName() const
+std::string const &ar::ErrorException::getName() const
 {
 	return this->_name;
 }

@@ -16,7 +16,7 @@ ar::ManageSharks::~ManageSharks()
 {
 }
 
-std::vector<DirObj> ar::ManageSharks::getAllDirSharks(ar::ManageMap &manageMap)
+std::vector<ar::DirObj> ar::ManageSharks::getAllDirSharks(ar::ManageMap &manageMap)
 {
 	std::vector<ar::DirObj> result;
 
@@ -47,7 +47,7 @@ std::vector<DirObj> ar::ManageSharks::getAllDirSharks(ar::ManageMap &manageMap)
 			manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::TRAIL ||
 			(manageMap._map[this->_posY + 1][this->_posX] == ar::MapPattern::OLDBORDER &&
 				(manageMap._map[this->_posY][this->_posX] == ar::MapPattern::OLDBORDER || manageMap._map[this->_posY][this->_posX] == ar::MapPattern::SHARKS))))
-		result.push_back(Dar::irObj::DOWN);
+		result.push_back(ar::DirObj::DOWN);
 	return result;
 }
 
@@ -144,7 +144,7 @@ std::size_t ar::ManageSharks::getPosX() const
 	return this->_posX;
 }
 
-MapPattern ar::ManageSharks::getLastChar() const
+ar::MapPattern ar::ManageSharks::getLastChar() const
 {
 	return this->_lastChar;
 }
