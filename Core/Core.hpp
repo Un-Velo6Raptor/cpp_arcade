@@ -45,7 +45,6 @@ namespace ar {
 
 		void changeGameLib(int idx);
 		void changeGraphicalLib(int idx);
-		void destroyActualGame();
 		void destroyActualGraphical();
 
 		void loadSpritesAndColors();

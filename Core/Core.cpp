@@ -26,6 +26,9 @@ ar::Core::~Core()
 	for (auto &it: _graphicalsDL) {
 		delete it;
 	}
+	for (auto &it: _games) {
+		delete it;
+	}
 	for (auto &it: _gamesDL) {
 		delete it;
 	}
@@ -72,20 +75,9 @@ std::vector<std::string> ar::Core::getGamesName()
 {
 	std::vector<std::string> names;
 
-	for (auto &it: _gamesDL) {
-		ar::IGame *tmp = ((createGame *) it->sym("createGame"))();
-		names.push_back(tmp->getGameName());
-		((destroyGame *) it->sym("destroyGame"))(tmp);
-	}
+	for (auto &it: _games)
+		names.push_back(it->getGameName());
 	return names;
-}
-
-void ar::Core::destroyActualGame()
-{
-	if (_game) {
-		((destroyGame *)_gamesDL[_gamesIdx]->sym("destroyGame"))(_game);
-		_game = nullptr;
-	}
 }
 
 void ar::Core::destroyActualGraphical()
@@ -171,7 +163,6 @@ void ar::Core::prevGraphicalLib()
 
 void ar::Core::activateMenu()
 {
-	//destroyActualGame();
 	_game = nullptr;
 	_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
 	_menu = true;
@@ -179,13 +170,15 @@ void ar::Core::activateMenu()
 
 void ar::Core::exit()
 {
-	destroyActualGame();
 	destroyActualGraphical();
 	_ended = true;
 }
 
 void ar::Core::restart()
 {
+	delete _games[_gamesIdx];
+	_game = nullptr;
+	_games[_gamesIdx] = (((createGame *)_gamesDL[_gamesIdx]->sym("createGame"))());
 	changeGameLib(_gamesIdx);
 }
 
@@ -201,7 +194,6 @@ void ar::Core::manageGame(ar::Event &event)
 		delete _games[_gamesIdx];
 		_game = nullptr;
 		_games[_gamesIdx] = (((createGame *)_gamesDL[_gamesIdx]->sym("createGame"))());
-		//destroyActualGame();
 		_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
 		_menu = true;
 	} else {
