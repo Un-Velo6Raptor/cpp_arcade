@@ -171,7 +171,8 @@ void ar::Core::prevGraphicalLib()
 
 void ar::Core::activateMenu()
 {
-	destroyActualGame();
+	//destroyActualGame();
+	_game = nullptr;
 	_graphical->initMenu(_gamesName, MENU_NAME, _graphicalsName);
 	_menu = true;
 }
