@@ -249,9 +249,9 @@ void ar::SDL2::printGraphicalList(void)
 		s.str("");
 		s << (*it).substr((*it).find_last_of('/') + 1);
 
-		texture_dest.y += ((height - (height / 20) * 2) + 20) / (_graphicalName.size() + 1);
 
 		printStringMenu(&texture_dest, s.str().c_str());
+		texture_dest.y += ((height - (height / 20) * 2) + 20) / (_graphicalName.size() + 1);
 	}
 }
 
@@ -276,9 +276,9 @@ void ar::SDL2::printGameList(void)
 		if (cmp == _index)
 			TTF_SetFontStyle(_font, TTF_STYLE_UNDERLINE);
 
-		texture_dest.y += ((height - (height / 20) * 2) + 20) / (_gameName.size() + 1);
 
 		printStringMenu(&texture_dest, s.str().c_str());
+		texture_dest.y += ((height - (height / 20) * 2) + 20) / (_gameName.size() + 1);
 		TTF_SetFontStyle(_font, TTF_STYLE_NORMAL);
 		cmp++;
 	}
