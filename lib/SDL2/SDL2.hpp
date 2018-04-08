@@ -35,6 +35,10 @@ namespace ar {
 	private:
 		SDL_Window *_window;
 		SDL_Renderer *_renderer;
+		TTF_Font *_font;
+
+		SDL_Texture *_menuBackground;
+		SDL_Texture *_frame;
 
 		unsigned int _windowWidth = 1920;
 		unsigned int _windowHeight = 1080;
@@ -47,6 +51,11 @@ namespace ar {
 
 		SDL_Texture *_texture;
 		std::map<unsigned char, ar::spriteCoords> _sprites;
+
+		void printStringMenu(SDL_Rect *dest, const char *str);
+		void printHeaderUserInterface(const ar::userInterface &UI, bool opt = false);
+		void printGraphicalList(void);
+		void printGameList(void);
 
 	};
 }
