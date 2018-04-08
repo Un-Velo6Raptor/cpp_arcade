@@ -173,7 +173,7 @@ void		ar::NCurses::initMenu(const std::vector<std::string> &menuChoices,
 				  const std::string &menuName, const std::vector<std::string> &display)
 {
 	erase();
-	_menuChoices = { "Snake", "Qix", "Nibbler", "Qix", "Exit" };
+	_menuChoices = menuChoices;
 	_menuName = menuName;
 	_display = display;
 }
