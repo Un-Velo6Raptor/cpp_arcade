@@ -144,6 +144,7 @@ void		ar::NCurses::displayGame(const ar::userInterface &UI, ar::Map &map)
 	int	mul = getMul(width, height, map);
 	std::pair<int, int>	start;
 
+	_selectedGame = 0;
 	start.first = getStartY(width, height, map) + 1;
 	start.second = getStartX(width, height, map);
 	erase();
