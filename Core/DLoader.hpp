@@ -21,23 +21,11 @@ namespace ar {
 		// Destructor
 		~DLoader();
 
-		// Operator
-
-		// Getter
-		std::string const &getName() const;
-
-		// Setter
-		void setName(std::string const &name);
-
 		// Other
 		void *sym(std::string const &symName);
 
-	protected:
-
 	private:
 		void *_dl = nullptr;
-		std::string _name;
-
 	};
 }
 

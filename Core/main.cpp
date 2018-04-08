@@ -8,17 +8,29 @@
 #include <iostream>
 #include "Core.hpp"
 
-int main(int ac, char **av, char **env)
+bool envError()
+{
+	if (!getenv("DISPLAY")) {
+		std::cerr << "Env variable Display is not set" << std::endl;
+		return true;
+	}
+	return false;
+}
+
+int main(int ac, char **av)
 {
 	if (ac != 2) {
 		std::cerr << "USAGE" << std::endl;
 		std::cerr << "\t " + std::string(av[0]);
-		std::cerr << " [ path to a graphics library ]\n" << std::endl;
+		std::cerr << " [ path to a graphics library ]" << std::endl << std::endl;
 		std::cerr << "DESCRIPTION" << std::endl;
 		std::cerr << "\tAllows you to play to several arcade games." << std::endl;
 		return 84;
 	}
-	(void) env;
+	if (envError()) {
+		std::cerr << "Please stop doing unconventional action." << std::endl;
+		return 84;
+	}
 	try {
 		ar::Core core;
 		core.start(av[1]);

@@ -30,7 +30,16 @@ namespace ar {
 
 	private:
 
+		void displayScore(int score, int boxSizeX, int boxSizeY);
+		void displayUsername(std::string const &username, int boxSizeX, int boxSizeY);
+		void displayTime(int time, int boxSizeX, int boxSizeY);
 		void displayUserInterface(ar::userInterface const &user);
+
+		void menuDisplayGames();
+		void menuDisplayGraphicals();
+		void menuDisplayUsername();
+		void menuDisplayTitle();
+		void menuManageKey(ar::Event const &key, std::vector<ar::userInterface> const &datas);
 
 		sf::Texture _texture;
 		std::map<unsigned char, sf::RectangleShape> _sprites;

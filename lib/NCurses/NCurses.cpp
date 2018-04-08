@@ -11,7 +11,7 @@
 #include	<curses.h>
 #include	"NCurses.hpp"
 
-NCurses::NCurses() : _selectedGame(0), _username("")
+ar::NCurses::NCurses() : _selectedGame(0), _username("")
 {
 	initscr();
 	cbreak();
@@ -31,12 +31,12 @@ NCurses::NCurses() : _selectedGame(0), _username("")
 	init_pair(9, COLOR_GREEN, COLOR_BLACK);
 }
 
-NCurses::~NCurses()
+ar::NCurses::~NCurses()
 {
 	endwin();
 }
 
-ar::Event	NCurses::getEvent(int &realEvent)
+ar::Event	ar::NCurses::getEvent(int &realEvent)
 {
 	std::map<int, ar::Event>	keyBinding = {
 		{ KEY_UP, ar::AR_UP },
@@ -54,7 +54,7 @@ ar::Event	NCurses::getEvent(int &realEvent)
 		{ 27, ar::AR_EXIT },
 		{ 10, ar::AR_VALIDATE }
 	};
-	std::map<int, ar::Event>::iterator	it;
+	std::map<int, ar::Event>::iterator it;
 
 	realEvent = getch();
 	it = keyBinding.find(realEvent);
@@ -63,12 +63,12 @@ ar::Event	NCurses::getEvent(int &realEvent)
 	return ar::AR_UNKNOWN;
 }
 
-bool		NCurses::canHandleSprites()
+bool		ar::NCurses::canHandleSprites()
 {
 	return false;
 }
 
-int		NCurses::findColorPair(int value)
+int		ar::NCurses::findColorPair(int value)
 {
 	std::map<unsigned char, ar::colorVector>::iterator	it;
 
@@ -92,7 +92,7 @@ int		NCurses::findColorPair(int value)
 	return 1;
 }
 
-int		NCurses::getMul(int width, int height, ar::Map &map)
+int		ar::NCurses::getMul(int width, int height, ar::Map &map)
 {
 	if (width > map.getWidth() * 4 && height > map.getHeight() * 2 + 1)
 		return 4;
@@ -101,14 +101,14 @@ int		NCurses::getMul(int width, int height, ar::Map &map)
 	return 1;
 }
 
-int		NCurses::getStartY(int width, int height, ar::Map &map)
+int		ar::NCurses::getStartY(int width, int height, ar::Map &map)
 {
 	if (width > map.getWidth() * 4 && height > map.getHeight() * 2 + 1)
 		return height / 2 - map.getHeight();
 	return height / 2 - map.getHeight() / 2;
 }
 
-int		NCurses::getStartX(int width, int height, ar::Map &map)
+int		ar::NCurses::getStartX(int width, int height, ar::Map &map)
 {
 	if (width > map.getWidth() * 4 && height > map.getHeight() * 2 + 1)
 		return width / 2 - map.getWidth() * 2;
@@ -117,7 +117,7 @@ int		NCurses::getStartX(int width, int height, ar::Map &map)
 	return width / 2 - map.getWidth() / 2;
 }
 
-void		NCurses::displayMap(ar::Map &map, const int mul, const std::pair<int, int> start)
+void		ar::NCurses::displayMap(ar::Map &map, const int mul, const std::pair<int, int> start)
 {
 	std::string	str(mul, ' ');
 
@@ -134,7 +134,7 @@ void		NCurses::displayMap(ar::Map &map, const int mul, const std::pair<int, int>
 	}
 }
 
-void		NCurses::displayGame(const ar::userInterface &UI, ar::Map &map)
+void		ar::NCurses::displayGame(const ar::userInterface &UI, ar::Map &map)
 {
 	std::string	score = "Score: " + std::to_string(UI.score);
 	std::string	time = "Time: " + std::to_string(UI.time);
@@ -158,18 +158,18 @@ void		NCurses::displayGame(const ar::userInterface &UI, ar::Map &map)
 	refresh();
 }
 
-void		NCurses::loadResources(const std::map<unsigned char, ar::colorVector> &color)
+void		ar::NCurses::loadResources(const std::map<unsigned char, ar::colorVector> &color)
 {
 	_colorLegend = color;
 }
 
-void		NCurses::loadResources(const __attribute__ ((unused)) std::string &filePath,
+void		ar::NCurses::loadResources(const __attribute__ ((unused)) std::string &filePath,
 					const __attribute__ ((unused)) std::map<unsigned char,
 					ar::spriteCoords> &sprites)
 {
 }
 
-void		NCurses::initMenu(const std::vector<std::string> &menuChoices,
+void		ar::NCurses::initMenu(const std::vector<std::string> &menuChoices,
 				  const std::string &menuName, const std::vector<std::string> &display)
 {
 	erase();
@@ -178,7 +178,7 @@ void		NCurses::initMenu(const std::vector<std::string> &menuChoices,
 	_display = display;
 }
 
-void		NCurses::displayName(const int width) const
+void		ar::NCurses::displayName(const int width) const
 {
 	const std::map<int, std::string>	name = {
 		{ 1, "        **                                                **              " },
@@ -207,7 +207,7 @@ void		NCurses::displayName(const int width) const
 	attron(COLOR_PAIR(1));
 }
 
-void		NCurses::printGameName(int &i, const int width, const std::string str) const
+void		ar::NCurses::printGameName(int &i, const int width, const std::string str) const
 {
 	if (i - 19 == _selectedGame)
 		attron(COLOR_PAIR(2));
@@ -217,14 +217,14 @@ void		NCurses::printGameName(int &i, const int width, const std::string str) con
 	i++;
 }
 
-void		NCurses::printHighScore(const int width, const ar::userInterface ui) const
+void		ar::NCurses::printHighScore(const int width, const ar::userInterface ui) const
 {
 	std::string	highscore = "High Score: " + ui.username + " "
 		+ std::to_string(ui.score) + " " + std::to_string(ui.time);
 	mvprintw(17, width / 2 - highscore.size() / 2, highscore.c_str());
 }
 
-void		NCurses::printLibName(int &i, const int width, const std::string str) const
+void		ar::NCurses::printLibName(int &i, const int width, const std::string str) const
 {
 	std::size_t found = str.find_last_of("/");
 
@@ -232,7 +232,7 @@ void		NCurses::printLibName(int &i, const int width, const std::string str) cons
 	i--;
 }
 
-int		NCurses::refreshMenu(const ar::Event &key,
+int		ar::NCurses::refreshMenu(const ar::Event &key,
 				     const std::vector<ar::userInterface> &dataArray)
 {
 	int	gameSize = _menuChoices.size();
@@ -266,7 +266,7 @@ int		NCurses::refreshMenu(const ar::Event &key,
 	return _selectedGame;
 }
 
-void		NCurses::refreshUsername(std::string &name, int realKey)
+void		ar::NCurses::refreshUsername(std::string &name, int realKey)
 {
 	if ((realKey == 127 || realKey == KEY_BACKSPACE) && name.size() > 0)
 		name.pop_back();
@@ -276,17 +276,17 @@ void		NCurses::refreshUsername(std::string &name, int realKey)
 	_username = name;
 }
 
-void		NCurses::destroyMenu()
+void		ar::NCurses::destroyMenu()
 {
 	erase();
 }
 
-extern "C" NCurses *createDisplay()
+extern "C" ar::NCurses *createDisplay()
 {
-	return new NCurses();
+	return new ar::NCurses();
 }
 
-extern "C" void destroyDisplay(NCurses *ncurses)
+extern "C" void destroyDisplay(ar::NCurses *ncurses)
 {
 	delete ncurses;
 }

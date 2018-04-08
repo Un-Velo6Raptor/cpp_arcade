@@ -14,7 +14,7 @@ LDFLAGS		=	-shared -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2main
 
 OBJ		=	$(SRC:.cpp=.o)
 
-NAME		=	lib_arcade_SDL2.so
+NAME		=	lib_arcade_sdl2.so
 
 all:    	$(NAME)
 
